@@ -14,6 +14,10 @@ Este projeto é uma extensão do tipo Bundle para o Directus voltada para para i
  docker compose up -d --no-deps --build directus-extension-here; docker compose up
 ```
 
+Atualiza types
+
+  `npx @devix/directus2ts --host <directus-host> --token <auth-token> --typeName AgilizaAi --outFile src/here-extension.d.ts --simplified`
+
 
 > [!IMPORTANT] 
 > _O docker-compose usado neste projeto está configurado para permitir iframe de qualquer domínio. Em produção você deve liberar apenas domínios confiáveis."_
