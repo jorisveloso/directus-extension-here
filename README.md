@@ -15,6 +15,7 @@ Este projeto é uma extensão do tipo Bundle para o Directus voltada para para i
 - Com o docker instalado na máquina ([saiba mais](https://docs.docker.com/get-docker/)), rode o comando:
 ```
  docker compose up
+ docker compose up -d --no-deps --build directus-extension-here; docker compose up
 ```
 
 
