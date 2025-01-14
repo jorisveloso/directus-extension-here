@@ -2,19 +2,15 @@
 
 Este projeto é uma extensão do tipo Bundle para o Directus voltada para para integração com a plataforma here.com.
 
-## 💎 Usando a extensão
-
-- Garanta que sua coleção tenha um campo com nome `geolocation`, do tipo "Mapa".
-- Ative o Layout no menu de configurações a direita selecionando "MapGrid" no dropdown;
-
-![Tela de visualização da extensão](docs/tela.jpg)
-
 ##  🚀  Levantando um Directus a partir de docker-compose
 
 - Baixe este projeto ou copie o arquivo `docker-compose.yml` e inicie uma instalação do zero;
 - Com o docker instalado na máquina ([saiba mais](https://docs.docker.com/get-docker/)), rode o comando:
 ```
  docker compose up
+ 
+ ou
+ 
  docker compose up -d --no-deps --build directus-extension-here; docker compose up
 ```
 
