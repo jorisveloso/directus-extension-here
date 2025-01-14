@@ -31,4 +31,4 @@ DIRECTUS_HTTP_HEADERS__CONTENT_SECURITY_POLICY: "default-src *; img-src * 'self'
 - [Como Criar uma extensão](https://docs.directus.io/extensions/creating-extensions.html) 
 - [Acessar serviços do Directus](https://docs.directus.io/extensions/services/introduction.html)
 - [Acessar itens gravados nas coleções](https://docs.directus.io/extensions/services/accessing-items.html) 
-- [Routing API Reference v8](https://www.here.com/docs/bundle/routing-api-v8-api-reference/page/index.html)
+- [Here.com - Routing API Reference v8](https://www.here.com/docs/bundle/routing-api-v8-api-reference/page/index.html)
