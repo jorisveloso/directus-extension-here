@@ -1,7 +1,7 @@
 /** 
  Arquivo gerado automaticamente pelo Directus2TS 
  */
-export type Here-Extension = {
+export type HereExtension = {
   here_routing: components["schemas"]["ItemsHereRouting"];
 };
 export type paths = Record<string, never>;
@@ -403,9 +403,14 @@ export interface components {
       date_updated?: string | null;
       method?: string | null;
       transport_mode?: string | null;
-      /** @description ex:   destination=51.611571,11.351608 - A simple WGS84 coordinate */
+      response?: unknown;
+      error?: string | null;
+      return?: string[] | null;
+      currency?: string | null;
       origin?: string | null;
       destination?: string | null;
+      map?: Record<string, unknown> | null;
+      spans?: string[] | null;
     };
   };
   responses: never;
