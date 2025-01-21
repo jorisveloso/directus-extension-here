@@ -15,6 +15,10 @@ Este projeto é uma extensão do tipo Bundle para o Directus voltada para para i
  docker compose up -d --no-deps --build directus-extension-here; docker compose up
 ```
 
+Para exportar o schema para criação das tabelas no directus automaticamente
+
+`npx directus schema snapshot ./schema-snapshot.json`
+
 Para atualizar o schema/types
 
 `npx @devix/directus2ts --host <directus-host> --token <auth-token> --typeName HereExtension --outFile src/here-extension.d.ts --simplified`
