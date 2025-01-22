@@ -410,7 +410,11 @@ export interface components {
       origin?: string | null;
       destination?: string | null;
       map?: Record<string, unknown> | null;
+      /** @description description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead. */
       spans?: string[] | null;
+      routingMode?: string | null;
+      /** @description Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . */
+      vehicle_speed_cap?: number | null;
     };
   };
   responses: never;

@@ -92,6 +92,8 @@ export class RoutingService {
             return: rota.return ? rota.return.join(",") : "",
             currency: rota.currency,
             spans: rota.spans ? rota.spans.join(",") : "",
+            routingMode: rota.routingMode,
+            "vehicle[speedCap]": rota.vehicle_speed_cap,
           };
 
           const metodo = rota.method?.toUpperCase() || "GET";
