@@ -23,11 +23,6 @@
         "type": "hook",
         "name": "routing-hook",
         "source": "src/routing-hook/index.ts"
-      },
-      {
-        "type": "hook",
-        "name": "db-configuration-hook",
-        "source": "src/db-configuration-hook/index.ts"
       }
     ],
     "host": "^10.10.0"
@@ -71,6 +66,7 @@
     "@directus/cli": "^9.14.3",
     "@unhead/vue": "^1.11.18",
     "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
     "pinia": "^2.3.0",
     "wkx": "^0.5.0"
   }
