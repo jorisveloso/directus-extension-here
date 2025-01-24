@@ -1,31 +1,37 @@
 import { defineHook } from "@directus/extensions-sdk";
 import { components } from "../here-extension";
 import { RoutingService } from "../routing-service/routing-service";
+import { StatusRota } from "../routing-service/StatusRota";
 
 type Routing = components["schemas"]["ItemsHereRouting"];
 
 export default defineHook(async (tiposEvento, apiExtensionContext) => {
-  const aCadaUmMinutoCronExpression = "*/1 * * * *";
-  const schema = await apiExtensionContext.getSchema();
+  tiposEvento.filter<Routing>(
+    "here-routing.items.update",
+    async (input: Routing) => {
+      if (input.status !== StatusRota.Rascunho.nome) {
+        return input;
+      }
 
+      input.request = "";
+      input.response = "";
+      input.error = "";
+      input.debug = "Alterado pelo filter hook";
+      return input;
+    },
+  );
+
+  const schema = await apiExtensionContext.getSchema();
   const service = new RoutingService(apiExtensionContext, {
-    schema,
+    schema: schema,
     knex: apiExtensionContext.database,
   });
-
-  tiposEvento.filter<Routing>("here-routing.items.update", async (input) => {
-    if (input.status == "draft") {
-      return input;
-    }
-
-    input.status = "published";
-    return input;
-  });
+  const aCadaUmMinutoCronExpression = "*/1 * * * *";
 
   tiposEvento.schedule(aCadaUmMinutoCronExpression, async () => {
     service.sincronizar().catch((erro) => {
       apiExtensionContext.logger.error(
-        `Falha ao sincronizar com here.com. Erro = ${erro}.`
+        `Falha ao sincronizar com here.com. Erro = ${erro}.`,
       );
     });
   });

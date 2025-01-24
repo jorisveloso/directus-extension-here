@@ -16,7 +16,7 @@ describe("ApiClient", () => {
     !process.env.HERE_API_TOKEN
   ) {
     throw new Error(
-      "Variáveis de ambiente obrigatórias (HERE_API_BASE_URL, HERE_API_ROUTES_PATH, HERE_API_TOKEN) não foram definidas."
+      "Variáveis de ambiente obrigatórias (HERE_API_BASE_URL, HERE_API_ROUTES_PATH, HERE_API_TOKEN) não foram definidas.",
     );
   }
 
@@ -83,7 +83,7 @@ describe("ApiClient", () => {
           Authorization: `Bearer ${token}`, // Verifica se o token foi incluído no cabeçalho
         },
         signal: expect.any(AbortSignal), // Valida o AbortSignal de forma genérica
-      })
+      }),
     );
   });
 
@@ -181,7 +181,7 @@ describe("ApiClient", () => {
         },
         body: JSON.stringify(requestBody),
         signal: expect.any(AbortSignal), // Valida o AbortSignal de forma genérica
-      })
+      }),
     );
   });
 
@@ -217,7 +217,7 @@ describe("ApiClient", () => {
 
     // Verifica se a requisição lança um erro
     await expect(apiClient.post(requestBody)).rejects.toThrow(
-      "HTTP error! status: 500"
+      "HTTP error! status: 500",
     );
   });
 });

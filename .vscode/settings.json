@@ -1,15 +1,14 @@
 {
-    "cSpell.enableFiletypes": ["!javascript"],
-    "editor.formatOnSave": true, // Ativa a formatação ao salvar
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "always", // Aplica todas as correções do ESLint ao salvar
-      "source.organizeImports": "always" // Organiza as importações ao salvar
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode" // Configura Prettier como formatter para JavaScript
-    },
-    "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode" // Configura Prettier para TypeScript
-    }
+  "cSpell.enableFiletypes": ["!javascript"],
+  "editor.formatOnSave": true, // Ativa a formatação ao salvar
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always", // Aplica todas as correções do ESLint ao salvar
+    "source.organizeImports": "always" // Organiza as importações ao salvar
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Configura Prettier como formatter para JavaScript
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Configura Prettier para TypeScript
   }
-  
+}

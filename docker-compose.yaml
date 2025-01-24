@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   database:
     image: postgis/postgis:15-3.3-alpine
@@ -31,7 +31,7 @@ services:
 
   directus:
     image: directus/directus:11.3.5
-    env_file: .env  # Carrega as variáveis do arquivo .env
+    env_file: .env # Carrega as variáveis do arquivo .env
     ports:
       - 8055:8055
     volumes:

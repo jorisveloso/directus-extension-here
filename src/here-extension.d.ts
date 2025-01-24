@@ -289,6 +289,56 @@ export interface components {
        */
       bundle?: string | null;
     };
+    ItemsHereRouting: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      method?: string | null;
+      transport_mode?: string | null;
+      response?: unknown;
+      error?: string | null;
+      return?: string[] | null;
+      currency?: string | null;
+      /** @description description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead. */
+      spans?: string[] | null;
+      routingMode?: string | null;
+      /** @description Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . */
+      vehicle_speed_cap?: number | null;
+      vehicles_hipped_hazardous_goods?: unknown;
+      /** @description Supported in `truck`, `bus`, `privateBus`, `car` (Beta), `taxi` (Beta) transport modes.  minimum - 0 maximum - 5000 */
+      vehicle_gross_weight?: number | null;
+      vehicle_current_weight?: number | null;
+      vehicle_weight_per_axle?: number | null;
+      vehicle_height?: number | null;
+      vehicle_width?: number | null;
+      vehicle_length?: number | null;
+      /** @description description - Kingpin to rear axle length, in centimeters.  **NOTE:** Currently, the KPRA restrictions are only present in California and Idaho.  **Note:** Supported in `truck`, `car` (Beta), `taxi` (Beta) transport modes. */
+      vehicle_kpra_length?: number | null;
+      vehicle_payload_capacity?: number | null;
+      vehicle_tunnel_category?: string | null;
+      vehicle_axle_count?: number | null;
+      vehicle_trailer_axle_count?: number | null;
+      origin?: Record<string, unknown> | null;
+      request?: unknown;
+      debug?: string | null;
+      destination?: Record<string, unknown> | null;
+      vehicle_tires_count?: number | null;
+      vehicle_type?: string | null;
+      vehicle_category?: string | null;
+      vehicle_trailer_count?: number | null;
+      vehicle_license_plate?: string | null;
+      vehicle_occupancy?: number | null;
+      vehicle_engine_type?: string | null;
+      vehicle_height_above_first_axle?: number | null;
+      vehiclecommercial?: string | null;
+    };
     Comments: {
       /**
        * @description Unique identifier for this single collection preset.
@@ -389,32 +439,6 @@ export interface components {
        * }
        */
       delta?: Record<string, never>;
-    };
-    ItemsHereRouting: {
-      /** Format: uuid */
-      id: string;
-      status?: string;
-      sort?: number | null;
-      user_created?: string | components["schemas"]["Users"] | null;
-      /** Format: timestamp */
-      date_created?: string | null;
-      user_updated?: string | components["schemas"]["Users"] | null;
-      /** Format: timestamp */
-      date_updated?: string | null;
-      method?: string | null;
-      transport_mode?: string | null;
-      response?: unknown;
-      error?: string | null;
-      return?: string[] | null;
-      currency?: string | null;
-      origin?: string | null;
-      destination?: string | null;
-      map?: Record<string, unknown> | null;
-      /** @description description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead. */
-      spans?: string[] | null;
-      routingMode?: string | null;
-      /** @description Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . */
-      vehicle_speed_cap?: number | null;
     };
   };
   responses: never;

@@ -1,38 +1,4160 @@
 {
-  "collections": [
-    {
-      "collection": "endereco_br",
-      "meta": {
-        "collection": "endereco_br",
-        "icon": "location_on",
-        "note": null,
-        "display_template": null,
-        "hidden": false,
-        "singleton": false,
-        "translations": [
-          {
-            "language": "pt-BR",
-            "translation": "Endereço",
-            "singular": "Endereço",
-            "plural": "Endereços"
-          }
-        ],
-        "archive_field": "status",
-        "archive_app_filter": true,
-        "archive_value": "archived",
-        "unarchive_value": "draft",
-        "sort_field": null,
-        "accountability": "all",
-        "color": "#818283",
-        "item_duplication_fields": null,
-        "sort": 1,
-        "group": "extension_endereco_br",
-        "collapse": "open",
-        "preview_url": null
-      },
-      "schema": {}
-    }
-  ],
-  "fields": [],
-  "relations": []
+    "collections": [
+        {
+            "collection": "here_routing",
+            "meta": {
+                "collection": "here_routing",
+                "icon": null,
+                "note": null,
+                "display_template": null,
+                "hidden": false,
+                "singleton": false,
+                "translations": null,
+                "archive_field": "status",
+                "archive_app_filter": true,
+                "archive_value": "archived",
+                "unarchive_value": "draft",
+                "sort_field": "sort",
+                "accountability": "all",
+                "color": null,
+                "item_duplication_fields": null,
+                "sort": null,
+                "group": null,
+                "collapse": "open",
+                "preview_url": null,
+                "versioning": false
+            },
+            "schema": {}
+        }
+    ],
+    "fields": [
+        {
+            "collection": "here_routing",
+            "field": "id",
+            "type": "uuid",
+            "meta": {
+                "collection": "here_routing",
+                "field": "id",
+                "special": [
+                    "uuid"
+                ],
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": true,
+                "hidden": true,
+                "sort": 1,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "id",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": false,
+                "is_unique": true,
+                "is_indexed": false,
+                "is_primary_key": true,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "method",
+            "type": "string",
+            "schema": {
+                "name": "method",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "method",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "get",
+                            "value": "get"
+                        },
+                        {
+                            "text": "post",
+                            "value": "post"
+                        }
+                    ]
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 1,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicles_hipped_hazardous_goods",
+            "type": "json",
+            "schema": {
+                "name": "vehicles_hipped_hazardous_goods",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicles_hipped_hazardous_goods",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "explosive",
+                            "value": "explosive"
+                        },
+                        {
+                            "text": "flammable",
+                            "value": "flammable"
+                        },
+                        {
+                            "text": "organic",
+                            "value": "organic"
+                        },
+                        {
+                            "text": "radioactive",
+                            "value": "radioactive"
+                        },
+                        {
+                            "text": "poisonousInhalation",
+                            "value": "poisonousInhalation"
+                        },
+                        {
+                            "text": "other",
+                            "value": "other"
+                        },
+                        {
+                            "text": "gas",
+                            "value": "gas"
+                        },
+                        {
+                            "text": "combustible",
+                            "value": "combustible"
+                        },
+                        {
+                            "text": "poison",
+                            "value": "poison"
+                        },
+                        {
+                            "text": "corrosive",
+                            "value": "corrosive"
+                        },
+                        {
+                            "text": "harmfulToWater",
+                            "value": "harmfulToWater"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "explosive",
+                            "value": "explosive"
+                        },
+                        {
+                            "text": "flammable",
+                            "value": "flammable"
+                        },
+                        {
+                            "text": "organic",
+                            "value": "organic"
+                        },
+                        {
+                            "text": "radioactive",
+                            "value": "radioactive"
+                        },
+                        {
+                            "text": "poisonousInhalation",
+                            "value": "poisonousInhalation"
+                        },
+                        {
+                            "text": "other",
+                            "value": "other"
+                        },
+                        {
+                            "text": "gas",
+                            "value": "gas"
+                        },
+                        {
+                            "text": "combustible",
+                            "value": "combustible"
+                        },
+                        {
+                            "text": "poison",
+                            "value": "poison"
+                        },
+                        {
+                            "text": "corrosive",
+                            "value": "corrosive"
+                        },
+                        {
+                            "text": "harmfulToWater",
+                            "value": "harmfulToWater"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 1,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "status",
+            "type": "string",
+            "meta": {
+                "collection": "here_routing",
+                "field": "status",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "Published",
+                            "value": "published",
+                            "color": "#11C03D"
+                        },
+                        {
+                            "text": "Draft",
+                            "value": "draft",
+                            "color": "#E6ED92"
+                        },
+                        {
+                            "text": "Archived",
+                            "value": "archived",
+                            "color": "#DB1432"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "showAsDot": true,
+                    "choices": [
+                        {
+                            "text": "Published",
+                            "value": "published",
+                            "color": "#11C03D"
+                        },
+                        {
+                            "text": "Draft",
+                            "value": "draft",
+                            "color": "#E6ED92"
+                        },
+                        {
+                            "text": "Archived",
+                            "value": "archived",
+                            "color": "#DB1432"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 2,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "status",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": "draft",
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": false,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "transport_mode",
+            "type": "string",
+            "schema": {
+                "name": "transport_mode",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "transport_mode",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "car",
+                            "value": "car"
+                        },
+                        {
+                            "text": "truck",
+                            "value": "truck"
+                        },
+                        {
+                            "text": "pedestrian",
+                            "value": "pedestrian"
+                        },
+                        {
+                            "text": "bicycle",
+                            "value": "bicycle"
+                        },
+                        {
+                            "text": "scooter",
+                            "value": "scooter"
+                        },
+                        {
+                            "text": "taxi",
+                            "value": "taxi"
+                        },
+                        {
+                            "text": "bus",
+                            "value": "bus"
+                        },
+                        {
+                            "text": "privateBus",
+                            "value": "privateBus"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "car",
+                            "value": "car"
+                        },
+                        {
+                            "text": "truck",
+                            "value": "truck"
+                        },
+                        {
+                            "text": "pedestrian",
+                            "value": "pedestrian"
+                        },
+                        {
+                            "text": "bicycle",
+                            "value": "bicycle"
+                        },
+                        {
+                            "text": "scooter",
+                            "value": "scooter"
+                        },
+                        {
+                            "text": "taxi",
+                            "value": "taxi"
+                        },
+                        {
+                            "text": "bus",
+                            "value": "bus"
+                        },
+                        {
+                            "text": "privateBus",
+                            "value": "privateBus"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 2,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": true,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_speed_cap",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_speed_cap",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_speed_cap",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 1,
+                    "max": 70,
+                    "placeholder": "Speed cap (min 1, max 70)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 2,
+                "width": "half",
+                "translations": null,
+                "note": "Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . ",
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "sort",
+            "type": "integer",
+            "meta": {
+                "collection": "here_routing",
+                "field": "sort",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": true,
+                "sort": 3,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "sort",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_gross_weight",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_gross_weight",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_gross_weight",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "placeholder": "Gross Weight in KG (minimun 0)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 3,
+                "width": "half",
+                "translations": null,
+                "note": "Supported in `truck`, `bus`, `privateBus`, `car` (Beta), `taxi` (Beta) transport modes.  minimum - 0 maximum - 5000",
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "origin",
+            "type": "geometry.Point",
+            "schema": {
+                "name": "origin",
+                "table": "here_routing",
+                "data_type": "POINT",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "origin",
+                "special": null,
+                "interface": "map",
+                "options": {
+                    "defaultView": {
+                        "center": {
+                            "lng": 0,
+                            "lat": 0
+                        },
+                        "zoom": 0,
+                        "bearing": 0,
+                        "pitch": 0
+                    },
+                    "geometryType": "Point"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 3,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": true,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "user_created",
+            "type": "uuid",
+            "meta": {
+                "collection": "here_routing",
+                "field": "user_created",
+                "special": [
+                    "user-created"
+                ],
+                "interface": "select-dropdown-m2o",
+                "options": {
+                    "template": "{{avatar}} {{first_name}} {{last_name}}"
+                },
+                "display": "user",
+                "display_options": null,
+                "readonly": true,
+                "hidden": true,
+                "sort": 4,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "user_created",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_current_weight",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_current_weight",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_current_weight",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "placeholder": "Current Weight in KG (minimum 0)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 4,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "destination",
+            "type": "geometry.Point",
+            "schema": {
+                "name": "destination",
+                "table": "here_routing",
+                "data_type": "POINT",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "destination",
+                "special": null,
+                "interface": "map",
+                "options": {
+                    "defaultView": {
+                        "center": {
+                            "lng": 0,
+                            "lat": 0
+                        },
+                        "zoom": 0,
+                        "bearing": 0,
+                        "pitch": 0
+                    },
+                    "geometryType": "Point"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 4,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": true,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "date_created",
+            "type": "timestamp",
+            "meta": {
+                "collection": "here_routing",
+                "field": "date_created",
+                "special": [
+                    "date-created"
+                ],
+                "interface": "datetime",
+                "options": null,
+                "display": "datetime",
+                "display_options": {
+                    "relative": true
+                },
+                "readonly": true,
+                "hidden": true,
+                "sort": 5,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "date_created",
+                "table": "here_routing",
+                "data_type": "timestamp with time zone",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_height",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_height",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_height",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 5000,
+                    "placeholder": "Height (min 0, max 5000)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 5,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle",
+            "type": "alias",
+            "schema": null,
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-detail",
+                "options": {
+                    "start": "closed"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 5,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "user_updated",
+            "type": "uuid",
+            "meta": {
+                "collection": "here_routing",
+                "field": "user_updated",
+                "special": [
+                    "user-updated"
+                ],
+                "interface": "select-dropdown-m2o",
+                "options": {
+                    "template": "{{avatar}} {{first_name}} {{last_name}}"
+                },
+                "display": "user",
+                "display_options": null,
+                "readonly": true,
+                "hidden": true,
+                "sort": 6,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "user_updated",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "return",
+            "type": "csv",
+            "schema": {
+                "name": "return",
+                "table": "here_routing",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "return",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "polyline",
+                            "value": "polyline"
+                        },
+                        {
+                            "text": "instructions",
+                            "value": "instructions"
+                        },
+                        {
+                            "text": "travelSummary",
+                            "value": "travelSummary"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "elevation",
+                            "value": "elevation"
+                        },
+                        {
+                            "text": "passthrough",
+                            "value": "passthrough"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "tolls",
+                            "value": "tolls"
+                        },
+                        {
+                            "text": "potentialTimeDependentViolations",
+                            "value": "potentialTimeDependentViolations"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        },
+                        {
+                            "text": "routeLabels",
+                            "value": "routeLabels"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "routeHandle",
+                            "value": "routeHandle"
+                        },
+                        {
+                            "text": "turnByTurnActions",
+                            "value": "turnByTurnActions"
+                        },
+                        {
+                            "text": "mlDuration",
+                            "value": "mlDuration"
+                        },
+                        {
+                            "text": "summary",
+                            "value": "summary"
+                        },
+                        {
+                            "text": "actions",
+                            "value": "actions"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "polyline",
+                            "value": "polyline"
+                        },
+                        {
+                            "text": "instructions",
+                            "value": "instructions"
+                        },
+                        {
+                            "text": "travelSummary",
+                            "value": "travelSummary"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "elevation",
+                            "value": "elevation"
+                        },
+                        {
+                            "text": "passthrough",
+                            "value": "passthrough"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "tolls",
+                            "value": "tolls"
+                        },
+                        {
+                            "text": "potentialTimeDependentViolations",
+                            "value": "potentialTimeDependentViolations"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        },
+                        {
+                            "text": "routeLabels",
+                            "value": "routeLabels"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "routeHandle",
+                            "value": "routeHandle"
+                        },
+                        {
+                            "text": "turnByTurnActions",
+                            "value": "turnByTurnActions"
+                        },
+                        {
+                            "text": "mlDuration",
+                            "value": "mlDuration"
+                        },
+                        {
+                            "text": "summary",
+                            "value": "summary"
+                        },
+                        {
+                            "text": "actions",
+                            "value": "actions"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 6,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_weight_per_axle",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_weight_per_axle",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_weight_per_axle",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "placeholder": "Weight Per Axle (minimum 0)",
+                    "min": 0
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 6,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "date_updated",
+            "type": "timestamp",
+            "meta": {
+                "collection": "here_routing",
+                "field": "date_updated",
+                "special": [
+                    "date-updated"
+                ],
+                "interface": "datetime",
+                "options": null,
+                "display": "datetime",
+                "display_options": {
+                    "relative": true
+                },
+                "readonly": true,
+                "hidden": true,
+                "sort": 7,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "date_updated",
+                "table": "here_routing",
+                "data_type": "timestamp with time zone",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "spans",
+            "type": "csv",
+            "schema": {
+                "name": "spans",
+                "table": "here_routing",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "spans",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "walkAttributes",
+                            "value": "walkAttributes"
+                        },
+                        {
+                            "text": "carAttributes",
+                            "value": "carAttributes"
+                        },
+                        {
+                            "text": "scooterAttributes",
+                            "value": "scooterAttributes"
+                        },
+                        {
+                            "text": "length",
+                            "value": "length"
+                        },
+                        {
+                            "text": "baseDuration",
+                            "value": "baseDuration"
+                        },
+                        {
+                            "text": "countryCode",
+                            "value": "countryCode"
+                        },
+                        {
+                            "text": "functionalClass",
+                            "value": "functionalClass"
+                        },
+                        {
+                            "text": "speedLimit",
+                            "value": "speedLimit"
+                        },
+                        {
+                            "text": "dynamicSpeedInfo",
+                            "value": "dynamicSpeedInfo"
+                        },
+                        {
+                            "text": "segmentRef",
+                            "value": "segmentRef"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "notices",
+                            "value": "notices"
+                        },
+                        {
+                            "text": "tollSystems",
+                            "value": "tollSystems"
+                        },
+                        {
+                            "text": "railwayCrossings",
+                            "value": "railwayCrossings"
+                        },
+                        {
+                            "text": "streetAttributes",
+                            "value": "streetAttributes"
+                        },
+                        {
+                            "text": "truckAttributes",
+                            "value": "truckAttributes"
+                        },
+                        {
+                            "text": "names",
+                            "value": "names"
+                        },
+                        {
+                            "text": "duration",
+                            "value": "duration"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "stateCode",
+                            "value": "stateCode"
+                        },
+                        {
+                            "text": "routeNumbers",
+                            "value": "routeNumbers"
+                        },
+                        {
+                            "text": "maxSpeed",
+                            "value": "maxSpeed"
+                        },
+                        {
+                            "text": "segmentId",
+                            "value": "segmentId"
+                        },
+                        {
+                            "text": "consumption",
+                            "value": "consumption"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "gates",
+                            "value": "gates"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "walkAttributes",
+                            "value": "walkAttributes"
+                        },
+                        {
+                            "text": "carAttributes",
+                            "value": "carAttributes"
+                        },
+                        {
+                            "text": "scooterAttributes",
+                            "value": "scooterAttributes"
+                        },
+                        {
+                            "text": "length",
+                            "value": "length"
+                        },
+                        {
+                            "text": "baseDuration",
+                            "value": "baseDuration"
+                        },
+                        {
+                            "text": "countryCode",
+                            "value": "countryCode"
+                        },
+                        {
+                            "text": "functionalClass",
+                            "value": "functionalClass"
+                        },
+                        {
+                            "text": "speedLimit",
+                            "value": "speedLimit"
+                        },
+                        {
+                            "text": "dynamicSpeedInfo",
+                            "value": "dynamicSpeedInfo"
+                        },
+                        {
+                            "text": "segmentRef",
+                            "value": "segmentRef"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "notices",
+                            "value": "notices"
+                        },
+                        {
+                            "text": "tollSystems",
+                            "value": "tollSystems"
+                        },
+                        {
+                            "text": "railwayCrossings",
+                            "value": "railwayCrossings"
+                        },
+                        {
+                            "text": "streetAttributes",
+                            "value": "streetAttributes"
+                        },
+                        {
+                            "text": "truckAttributes",
+                            "value": "truckAttributes"
+                        },
+                        {
+                            "text": "names",
+                            "value": "names"
+                        },
+                        {
+                            "text": "duration",
+                            "value": "duration"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "stateCode",
+                            "value": "stateCode"
+                        },
+                        {
+                            "text": "routeNumbers",
+                            "value": "routeNumbers"
+                        },
+                        {
+                            "text": "maxSpeed",
+                            "value": "maxSpeed"
+                        },
+                        {
+                            "text": "segmentId",
+                            "value": "segmentId"
+                        },
+                        {
+                            "text": "consumption",
+                            "value": "consumption"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "gates",
+                            "value": "gates"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 7,
+                "width": "half",
+                "translations": null,
+                "note": "description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead.",
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_width",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_width",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_width",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 5000,
+                    "placeholder": "Width in CM. (min 0, max 5000)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 7,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "routingMode",
+            "type": "string",
+            "schema": {
+                "name": "routingMode",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "routingMode",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "Fast",
+                            "value": "fast"
+                        },
+                        {
+                            "text": "Short",
+                            "value": "short"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "Fast",
+                            "value": "fast"
+                        },
+                        {
+                            "text": "Short",
+                            "value": "short"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_length",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_length",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_length",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 30000,
+                    "placeholder": "Length in CM. (min 0, max 30000)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "Input",
+            "type": "alias",
+            "meta": {
+                "collection": "here_routing",
+                "field": "Input",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-detail",
+                "options": {
+                    "start": "closed"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": null
+        },
+        {
+            "collection": "here_routing",
+            "field": "error",
+            "type": "text",
+            "meta": {
+                "collection": "here_routing",
+                "field": "error",
+                "special": null,
+                "interface": "input-multiline",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 9,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "error",
+                "table": "here_routing",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "currency",
+            "type": "string",
+            "schema": {
+                "name": "currency",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": "USD",
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "currency",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "AED - Dirham dos Emirados Árabes Unidos",
+                            "value": "AED"
+                        },
+                        {
+                            "text": "AFN - Afegane Afegão",
+                            "value": "AFN"
+                        },
+                        {
+                            "text": "ALL - Lek Albanês",
+                            "value": "ALL"
+                        },
+                        {
+                            "text": "AMD - Dram Armênio",
+                            "value": "AMD"
+                        },
+                        {
+                            "text": "ANG - Florim das Antilhas Neerlandesas",
+                            "value": "ANG"
+                        },
+                        {
+                            "text": "AOA - Kwanza Angolano",
+                            "value": "AOA"
+                        },
+                        {
+                            "text": "ARS - Peso Argentino",
+                            "value": "ARS"
+                        },
+                        {
+                            "text": "AUD - Dólar Australiano",
+                            "value": "AUD"
+                        },
+                        {
+                            "text": "AWG - Florim Arubano",
+                            "value": "AWG"
+                        },
+                        {
+                            "text": "AZN - Manat Azeri",
+                            "value": "AZN"
+                        },
+                        {
+                            "text": "BAM - Marco Convertível da Bósnia e Herzegovina",
+                            "value": "BAM"
+                        },
+                        {
+                            "text": "BBD - Dólar Barbadense",
+                            "value": "BBD"
+                        },
+                        {
+                            "text": "BDT - Taka Bangladeshi",
+                            "value": "BDT"
+                        },
+                        {
+                            "text": "BGN - Lev Búlgaro",
+                            "value": "BGN"
+                        },
+                        {
+                            "text": "BHD - Dinar Bareinita",
+                            "value": "BHD"
+                        },
+                        {
+                            "text": "BIF - Franco Burundinês",
+                            "value": "BIF"
+                        },
+                        {
+                            "text": "BMD - Dólar Bermudense",
+                            "value": "BMD"
+                        },
+                        {
+                            "text": "BND - Dólar Bruneano",
+                            "value": "BND"
+                        },
+                        {
+                            "text": "BOB - Boliviano",
+                            "value": "BOB"
+                        },
+                        {
+                            "text": "BRL - Real Brasileiro",
+                            "value": "BRL"
+                        },
+                        {
+                            "text": "BSD - Dólar Bahamense",
+                            "value": "BSD"
+                        },
+                        {
+                            "text": "BTN - Ngultrum Butanês",
+                            "value": "BTN"
+                        },
+                        {
+                            "text": "BWP - Pula Botsuanesa",
+                            "value": "BWP"
+                        },
+                        {
+                            "text": "BYN - Rublo Bielorrusso",
+                            "value": "BYN"
+                        },
+                        {
+                            "text": "BZD - Dólar Belizenho",
+                            "value": "BZD"
+                        },
+                        {
+                            "text": "CAD - Dólar Canadense",
+                            "value": "CAD"
+                        },
+                        {
+                            "text": "CDF - Franco Congolês",
+                            "value": "CDF"
+                        },
+                        {
+                            "text": "CHF - Franco Suíço",
+                            "value": "CHF"
+                        },
+                        {
+                            "text": "CLP - Peso Chileno",
+                            "value": "CLP"
+                        },
+                        {
+                            "text": "CNY - Yuan Chinês",
+                            "value": "CNY"
+                        },
+                        {
+                            "text": "COP - Peso Colombiano",
+                            "value": "COP"
+                        },
+                        {
+                            "text": "CRC - Colón Costarriquenho",
+                            "value": "CRC"
+                        },
+                        {
+                            "text": "CUC - Peso Cubano Conversível",
+                            "value": "CUC"
+                        },
+                        {
+                            "text": "CUP - Peso Cubano",
+                            "value": "CUP"
+                        },
+                        {
+                            "text": "CVE - Escudo Cabo-verdiano",
+                            "value": "CVE"
+                        },
+                        {
+                            "text": "CZK - Coroa Tcheca",
+                            "value": "CZK"
+                        },
+                        {
+                            "text": "DJF - Franco Djibutiense",
+                            "value": "DJF"
+                        },
+                        {
+                            "text": "DKK - Coroa Dinamarquesa",
+                            "value": "DKK"
+                        },
+                        {
+                            "text": "DOP - Peso Dominicano",
+                            "value": "DOP"
+                        },
+                        {
+                            "text": "DZD - Dinar Argelino",
+                            "value": "DZD"
+                        },
+                        {
+                            "text": "EGP - Libra Egípcia",
+                            "value": "EGP"
+                        },
+                        {
+                            "text": "ERN - Nakfa Eritreia",
+                            "value": "ERN"
+                        },
+                        {
+                            "text": "ETB - Birr Etíope",
+                            "value": "ETB"
+                        },
+                        {
+                            "text": "EUR - Euro",
+                            "value": "EUR"
+                        },
+                        {
+                            "text": "FJD - Dólar Fijiano",
+                            "value": "FJD"
+                        },
+                        {
+                            "text": "FKP - Libra das Ilhas Falkland",
+                            "value": "FKP"
+                        },
+                        {
+                            "text": "GBP - Libra Esterlina",
+                            "value": "GBP"
+                        },
+                        {
+                            "text": "GEL - Lari Georgiano",
+                            "value": "GEL"
+                        },
+                        {
+                            "text": "GGP - Libra de Guernsey",
+                            "value": "GGP"
+                        },
+                        {
+                            "text": "GHS - Cedi Ganês",
+                            "value": "GHS"
+                        },
+                        {
+                            "text": "GIP - Libra de Gibraltar",
+                            "value": "GIP"
+                        },
+                        {
+                            "text": "GMD - Dalasi Gambiano",
+                            "value": "GMD"
+                        },
+                        {
+                            "text": "GNF - Franco Guineano",
+                            "value": "GNF"
+                        },
+                        {
+                            "text": "GTQ - Quetzal Guatemalteco",
+                            "value": "GTQ"
+                        },
+                        {
+                            "text": "GYD - Dólar Guianense",
+                            "value": "GYD"
+                        },
+                        {
+                            "text": "HKD - Dólar de Hong Kong",
+                            "value": "HKD"
+                        },
+                        {
+                            "text": "HNL - Lempira Hondurenha",
+                            "value": "HNL"
+                        },
+                        {
+                            "text": "HRK - Kuna Croata",
+                            "value": "HRK"
+                        },
+                        {
+                            "text": "HTG - Gourde Haitiano",
+                            "value": "HTG"
+                        },
+                        {
+                            "text": "HUF - Forint Húngaro",
+                            "value": "HUF"
+                        },
+                        {
+                            "text": "IDR - Rupia Indonésia",
+                            "value": "IDR"
+                        },
+                        {
+                            "text": "ILS - Novo Shekel Israelense",
+                            "value": "ILS"
+                        },
+                        {
+                            "text": "IMP - Libra da Ilha de Man",
+                            "value": "IMP"
+                        },
+                        {
+                            "text": "INR - Rupia Indiana",
+                            "value": "INR"
+                        },
+                        {
+                            "text": "IQD - Dinar Iraquiano",
+                            "value": "IQD"
+                        },
+                        {
+                            "text": "IRR - Rial Iraniano",
+                            "value": "IRR"
+                        },
+                        {
+                            "text": "ISK - Coroa Islandesa",
+                            "value": "ISK"
+                        },
+                        {
+                            "text": "JEP - Libra de Jersey",
+                            "value": "JEP"
+                        },
+                        {
+                            "text": "JMD - Dólar Jamaicano",
+                            "value": "JMD"
+                        },
+                        {
+                            "text": "JOD - Dinar Jordaniano",
+                            "value": "JOD"
+                        },
+                        {
+                            "text": "JPY - Iene Japonês",
+                            "value": "JPY"
+                        },
+                        {
+                            "text": "KES - Xelim Queniano",
+                            "value": "KES"
+                        },
+                        {
+                            "text": "KGS - Som Quirguiz",
+                            "value": "KGS"
+                        },
+                        {
+                            "text": "KHR - Riel Cambojano",
+                            "value": "KHR"
+                        },
+                        {
+                            "text": "KMF - Franco Comorense",
+                            "value": "KMF"
+                        },
+                        {
+                            "text": "KPW - Won Norte-Coreano",
+                            "value": "KPW"
+                        },
+                        {
+                            "text": "KRW - Won Sul-Coreano",
+                            "value": "KRW"
+                        },
+                        {
+                            "text": "KWD - Dinar Kuwaitiano",
+                            "value": "KWD"
+                        },
+                        {
+                            "text": "KYD - Dólar das Ilhas Cayman",
+                            "value": "KYD"
+                        },
+                        {
+                            "text": "KZT - Tenge Cazaque",
+                            "value": "KZT"
+                        },
+                        {
+                            "text": "LAK - Kip Laosiano",
+                            "value": "LAK"
+                        },
+                        {
+                            "text": "LBP - Libra Libanesa",
+                            "value": "LBP"
+                        },
+                        {
+                            "text": "LKR - Rupia do Sri Lanka",
+                            "value": "LKR"
+                        },
+                        {
+                            "text": "LRD - Dólar Liberiano",
+                            "value": "LRD"
+                        },
+                        {
+                            "text": "LSL - Loti Lesotiano",
+                            "value": "LSL"
+                        },
+                        {
+                            "text": "LYD - Dinar Líbio",
+                            "value": "LYD"
+                        },
+                        {
+                            "text": "MAD - Dirham Marroquino",
+                            "value": "MAD"
+                        },
+                        {
+                            "text": "MDL - Leu Moldavo",
+                            "value": "MDL"
+                        },
+                        {
+                            "text": "MGA - Ariary Malgaxe",
+                            "value": "MGA"
+                        },
+                        {
+                            "text": "MKD - Dinar Macedônio",
+                            "value": "MKD"
+                        },
+                        {
+                            "text": "MMK - Kyat Mianmarense",
+                            "value": "MMK"
+                        },
+                        {
+                            "text": "MNT - Tugrik Mongol",
+                            "value": "MNT"
+                        },
+                        {
+                            "text": "MOP - Pataca de Macau",
+                            "value": "MOP"
+                        },
+                        {
+                            "text": "MRU - Ouguiya Mauritana",
+                            "value": "MRU"
+                        },
+                        {
+                            "text": "MUR - Rupia Mauriciana",
+                            "value": "MUR"
+                        },
+                        {
+                            "text": "MVR - Rupia Maldiva",
+                            "value": "MVR"
+                        },
+                        {
+                            "text": "MWK - Kwacha Malauiana",
+                            "value": "MWK"
+                        },
+                        {
+                            "text": "MXN - Peso Mexicano",
+                            "value": "MXN"
+                        },
+                        {
+                            "text": "MYR - Ringgit Malaio",
+                            "value": "MYR"
+                        },
+                        {
+                            "text": "MZN - Metical Moçambicano",
+                            "value": "MZN"
+                        },
+                        {
+                            "text": "NAD - Dólar Namibiano",
+                            "value": "NAD"
+                        },
+                        {
+                            "text": "NGN - Naira Nigeriana",
+                            "value": "NGN"
+                        },
+                        {
+                            "text": "NIO - Córdoba Nicaraguense",
+                            "value": "NIO"
+                        },
+                        {
+                            "text": "NOK - Coroa Norueguesa",
+                            "value": "NOK"
+                        },
+                        {
+                            "text": "NPR - Rupia Nepalesa",
+                            "value": "NPR"
+                        },
+                        {
+                            "text": "NZD - Dólar Neozelandês",
+                            "value": "NZD"
+                        },
+                        {
+                            "text": "OMR - Rial Omanense",
+                            "value": "OMR"
+                        },
+                        {
+                            "text": "PAB - Balboa Panamenho",
+                            "value": "PAB"
+                        },
+                        {
+                            "text": "PEN - Sol Peruano",
+                            "value": "PEN"
+                        },
+                        {
+                            "text": "PGK - Kina Papua-Nova Guiné",
+                            "value": "PGK"
+                        },
+                        {
+                            "text": "PHP - Peso Filipino",
+                            "value": "PHP"
+                        },
+                        {
+                            "text": "PKR - Rupia Paquistanesa",
+                            "value": "PKR"
+                        },
+                        {
+                            "text": "PLN - Zloty Polonês",
+                            "value": "PLN"
+                        },
+                        {
+                            "text": "PYG - Guarani Paraguaio",
+                            "value": "PYG"
+                        },
+                        {
+                            "text": "QAR - Rial Catariano",
+                            "value": "QAR"
+                        },
+                        {
+                            "text": "RON - Leu Romeno",
+                            "value": "RON"
+                        },
+                        {
+                            "text": "RSD - Dinar Sérvio",
+                            "value": "RSD"
+                        },
+                        {
+                            "text": "RUB - Rublo Russo",
+                            "value": "RUB"
+                        },
+                        {
+                            "text": "RWF - Franco Ruandês",
+                            "value": "RWF"
+                        },
+                        {
+                            "text": "SAR - Rial Saudita",
+                            "value": "SAR"
+                        },
+                        {
+                            "text": "SBD - Dólar das Ilhas Salomão",
+                            "value": "SBD"
+                        },
+                        {
+                            "text": "SCR - Rupia Seichelense",
+                            "value": "SCR"
+                        },
+                        {
+                            "text": "SDG - Libra Sudanesa",
+                            "value": "SDG"
+                        },
+                        {
+                            "text": "SEK - Coroa Sueca",
+                            "value": "SEK"
+                        },
+                        {
+                            "text": "SGD - Dólar Singapuriano",
+                            "value": "SGD"
+                        },
+                        {
+                            "text": "SHP - Libra de Santa Helena",
+                            "value": "SHP"
+                        },
+                        {
+                            "text": "SLL - Leone de Serra Leoa",
+                            "value": "SLL"
+                        },
+                        {
+                            "text": "SOS - Xelim Somaliano",
+                            "value": "SOS"
+                        },
+                        {
+                            "text": "SPL - Luigino de Seborga",
+                            "value": "SPL"
+                        },
+                        {
+                            "text": "SRD - Dólar Surinamês",
+                            "value": "SRD"
+                        },
+                        {
+                            "text": "STN - Dobra de São Tomé e Príncipe",
+                            "value": "STN"
+                        },
+                        {
+                            "text": "SVC - Colón Salvadorenho",
+                            "value": "SVC"
+                        },
+                        {
+                            "text": "SYP - Libra Síria",
+                            "value": "SYP"
+                        },
+                        {
+                            "text": "SZL - Lilangeni Suazi",
+                            "value": "SZL"
+                        },
+                        {
+                            "text": "THB - Baht Tailandês",
+                            "value": "THB"
+                        },
+                        {
+                            "text": "TJS - Somoni Tajique",
+                            "value": "TJS"
+                        },
+                        {
+                            "text": "TMT - Manat Turcomeno",
+                            "value": "TMT"
+                        },
+                        {
+                            "text": "TND - Dinar Tunisiano",
+                            "value": "TND"
+                        },
+                        {
+                            "text": "TOP - Paʻanga Tonganesa",
+                            "value": "TOP"
+                        },
+                        {
+                            "text": "TRY - Lira Turca",
+                            "value": "TRY"
+                        },
+                        {
+                            "text": "TTD - Dólar de Trinidad e Tobago",
+                            "value": "TTD"
+                        },
+                        {
+                            "text": "TVD - Dólar Tuvaluano",
+                            "value": "TVD"
+                        },
+                        {
+                            "text": "TWD - Novo Dólar Taiwanês",
+                            "value": "TWD"
+                        },
+                        {
+                            "text": "TZS - Xelim Tanzaniano",
+                            "value": "TZS"
+                        },
+                        {
+                            "text": "UAH - Hryvnia Ucraniano",
+                            "value": "UAH"
+                        },
+                        {
+                            "text": "UGX - Xelim Ugandês",
+                            "value": "UGX"
+                        },
+                        {
+                            "text": "USD - Dólar Americano",
+                            "value": "USD"
+                        },
+                        {
+                            "text": "UYU - Peso Uruguaio",
+                            "value": "UYU"
+                        },
+                        {
+                            "text": "UZS - Som Uzbeque",
+                            "value": "UZS"
+                        },
+                        {
+                            "text": "VEF - Bolívar Venezuelano",
+                            "value": "VEF"
+                        },
+                        {
+                            "text": "VND - Dong Vietnamita",
+                            "value": "VND"
+                        },
+                        {
+                            "text": "VUV - Vatu de Vanuatu",
+                            "value": "VUV"
+                        },
+                        {
+                            "text": "WST - Tala Samoano",
+                            "value": "WST"
+                        },
+                        {
+                            "text": "XAF - Franco CFA Central",
+                            "value": "XAF"
+                        },
+                        {
+                            "text": "XCD - Dólar do Caribe Oriental",
+                            "value": "XCD"
+                        },
+                        {
+                            "text": "XDR - Direitos Especiais de Saque",
+                            "value": "XDR"
+                        },
+                        {
+                            "text": "XOF - Franco CFA Ocidental",
+                            "value": "XOF"
+                        },
+                        {
+                            "text": "XPF - Franco CFP",
+                            "value": "XPF"
+                        },
+                        {
+                            "text": "YER - Rial Iemenita",
+                            "value": "YER"
+                        },
+                        {
+                            "text": "ZAR - Rand Sul-Africano",
+                            "value": "ZAR"
+                        },
+                        {
+                            "text": "ZMW - Kwacha Zambiano",
+                            "value": "ZMW"
+                        },
+                        {
+                            "text": "ZWL - Dólar Zimbabuense",
+                            "value": "ZWL"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "AED - Dirham dos Emirados Árabes Unidos",
+                            "value": "AED"
+                        },
+                        {
+                            "text": "AFN - Afegane Afegão",
+                            "value": "AFN"
+                        },
+                        {
+                            "text": "ALL - Lek Albanês",
+                            "value": "ALL"
+                        },
+                        {
+                            "text": "AMD - Dram Armênio",
+                            "value": "AMD"
+                        },
+                        {
+                            "text": "ANG - Florim das Antilhas Neerlandesas",
+                            "value": "ANG"
+                        },
+                        {
+                            "text": "AOA - Kwanza Angolano",
+                            "value": "AOA"
+                        },
+                        {
+                            "text": "ARS - Peso Argentino",
+                            "value": "ARS"
+                        },
+                        {
+                            "text": "AUD - Dólar Australiano",
+                            "value": "AUD"
+                        },
+                        {
+                            "text": "AWG - Florim Arubano",
+                            "value": "AWG"
+                        },
+                        {
+                            "text": "AZN - Manat Azeri",
+                            "value": "AZN"
+                        },
+                        {
+                            "text": "BAM - Marco Convertível da Bósnia e Herzegovina",
+                            "value": "BAM"
+                        },
+                        {
+                            "text": "BBD - Dólar Barbadense",
+                            "value": "BBD"
+                        },
+                        {
+                            "text": "BDT - Taka Bangladeshi",
+                            "value": "BDT"
+                        },
+                        {
+                            "text": "BGN - Lev Búlgaro",
+                            "value": "BGN"
+                        },
+                        {
+                            "text": "BHD - Dinar Bareinita",
+                            "value": "BHD"
+                        },
+                        {
+                            "text": "BIF - Franco Burundinês",
+                            "value": "BIF"
+                        },
+                        {
+                            "text": "BMD - Dólar Bermudense",
+                            "value": "BMD"
+                        },
+                        {
+                            "text": "BND - Dólar Bruneano",
+                            "value": "BND"
+                        },
+                        {
+                            "text": "BOB - Boliviano",
+                            "value": "BOB"
+                        },
+                        {
+                            "text": "BRL - Real Brasileiro",
+                            "value": "BRL"
+                        },
+                        {
+                            "text": "BSD - Dólar Bahamense",
+                            "value": "BSD"
+                        },
+                        {
+                            "text": "BTN - Ngultrum Butanês",
+                            "value": "BTN"
+                        },
+                        {
+                            "text": "BWP - Pula Botsuanesa",
+                            "value": "BWP"
+                        },
+                        {
+                            "text": "BYN - Rublo Bielorrusso",
+                            "value": "BYN"
+                        },
+                        {
+                            "text": "BZD - Dólar Belizenho",
+                            "value": "BZD"
+                        },
+                        {
+                            "text": "CAD - Dólar Canadense",
+                            "value": "CAD"
+                        },
+                        {
+                            "text": "CDF - Franco Congolês",
+                            "value": "CDF"
+                        },
+                        {
+                            "text": "CHF - Franco Suíço",
+                            "value": "CHF"
+                        },
+                        {
+                            "text": "CLP - Peso Chileno",
+                            "value": "CLP"
+                        },
+                        {
+                            "text": "CNY - Yuan Chinês",
+                            "value": "CNY"
+                        },
+                        {
+                            "text": "COP - Peso Colombiano",
+                            "value": "COP"
+                        },
+                        {
+                            "text": "CRC - Colón Costarriquenho",
+                            "value": "CRC"
+                        },
+                        {
+                            "text": "CUC - Peso Cubano Conversível",
+                            "value": "CUC"
+                        },
+                        {
+                            "text": "CUP - Peso Cubano",
+                            "value": "CUP"
+                        },
+                        {
+                            "text": "CVE - Escudo Cabo-verdiano",
+                            "value": "CVE"
+                        },
+                        {
+                            "text": "CZK - Coroa Tcheca",
+                            "value": "CZK"
+                        },
+                        {
+                            "text": "DJF - Franco Djibutiense",
+                            "value": "DJF"
+                        },
+                        {
+                            "text": "DKK - Coroa Dinamarquesa",
+                            "value": "DKK"
+                        },
+                        {
+                            "text": "DOP - Peso Dominicano",
+                            "value": "DOP"
+                        },
+                        {
+                            "text": "DZD - Dinar Argelino",
+                            "value": "DZD"
+                        },
+                        {
+                            "text": "EGP - Libra Egípcia",
+                            "value": "EGP"
+                        },
+                        {
+                            "text": "ERN - Nakfa Eritreia",
+                            "value": "ERN"
+                        },
+                        {
+                            "text": "ETB - Birr Etíope",
+                            "value": "ETB"
+                        },
+                        {
+                            "text": "EUR - Euro",
+                            "value": "EUR"
+                        },
+                        {
+                            "text": "FJD - Dólar Fijiano",
+                            "value": "FJD"
+                        },
+                        {
+                            "text": "FKP - Libra das Ilhas Falkland",
+                            "value": "FKP"
+                        },
+                        {
+                            "text": "GBP - Libra Esterlina",
+                            "value": "GBP"
+                        },
+                        {
+                            "text": "GEL - Lari Georgiano",
+                            "value": "GEL"
+                        },
+                        {
+                            "text": "GGP - Libra de Guernsey",
+                            "value": "GGP"
+                        },
+                        {
+                            "text": "GHS - Cedi Ganês",
+                            "value": "GHS"
+                        },
+                        {
+                            "text": "GIP - Libra de Gibraltar",
+                            "value": "GIP"
+                        },
+                        {
+                            "text": "GMD - Dalasi Gambiano",
+                            "value": "GMD"
+                        },
+                        {
+                            "text": "GNF - Franco Guineano",
+                            "value": "GNF"
+                        },
+                        {
+                            "text": "GTQ - Quetzal Guatemalteco",
+                            "value": "GTQ"
+                        },
+                        {
+                            "text": "GYD - Dólar Guianense",
+                            "value": "GYD"
+                        },
+                        {
+                            "text": "HKD - Dólar de Hong Kong",
+                            "value": "HKD"
+                        },
+                        {
+                            "text": "HNL - Lempira Hondurenha",
+                            "value": "HNL"
+                        },
+                        {
+                            "text": "HRK - Kuna Croata",
+                            "value": "HRK"
+                        },
+                        {
+                            "text": "HTG - Gourde Haitiano",
+                            "value": "HTG"
+                        },
+                        {
+                            "text": "HUF - Forint Húngaro",
+                            "value": "HUF"
+                        },
+                        {
+                            "text": "IDR - Rupia Indonésia",
+                            "value": "IDR"
+                        },
+                        {
+                            "text": "ILS - Novo Shekel Israelense",
+                            "value": "ILS"
+                        },
+                        {
+                            "text": "IMP - Libra da Ilha de Man",
+                            "value": "IMP"
+                        },
+                        {
+                            "text": "INR - Rupia Indiana",
+                            "value": "INR"
+                        },
+                        {
+                            "text": "IQD - Dinar Iraquiano",
+                            "value": "IQD"
+                        },
+                        {
+                            "text": "IRR - Rial Iraniano",
+                            "value": "IRR"
+                        },
+                        {
+                            "text": "ISK - Coroa Islandesa",
+                            "value": "ISK"
+                        },
+                        {
+                            "text": "JEP - Libra de Jersey",
+                            "value": "JEP"
+                        },
+                        {
+                            "text": "JMD - Dólar Jamaicano",
+                            "value": "JMD"
+                        },
+                        {
+                            "text": "JOD - Dinar Jordaniano",
+                            "value": "JOD"
+                        },
+                        {
+                            "text": "JPY - Iene Japonês",
+                            "value": "JPY"
+                        },
+                        {
+                            "text": "KES - Xelim Queniano",
+                            "value": "KES"
+                        },
+                        {
+                            "text": "KGS - Som Quirguiz",
+                            "value": "KGS"
+                        },
+                        {
+                            "text": "KHR - Riel Cambojano",
+                            "value": "KHR"
+                        },
+                        {
+                            "text": "KMF - Franco Comorense",
+                            "value": "KMF"
+                        },
+                        {
+                            "text": "KPW - Won Norte-Coreano",
+                            "value": "KPW"
+                        },
+                        {
+                            "text": "KRW - Won Sul-Coreano",
+                            "value": "KRW"
+                        },
+                        {
+                            "text": "KWD - Dinar Kuwaitiano",
+                            "value": "KWD"
+                        },
+                        {
+                            "text": "KYD - Dólar das Ilhas Cayman",
+                            "value": "KYD"
+                        },
+                        {
+                            "text": "KZT - Tenge Cazaque",
+                            "value": "KZT"
+                        },
+                        {
+                            "text": "LAK - Kip Laosiano",
+                            "value": "LAK"
+                        },
+                        {
+                            "text": "LBP - Libra Libanesa",
+                            "value": "LBP"
+                        },
+                        {
+                            "text": "LKR - Rupia do Sri Lanka",
+                            "value": "LKR"
+                        },
+                        {
+                            "text": "LRD - Dólar Liberiano",
+                            "value": "LRD"
+                        },
+                        {
+                            "text": "LSL - Loti Lesotiano",
+                            "value": "LSL"
+                        },
+                        {
+                            "text": "LYD - Dinar Líbio",
+                            "value": "LYD"
+                        },
+                        {
+                            "text": "MAD - Dirham Marroquino",
+                            "value": "MAD"
+                        },
+                        {
+                            "text": "MDL - Leu Moldavo",
+                            "value": "MDL"
+                        },
+                        {
+                            "text": "MGA - Ariary Malgaxe",
+                            "value": "MGA"
+                        },
+                        {
+                            "text": "MKD - Dinar Macedônio",
+                            "value": "MKD"
+                        },
+                        {
+                            "text": "MMK - Kyat Mianmarense",
+                            "value": "MMK"
+                        },
+                        {
+                            "text": "MNT - Tugrik Mongol",
+                            "value": "MNT"
+                        },
+                        {
+                            "text": "MOP - Pataca de Macau",
+                            "value": "MOP"
+                        },
+                        {
+                            "text": "MRU - Ouguiya Mauritana",
+                            "value": "MRU"
+                        },
+                        {
+                            "text": "MUR - Rupia Mauriciana",
+                            "value": "MUR"
+                        },
+                        {
+                            "text": "MVR - Rupia Maldiva",
+                            "value": "MVR"
+                        },
+                        {
+                            "text": "MWK - Kwacha Malauiana",
+                            "value": "MWK"
+                        },
+                        {
+                            "text": "MXN - Peso Mexicano",
+                            "value": "MXN"
+                        },
+                        {
+                            "text": "MYR - Ringgit Malaio",
+                            "value": "MYR"
+                        },
+                        {
+                            "text": "MZN - Metical Moçambicano",
+                            "value": "MZN"
+                        },
+                        {
+                            "text": "NAD - Dólar Namibiano",
+                            "value": "NAD"
+                        },
+                        {
+                            "text": "NGN - Naira Nigeriana",
+                            "value": "NGN"
+                        },
+                        {
+                            "text": "NIO - Córdoba Nicaraguense",
+                            "value": "NIO"
+                        },
+                        {
+                            "text": "NOK - Coroa Norueguesa",
+                            "value": "NOK"
+                        },
+                        {
+                            "text": "NPR - Rupia Nepalesa",
+                            "value": "NPR"
+                        },
+                        {
+                            "text": "NZD - Dólar Neozelandês",
+                            "value": "NZD"
+                        },
+                        {
+                            "text": "OMR - Rial Omanense",
+                            "value": "OMR"
+                        },
+                        {
+                            "text": "PAB - Balboa Panamenho",
+                            "value": "PAB"
+                        },
+                        {
+                            "text": "PEN - Sol Peruano",
+                            "value": "PEN"
+                        },
+                        {
+                            "text": "PGK - Kina Papua-Nova Guiné",
+                            "value": "PGK"
+                        },
+                        {
+                            "text": "PHP - Peso Filipino",
+                            "value": "PHP"
+                        },
+                        {
+                            "text": "PKR - Rupia Paquistanesa",
+                            "value": "PKR"
+                        },
+                        {
+                            "text": "PLN - Zloty Polonês",
+                            "value": "PLN"
+                        },
+                        {
+                            "text": "PYG - Guarani Paraguaio",
+                            "value": "PYG"
+                        },
+                        {
+                            "text": "QAR - Rial Catariano",
+                            "value": "QAR"
+                        },
+                        {
+                            "text": "RON - Leu Romeno",
+                            "value": "RON"
+                        },
+                        {
+                            "text": "RSD - Dinar Sérvio",
+                            "value": "RSD"
+                        },
+                        {
+                            "text": "RUB - Rublo Russo",
+                            "value": "RUB"
+                        },
+                        {
+                            "text": "RWF - Franco Ruandês",
+                            "value": "RWF"
+                        },
+                        {
+                            "text": "SAR - Rial Saudita",
+                            "value": "SAR"
+                        },
+                        {
+                            "text": "SBD - Dólar das Ilhas Salomão",
+                            "value": "SBD"
+                        },
+                        {
+                            "text": "SCR - Rupia Seichelense",
+                            "value": "SCR"
+                        },
+                        {
+                            "text": "SDG - Libra Sudanesa",
+                            "value": "SDG"
+                        },
+                        {
+                            "text": "SEK - Coroa Sueca",
+                            "value": "SEK"
+                        },
+                        {
+                            "text": "SGD - Dólar Singapuriano",
+                            "value": "SGD"
+                        },
+                        {
+                            "text": "SHP - Libra de Santa Helena",
+                            "value": "SHP"
+                        },
+                        {
+                            "text": "SLL - Leone de Serra Leoa",
+                            "value": "SLL"
+                        },
+                        {
+                            "text": "SOS - Xelim Somaliano",
+                            "value": "SOS"
+                        },
+                        {
+                            "text": "SPL - Luigino de Seborga",
+                            "value": "SPL"
+                        },
+                        {
+                            "text": "SRD - Dólar Surinamês",
+                            "value": "SRD"
+                        },
+                        {
+                            "text": "STN - Dobra de São Tomé e Príncipe",
+                            "value": "STN"
+                        },
+                        {
+                            "text": "SVC - Colón Salvadorenho",
+                            "value": "SVC"
+                        },
+                        {
+                            "text": "SYP - Libra Síria",
+                            "value": "SYP"
+                        },
+                        {
+                            "text": "SZL - Lilangeni Suazi",
+                            "value": "SZL"
+                        },
+                        {
+                            "text": "THB - Baht Tailandês",
+                            "value": "THB"
+                        },
+                        {
+                            "text": "TJS - Somoni Tajique",
+                            "value": "TJS"
+                        },
+                        {
+                            "text": "TMT - Manat Turcomeno",
+                            "value": "TMT"
+                        },
+                        {
+                            "text": "TND - Dinar Tunisiano",
+                            "value": "TND"
+                        },
+                        {
+                            "text": "TOP - Paʻanga Tonganesa",
+                            "value": "TOP"
+                        },
+                        {
+                            "text": "TRY - Lira Turca",
+                            "value": "TRY"
+                        },
+                        {
+                            "text": "TTD - Dólar de Trinidad e Tobago",
+                            "value": "TTD"
+                        },
+                        {
+                            "text": "TVD - Dólar Tuvaluano",
+                            "value": "TVD"
+                        },
+                        {
+                            "text": "TWD - Novo Dólar Taiwanês",
+                            "value": "TWD"
+                        },
+                        {
+                            "text": "TZS - Xelim Tanzaniano",
+                            "value": "TZS"
+                        },
+                        {
+                            "text": "UAH - Hryvnia Ucraniano",
+                            "value": "UAH"
+                        },
+                        {
+                            "text": "UGX - Xelim Ugandês",
+                            "value": "UGX"
+                        },
+                        {
+                            "text": "USD - Dólar Americano",
+                            "value": "USD"
+                        },
+                        {
+                            "text": "UYU - Peso Uruguaio",
+                            "value": "UYU"
+                        },
+                        {
+                            "text": "UZS - Som Uzbeque",
+                            "value": "UZS"
+                        },
+                        {
+                            "text": "VEF - Bolívar Venezuelano",
+                            "value": "VEF"
+                        },
+                        {
+                            "text": "VND - Dong Vietnamita",
+                            "value": "VND"
+                        },
+                        {
+                            "text": "VUV - Vatu de Vanuatu",
+                            "value": "VUV"
+                        },
+                        {
+                            "text": "WST - Tala Samoano",
+                            "value": "WST"
+                        },
+                        {
+                            "text": "XAF - Franco CFA Central",
+                            "value": "XAF"
+                        },
+                        {
+                            "text": "XCD - Dólar do Caribe Oriental",
+                            "value": "XCD"
+                        },
+                        {
+                            "text": "XDR - Direitos Especiais de Saque",
+                            "value": "XDR"
+                        },
+                        {
+                            "text": "XOF - Franco CFA Ocidental",
+                            "value": "XOF"
+                        },
+                        {
+                            "text": "XPF - Franco CFP",
+                            "value": "XPF"
+                        },
+                        {
+                            "text": "YER - Rial Iemenita",
+                            "value": "YER"
+                        },
+                        {
+                            "text": "ZAR - Rand Sul-Africano",
+                            "value": "ZAR"
+                        },
+                        {
+                            "text": "ZMW - Kwacha Zambiano",
+                            "value": "ZMW"
+                        },
+                        {
+                            "text": "ZWL - Dólar Zimbabuense",
+                            "value": "ZWL"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 9,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_kpra_length",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_kpra_length",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_kpra_length",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "placeholder": "Kingpin to rear axle length"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 9,
+                "width": "half",
+                "translations": null,
+                "note": "description - Kingpin to rear axle length, in centimeters.  **NOTE:** Currently, the KPRA restrictions are only present in California and Idaho.  **Note:** Supported in `truck`, `car` (Beta), `taxi` (Beta) transport modes.",
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "response",
+            "type": "json",
+            "meta": {
+                "collection": "here_routing",
+                "field": "response",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 10,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "response",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": [
+                    "polyline",
+                    "instructions",
+                    "actions"
+                ],
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_payload_capacity",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_payload_capacity",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_payload_capacity",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "placeholder": null
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 10,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_tunnel_category",
+            "type": "string",
+            "schema": {
+                "name": "vehicle_tunnel_category",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_tunnel_category",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "B",
+                            "value": "B"
+                        },
+                        {
+                            "text": "C",
+                            "value": "C"
+                        },
+                        {
+                            "text": "D",
+                            "value": "D"
+                        },
+                        {
+                            "text": "E",
+                            "value": "E"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "B",
+                            "value": "B"
+                        },
+                        {
+                            "text": "C",
+                            "value": "C"
+                        },
+                        {
+                            "text": "D",
+                            "value": "D"
+                        },
+                        {
+                            "text": "E",
+                            "value": "E"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 11,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "request",
+            "type": "json",
+            "meta": {
+                "collection": "here_routing",
+                "field": "request",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 11,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "request",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_axle_count",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_axle_count",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_axle_count",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 2,
+                    "placeholder": "Axle Count (min 2)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 12,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "debug",
+            "type": "string",
+            "meta": {
+                "collection": "here_routing",
+                "field": "debug",
+                "special": null,
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 12,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "debug",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_trailer_axle_count",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_trailer_axle_count",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_trailer_axle_count",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 1,
+                    "placeholder": "Trailer Axle Count (min 1)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 13,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_tires_count",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_tires_count",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_tires_count",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 1,
+                    "max": 255,
+                    "placeholder": "Tires Count (min 1)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 14,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_type",
+            "type": "string",
+            "schema": {
+                "name": "vehicle_type",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_type",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "undefined",
+                            "value": "undefined"
+                        },
+                        {
+                            "text": "Tractor",
+                            "value": "Tractor"
+                        },
+                        {
+                            "text": "StraightTruck",
+                            "value": "StraightTruck"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "undefined",
+                            "value": "undefined"
+                        },
+                        {
+                            "text": "Tractor",
+                            "value": "Tractor"
+                        },
+                        {
+                            "text": "StraightTruck",
+                            "value": "StraightTruck"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 15,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_category",
+            "type": "string",
+            "schema": {
+                "name": "vehicle_category",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_category",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "undefined",
+                            "value": "undefined"
+                        },
+                        {
+                            "text": "lightTruck",
+                            "value": "lightTruck"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "undefined",
+                            "value": "undefined"
+                        },
+                        {
+                            "text": "lightTruck",
+                            "value": "lightTruck"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 16,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_trailer_count",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_trailer_count",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_trailer_count",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 255,
+                    "placeholder": "Trailer count (min 0, max 255)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 17,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_license_plate",
+            "type": "string",
+            "schema": {
+                "name": "vehicle_license_plate",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_license_plate",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "placeholder": "Last Character"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 18,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_occupancy",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_occupancy",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_occupancy",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 1,
+                    "placeholder": "Vehicle Occupancy"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 19,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_engine_type",
+            "type": "string",
+            "schema": {
+                "name": "vehicle_engine_type",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_engine_type",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "electric",
+                            "value": "electric"
+                        },
+                        {
+                            "text": "pluginHybrid",
+                            "value": "pluginHybrid"
+                        },
+                        {
+                            "text": "internalCombustion",
+                            "value": "internalCombustion"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "electric",
+                            "value": "electric"
+                        },
+                        {
+                            "text": "pluginHybrid",
+                            "value": "pluginHybrid"
+                        },
+                        {
+                            "text": "internalCombustion",
+                            "value": "internalCombustion"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 20,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_height_above_first_axle",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_height_above_first_axle",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_height_above_first_axle",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 5000,
+                    "placeholder": "Height Above First Axle (min 1)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 21,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehiclecommercial",
+            "type": "string",
+            "schema": {
+                "name": "vehiclecommercial",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehiclecommercial",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "true",
+                            "value": "true"
+                        },
+                        {
+                            "text": "false",
+                            "value": "false"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "true",
+                            "value": "true"
+                        },
+                        {
+                            "text": "false",
+                            "value": "false"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 22,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        }
+    ],
+    "relations": [
+        {
+            "collection": "here_routing",
+            "field": "user_created",
+            "related_collection": "directus_users",
+            "schema": {
+                "constraint_name": "here_routing_user_created_foreign",
+                "table": "here_routing",
+                "column": "user_created",
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "on_update": "NO ACTION",
+                "on_delete": "NO ACTION"
+            },
+            "meta": {
+                "many_collection": "here_routing",
+                "many_field": "user_created",
+                "one_collection": "directus_users",
+                "one_field": null,
+                "one_collection_field": null,
+                "one_allowed_collections": null,
+                "junction_field": null,
+                "sort_field": null,
+                "one_deselect_action": "nullify"
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "user_updated",
+            "related_collection": "directus_users",
+            "schema": {
+                "constraint_name": "here_routing_user_updated_foreign",
+                "table": "here_routing",
+                "column": "user_updated",
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "on_update": "NO ACTION",
+                "on_delete": "NO ACTION"
+            },
+            "meta": {
+                "many_collection": "here_routing",
+                "many_field": "user_updated",
+                "one_collection": "directus_users",
+                "one_field": null,
+                "one_collection_field": null,
+                "one_allowed_collections": null,
+                "junction_field": null,
+                "sort_field": null,
+                "one_deselect_action": "nullify"
+            }
+        }
+    ]
 }

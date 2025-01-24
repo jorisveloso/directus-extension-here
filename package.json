@@ -40,8 +40,8 @@
     "lint:fix": "eslint --fix .",
     "compose:up": "docker-compose up --build",
     "compose:down": "docker-compose down",
-    "compose:psql": "docker-compose exec --user postgres agiliza-ai-directus_postgres psql",
-    "compose:bash": "docker-compose exec --user postgres agiliza-ai-directus_postgres bash",
+    "compose:psql": "docker-compose exec --user postgres directus-extension-here_postgres psql",
+    "compose:bash": "docker-compose exec --user postgres adirectus-extension-here_postgres bash",
     "semantic-release": "semantic-release",
     "bootstrap": "directus bootstrap",
     "migration:create": "yarn knex migrate:make",
@@ -68,6 +68,7 @@
     "dotenv": "^16.4.7",
     "fs": "^0.0.1-security",
     "pinia": "^2.3.0",
+    "prettier": "^3.4.2",
     "wkx": "^0.5.0"
   }
 }

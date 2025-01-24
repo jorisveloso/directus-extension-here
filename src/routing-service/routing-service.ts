@@ -7,11 +7,6 @@ import { StatusRota } from "./StatusRota";
 import dotenv from "dotenv";
 dotenv.config();
 
-// interface Point {
-//   type: string;
-//   coordinates: [number, number];
-// }
-
 type Schemas = components["schemas"];
 type Rotas = Schemas["ItemsHereRouting"];
 
@@ -52,39 +47,60 @@ export class RoutingService {
     const integracaoAtivada =
       process.env.HERE_API_INTEGRACAO_ATIVADA === "true";
     if (!integracaoAtivada) {
-      console.log("Integração com a API da HERE está desativada.");
+      throw new Error("Integração com a API da HERE está desativada.");
     }
+  }
+
+  /**
+   * Extrai latitude e longitude de um objeto GeoJSON Point.
+   * @param point Objeto GeoJSON Point.
+   * @returns Uma tupla com [latitude, longitude].
+   * @throws Erro se o ponto não for um GeoJSON Point válido.
+   */
+  private getCoordinates(point: any): [number, number] {
+    if (
+      typeof point !== "object" ||
+      point === null ||
+      point.type !== "Point" ||
+      !Array.isArray(point.coordinates) ||
+      point.coordinates.length !== 2
+    ) {
+      throw new Error("O ponto não é um GeoJSON Point válido.");
+    }
+
+    const [longitude, latitude] = point.coordinates;
+    return [latitude, longitude];
+  }
+
+  /**
+   * Formata as coordenadas no formato "latitude,longitude".
+   * @param point Objeto GeoJSON Point.
+   * @returns String formatada com as coordenadas.
+   */
+  private formatCoordinates(point: any): string {
+    const [latitude, longitude] = this.getCoordinates(point);
+    return `${latitude},${longitude}`;
   }
 
   async sincronizar(): Promise<void> {
     this._rotas = [];
+
     try {
       await this.obterRotasPorStatus(StatusRota.Rascunho.nome);
       for (const rota of this._rotas) {
         try {
           // Validação dos campos origin e destination
-          console.log(JSON.stringify(rota));
           if (!rota.origin || !rota.destination) {
             throw new Error(
               `Os campos 'origin' e 'destination' são obrigatórios para a rota ${rota.id}.`
             );
           }
 
-          // Verifica se origin e destination têm a estrutura correta
-          const originPoint = rota.origin; //this.parsePoint(rota.origin);
-          const destinationPoint = rota.destination; //this.parsePoint(rota.destination);
+          // Extrai e formata as coordenadas de origin e destination
+          const originString = this.formatCoordinates(rota.origin);
+          const destinationString = this.formatCoordinates(rota.destination);
 
-          if (!originPoint || !destinationPoint) {
-            throw new Error(
-              `Os campos 'origin' e 'destination' devem ser do tipo 'Point' com coordenadas válidas para a rota ${rota.id}.`
-            );
-          }
-
-          // Extrai as coordenadas de origin e destination
-          const originString = rota.origin; //extractLatLongAsString(originPoint);
-          const destinationString = rota.destination; //extractLatLongAsString(destinationPoint);
-
-          // Monta o payload corretamente
+          // Atualiza o payload com os valores formatados
           const payload = {
             transportMode: rota.transport_mode,
             origin: originString,
@@ -92,11 +108,84 @@ export class RoutingService {
             return: rota.return ? rota.return.join(",") : "",
             currency: rota.currency,
             spans: rota.spans ? rota.spans.join(",") : "",
-            routingMode: rota.routingMode,
             "vehicle[speedCap]": rota.vehicle_speed_cap,
-          };
+            "vehicle[grossWeight]": rota.vehicle_gross_weight,
+            "vehicle[weightPerAxle]": rota.vehicle_weight_per_axle ?? 0,
+            "vehicle[width]": rota.vehicle_width ?? 0,
+            "vehicle[length]": rota.vehicle_length ?? 0,
+            "vehicle[kpraLength]": rota.vehicle_kpra_length ?? 0,
+            "vehicle[payloadCapacity]": rota.vehicle_payload_capacity ?? 0,
+          } as { [key: string]: any }; // Força o tipo para permitir propriedades dinâmicas
+
+          // Adiciona routingMode apenas se não for null
+          if (rota.routingMode !== null) {
+            payload.routingMode = rota.routingMode;
+          }
+
+          // Adiciona "vehicle[shippedHazardousGoods]" apenas se não for null
+          if (rota.vehicles_hipped_hazardous_goods !== null) {
+            payload["vehicle[shippedHazardousGoods]"] =
+              rota.vehicles_hipped_hazardous_goods;
+          }
+
+          // Adiciona "vehicle[currentWeight]" apenas se não for null
+          if (rota.vehicle_current_weight !== null) {
+            payload["vehicle[currentWeight]"] = rota.vehicle_current_weight;
+          }
+
+          // Adiciona "vehicle[tunnelCategory]" apenas se não for null
+          if (rota.vehicle_tunnel_category !== null) {
+            payload["vehicle[tunnelCategory]"] = rota.vehicle_tunnel_category;
+          }
+
+          // Adiciona "vehicle[axleCount]" apenas se não for null
+          if (rota.vehicle_axle_count !== null) {
+            payload["vehicle[axleCount]"] = rota.vehicle_axle_count;
+          }
+
+          // Adiciona "vehicle[type]" apenas se não for null
+          if (rota.vehicle_type !== null) {
+            payload["vehicle[type]"] = rota.vehicle_type;
+          }
+
+          // Adiciona "vehicle[category]" apenas se não for null
+          if (rota.vehicle_category !== null) {
+            payload["vehicle[category]"] = rota.vehicle_category;
+          }
+
+          // Adiciona "vehicle[trailerCount]" apenas se não for null
+          if (rota.vehicle_trailer_count !== null) {
+            payload["vehicle[trailerCount]"] = rota.vehicle_trailer_count;
+          }
+
+          // Adiciona "vehicle[licensePlate]" apenas se não for null
+          if (rota.vehicle_license_plate !== null) {
+            payload["vehicle[licensePlate]"] = rota.vehicle_license_plate;
+          }
+
+          // Adiciona "vehicle[occupancy]" apenas se não for null
+          if (rota.vehicle_occupancy !== null) {
+            payload["vehicle[occupancy]"] = rota.vehicle_occupancy;
+          }
+
+          // Adiciona "vehicle[engineType]" apenas se não for null
+          if (rota.vehicle_engine_type !== null) {
+            payload["vehicle[engineType]"] = rota.vehicle_engine_type;
+          }
+
+          // Adiciona "vehicle[heightAboveFirstAxle]" apenas se não for null
+          if (rota.vehicle_height_above_first_axle !== null) {
+            payload["vehicle[heightAboveFirstAxle]"] =
+              rota.vehicle_height_above_first_axle;
+          }
+
+          // Adiciona "vehicle[commercial]" apenas se não for null
+          if (rota.vehicle_commercial !== null) {
+            payload["vehicle[commercial]"] = rota.vehicle_commercial;
+          }
 
           const metodo = rota.method?.toUpperCase() || "GET";
+          await this.gravarRequisicao(rota.id, JSON.stringify(payload));
           const resposta = await this.send2Here(metodo, payload);
           await this.gravarResposta(rota.id, JSON.stringify(resposta));
           await this.definirStatus(rota.id, StatusRota.Publicado.nome);
@@ -105,7 +194,8 @@ export class RoutingService {
             this.ctx.logger.error(
               `Erro ao consultar rotas ${rota.id}: ${error.message}`
             );
-            await this.gravarErro(rota.id, error.message);
+
+            await this.gravarErro(rota.id, `${error.message}`);
           } else {
             this.ctx.logger.error(
               `Erro desconhecido ao consultar rotas ${rota.id}`
@@ -126,25 +216,6 @@ export class RoutingService {
       throw error;
     }
   }
-
-  // /**
-  //  * Converte um objeto Record<string, unknown> para Point, se válido.
-  //  */
-  // private parsePoint(point: Record<string, unknown> | null): Point | null {
-  //   if (
-  //     point &&
-  //     typeof point === "object" &&
-  //     point.type === "Point" &&
-  //     Array.isArray(point.coordinates) &&
-  //     point.coordinates.length === 2
-  //   ) {
-  //     return {
-  //       type: point.type as string,
-  //       coordinates: point.coordinates as [number, number],
-  //     };
-  //   }
-  //   return null;
-  // }
 
   /**
    * Obtém rotas por status
@@ -244,6 +315,24 @@ export class RoutingService {
       await this.service.updateOne(id, {
         status: StatusRota.Publicado.nome,
         response: resposta,
+        error: null,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        this.ctx.logger.error(
+          `Erro ao gravar resposta ${id}: ${error.message}`
+        );
+      } else {
+        this.ctx.logger.error(`Erro desconhecido ao gravar resposta ${id}`);
+      }
+      throw error;
+    }
+  }
+
+  async gravarRequisicao(id: string, request: string): Promise<void> {
+    try {
+      await this.service.updateOne(id, {
+        request: request,
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -266,21 +355,7 @@ export class RoutingService {
         error: erro,
       });
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(`Erro ao gravar erro ${id}: ${error.message}`);
-      } else {
-        this.ctx.logger.error(`Erro desconhecido ao gravar erro ${id}`);
-      }
       throw error;
     }
   }
 }
-
-// // Função para extrair latitude e longitude como string
-// function extractLatLongAsString(point: Point): string {
-//   if (point.type === "Point" && point.coordinates.length === 2) {
-//     const [latitude, longitude] = point.coordinates;
-//     return `${latitude}, ${longitude}`;
-//   }
-//   return ""; // Retorna uma string vazia se o tipo não for "Point" ou as coordenadas forem inválidas
-// }
