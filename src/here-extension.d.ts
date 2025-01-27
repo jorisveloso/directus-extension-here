@@ -3,6 +3,12 @@
  */
 export type HereExtension = {
   here_routing: components["schemas"]["ItemsHereRouting"];
+  here_span: components["schemas"]["ItemsHereSpan"];
+  here_place: components["schemas"]["ItemsHerePlace"];
+  here_route: components["schemas"]["ItemsHereRoute"];
+  here_action: components["schemas"]["ItemsHereAction"];
+  here_transport: components["schemas"]["ItemsHereTransport"];
+  here_section: components["schemas"]["ItemsHereSection"];
 };
 export type paths = Record<string, never>;
 
@@ -327,7 +333,6 @@ export interface components {
       vehicle_trailer_axle_count?: number | null;
       origin?: Record<string, unknown> | null;
       request?: unknown;
-      debug?: string | null;
       destination?: Record<string, unknown> | null;
       vehicle_tires_count?: number | null;
       vehicle_type?: string | null;
@@ -337,7 +342,9 @@ export interface components {
       vehicle_occupancy?: number | null;
       vehicle_engine_type?: string | null;
       vehicle_height_above_first_axle?: number | null;
-      vehiclecommercial?: string | null;
+      vehicle_commercial?: string | null;
+      log?: unknown;
+      routes?: ((string | components["schemas"]["ItemsHereRoute"])[]) | null;
     };
     Comments: {
       /**
@@ -439,6 +446,107 @@ export interface components {
        * }
        */
       delta?: Record<string, never>;
+    };
+    ItemsHereSpan: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      /** Format: float */
+      max_speed?: number | null;
+      span?: string | components["schemas"]["ItemsHereSection"] | null;
+      offset?: number | null;
+    };
+    ItemsHerePlace: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      name?: string | null;
+      location?: Record<string, unknown> | null;
+      originalLocation?: Record<string, unknown> | null;
+      type?: string | null;
+      time?: string | null;
+      place?: string | components["schemas"]["ItemsHereSection"] | null;
+    };
+    ItemsHereRoute: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      route?: string | components["schemas"]["ItemsHereRouting"] | null;
+      sections?: ((string | components["schemas"]["ItemsHereSection"])[]) | null;
+    };
+    ItemsHereAction: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      name?: string | null;
+      duration?: number | null;
+      length?: number | null;
+      instruction?: string | null;
+      offset?: number | null;
+      direction?: string | null;
+      exit?: number | null;
+      severity?: string | null;
+    };
+    ItemsHereTransport: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      mode?: string | null;
+      current_weight?: number | null;
+    };
+    ItemsHereSection: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      type?: string | null;
+      language?: string | null;
+      transport?: string | components["schemas"]["ItemsHereTransport"] | null;
+      section?: string | components["schemas"]["ItemsHereRoute"] | null;
+      polyline?: Record<string, unknown> | null;
+      places?: ((string | components["schemas"]["ItemsHerePlace"])[]) | null;
+      spans?: ((string | components["schemas"]["ItemsHereSpan"])[]) | null;
     };
   };
   responses: never;

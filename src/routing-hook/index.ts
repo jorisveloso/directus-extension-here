@@ -13,12 +13,13 @@ export default defineHook(async (tiposEvento, apiExtensionContext) => {
         return input;
       }
 
-      input.request = "";
-      input.response = "";
-      input.error = "";
-      input.debug = "Alterado pelo filter hook";
+      input.request = null;
+      input.response = null;
+      input.error = null;
+      input.log = null;
+      input.routes = null;
       return input;
-    },
+    }
   );
 
   const schema = await apiExtensionContext.getSchema();
@@ -31,7 +32,7 @@ export default defineHook(async (tiposEvento, apiExtensionContext) => {
   tiposEvento.schedule(aCadaUmMinutoCronExpression, async () => {
     service.sincronizar().catch((erro) => {
       apiExtensionContext.logger.error(
-        `Falha ao sincronizar com here.com. Erro = ${erro}.`,
+        `Falha ao sincronizar com here.com. Erro = ${erro}.`
       );
     });
   });

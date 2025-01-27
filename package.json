@@ -23,6 +23,11 @@
         "type": "hook",
         "name": "routing-hook",
         "source": "src/routing-hook/index.ts"
+      },
+      {
+        "type": "hook",
+        "name": "update-schema-hook",
+        "source": "src/update-schema-hook/index.ts"
       }
     ],
     "host": "^10.10.0"
@@ -56,19 +61,37 @@
     "limpar:branches": "node utils/limpar-branches.js"
   },
   "devDependencies": {
-    "@directus/extensions-sdk": "12.1.4",
-    "@types/node": "^22.10.7",
+    "@directus/extensions-sdk": "^13.0.0",
+    "@types/node": "^22.10.10",
+    "@types/proj4": "^2.5.6",
     "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "vitest": "^3.0.2"
   },
   "dependencies": {
     "@directus/cli": "^9.14.3",
+    "@directus/sdk": "^19.0.0",
+    "@googlemaps/polyline-codec": "^1.0.28",
+    "@here/flexpolyline": "^0.1.0",
+    "@types/express": "^5.0.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/pino": "^7.0.5",
     "@unhead/vue": "^1.11.18",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "fs": "^0.0.1-security",
+    "geojson": "^0.5.0",
+    "knex": "^3.1.0",
+    "knex-schema-inspector": "^3.1.0",
+    "path": "^0.12.7",
     "pinia": "^2.3.0",
+    "pino": "^9.6.0",
     "prettier": "^3.4.2",
+    "proj4": "^2.15.0",
+    "vue": "^3.5.13",
+    "vue-i18n": "9",
+    "vue-router": "4",
     "wkx": "^0.5.0"
   }
 }

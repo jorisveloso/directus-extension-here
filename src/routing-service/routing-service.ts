@@ -1,14 +1,47 @@
 import { HookExtensionContext } from "@directus/extensions";
+import { decode } from "@here/flexpolyline";
+import dotenv from "dotenv";
 import { components } from "../here-extension";
 import { ApiClient } from "../utils/api-client/api-client";
 import { AbstractServiceOptions, ItemsService } from "../utils/DirectusImports";
 import { StatusRota } from "./StatusRota";
-
-import dotenv from "dotenv";
 dotenv.config();
 
 type Schemas = components["schemas"];
 type Rotas = Schemas["ItemsHereRouting"];
+
+type GeoJSONLineString = {
+  type: "LineString";
+  coordinates: number[][];
+};
+
+interface Section {
+  type?: string;
+  language?: string;
+  departure?: any;
+  arrival?: any;
+  spans?: Array<any>;
+  transport?: any;
+  polyline?: any;
+  places?: Array<any>;
+}
+
+interface Route {
+  id?: string;
+  sections?: Section[];
+}
+
+interface RouteData {
+  routes: Route[];
+}
+
+interface OutputResponse {
+  data: RouteData[];
+}
+
+interface ApiResponse {
+  routes?: Route[];
+}
 
 export class RoutingService {
   ctx: HookExtensionContext;
@@ -24,7 +57,6 @@ export class RoutingService {
     this.service = new this.ctx.services.ItemsService("here_routing", opts);
     this._rotas = [];
 
-    // Validação das variáveis de ambiente obrigatórias
     if (
       !process.env.HERE_API_BASE_URL ||
       !process.env.HERE_API_ROUTES_PATH ||
@@ -35,28 +67,16 @@ export class RoutingService {
       );
     }
 
-    // Atribui as variáveis de ambiente
     this.baseUrl = process.env.HERE_API_BASE_URL;
     this.routePath = process.env.HERE_API_ROUTES_PATH;
     this.apiToken = process.env.HERE_API_TOKEN;
-
-    // Inicializa a instância do ApiClient com baseUrl, token e path
     this.apiClient = new ApiClient(this.baseUrl, this.apiToken, this.routePath);
 
-    // Verifica se a integração está ativada
-    const integracaoAtivada =
-      process.env.HERE_API_INTEGRACAO_ATIVADA === "true";
-    if (!integracaoAtivada) {
+    if (process.env.HERE_API_INTEGRACAO_ATIVADA !== "true") {
       throw new Error("Integração com a API da HERE está desativada.");
     }
   }
 
-  /**
-   * Extrai latitude e longitude de um objeto GeoJSON Point.
-   * @param point Objeto GeoJSON Point.
-   * @returns Uma tupla com [latitude, longitude].
-   * @throws Erro se o ponto não for um GeoJSON Point válido.
-   */
   private getCoordinates(point: any): [number, number] {
     if (
       typeof point !== "object" ||
@@ -72,11 +92,6 @@ export class RoutingService {
     return [latitude, longitude];
   }
 
-  /**
-   * Formata as coordenadas no formato "latitude,longitude".
-   * @param point Objeto GeoJSON Point.
-   * @returns String formatada com as coordenadas.
-   */
   private formatCoordinates(point: any): string {
     const [latitude, longitude] = this.getCoordinates(point);
     return `${latitude},${longitude}`;
@@ -89,18 +104,15 @@ export class RoutingService {
       await this.obterRotasPorStatus(StatusRota.Rascunho.nome);
       for (const rota of this._rotas) {
         try {
-          // Validação dos campos origin e destination
           if (!rota.origin || !rota.destination) {
             throw new Error(
               `Os campos 'origin' e 'destination' são obrigatórios para a rota ${rota.id}.`
             );
           }
 
-          // Extrai e formata as coordenadas de origin e destination
           const originString = this.formatCoordinates(rota.origin);
           const destinationString = this.formatCoordinates(rota.destination);
 
-          // Atualiza o payload com os valores formatados
           const payload = {
             transportMode: rota.transport_mode,
             origin: originString,
@@ -115,74 +127,35 @@ export class RoutingService {
             "vehicle[length]": rota.vehicle_length ?? 0,
             "vehicle[kpraLength]": rota.vehicle_kpra_length ?? 0,
             "vehicle[payloadCapacity]": rota.vehicle_payload_capacity ?? 0,
-          } as { [key: string]: any }; // Força o tipo para permitir propriedades dinâmicas
+          } as { [key: string]: any };
 
-          // Adiciona routingMode apenas se não for null
-          if (rota.routingMode !== null) {
-            payload.routingMode = rota.routingMode;
-          }
-
-          // Adiciona "vehicle[shippedHazardousGoods]" apenas se não for null
-          if (rota.vehicles_hipped_hazardous_goods !== null) {
+          if (rota.routingMode !== null) payload.routingMode = rota.routingMode;
+          if (rota.vehicles_hipped_hazardous_goods !== null)
             payload["vehicle[shippedHazardousGoods]"] =
               rota.vehicles_hipped_hazardous_goods;
-          }
-
-          // Adiciona "vehicle[currentWeight]" apenas se não for null
-          if (rota.vehicle_current_weight !== null) {
+          if (rota.vehicle_current_weight !== null)
             payload["vehicle[currentWeight]"] = rota.vehicle_current_weight;
-          }
-
-          // Adiciona "vehicle[tunnelCategory]" apenas se não for null
-          if (rota.vehicle_tunnel_category !== null) {
+          if (rota.vehicle_tunnel_category !== null)
             payload["vehicle[tunnelCategory]"] = rota.vehicle_tunnel_category;
-          }
-
-          // Adiciona "vehicle[axleCount]" apenas se não for null
-          if (rota.vehicle_axle_count !== null) {
+          if (rota.vehicle_axle_count !== null)
             payload["vehicle[axleCount]"] = rota.vehicle_axle_count;
-          }
-
-          // Adiciona "vehicle[type]" apenas se não for null
-          if (rota.vehicle_type !== null) {
+          if (rota.vehicle_type !== null)
             payload["vehicle[type]"] = rota.vehicle_type;
-          }
-
-          // Adiciona "vehicle[category]" apenas se não for null
-          if (rota.vehicle_category !== null) {
+          if (rota.vehicle_category !== null)
             payload["vehicle[category]"] = rota.vehicle_category;
-          }
-
-          // Adiciona "vehicle[trailerCount]" apenas se não for null
-          if (rota.vehicle_trailer_count !== null) {
+          if (rota.vehicle_trailer_count !== null)
             payload["vehicle[trailerCount]"] = rota.vehicle_trailer_count;
-          }
-
-          // Adiciona "vehicle[licensePlate]" apenas se não for null
-          if (rota.vehicle_license_plate !== null) {
+          if (rota.vehicle_license_plate !== null)
             payload["vehicle[licensePlate]"] = rota.vehicle_license_plate;
-          }
-
-          // Adiciona "vehicle[occupancy]" apenas se não for null
-          if (rota.vehicle_occupancy !== null) {
+          if (rota.vehicle_occupancy !== null)
             payload["vehicle[occupancy]"] = rota.vehicle_occupancy;
-          }
-
-          // Adiciona "vehicle[engineType]" apenas se não for null
-          if (rota.vehicle_engine_type !== null) {
+          if (rota.vehicle_engine_type !== null)
             payload["vehicle[engineType]"] = rota.vehicle_engine_type;
-          }
-
-          // Adiciona "vehicle[heightAboveFirstAxle]" apenas se não for null
-          if (rota.vehicle_height_above_first_axle !== null) {
+          if (rota.vehicle_height_above_first_axle !== null)
             payload["vehicle[heightAboveFirstAxle]"] =
               rota.vehicle_height_above_first_axle;
-          }
-
-          // Adiciona "vehicle[commercial]" apenas se não for null
-          if (rota.vehicle_commercial !== null) {
+          if (rota.vehicle_commercial !== null)
             payload["vehicle[commercial]"] = rota.vehicle_commercial;
-          }
 
           const metodo = rota.method?.toUpperCase() || "GET";
           await this.gravarRequisicao(rota.id, JSON.stringify(payload));
@@ -190,36 +163,147 @@ export class RoutingService {
           await this.gravarResposta(rota.id, JSON.stringify(resposta));
           await this.definirStatus(rota.id, StatusRota.Publicado.nome);
         } catch (error) {
-          if (error instanceof Error) {
-            this.ctx.logger.error(
-              `Erro ao consultar rotas ${rota.id}: ${error.message}`
-            );
-
-            await this.gravarErro(rota.id, `${error.message}`);
-          } else {
-            this.ctx.logger.error(
-              `Erro desconhecido ao consultar rotas ${rota.id}`
-            );
-            await this.gravarErro(rota.id, "Erro desconhecido");
-          }
+          this.handleRouteError(rota.id, error);
         }
       }
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          "Erro geral ao sincronizar com here: ",
-          error.message
-        );
-      } else {
-        this.ctx.logger.error("Erro desconhecido ao sincronizar com here");
-      }
-      throw error;
+      this.handleSyncError(error);
     }
   }
 
-  /**
-   * Obtém rotas por status
-   */
+  private convertResponse2Routes(responseData: ApiResponse): OutputResponse {
+    const output: OutputResponse = {
+      data: [
+        {
+          routes: [],
+        },
+      ],
+    };
+
+    if (!responseData.routes || !Array.isArray(responseData.routes)) {
+      return output;
+    }
+
+    responseData.routes.forEach((route) => {
+      const outputRoute: Route = {
+        id: route.id || "",
+        sections: [],
+      };
+
+      if (route.sections) {
+        route.sections.forEach((section) => {
+          const encodedPolyline = section.polyline;
+          const decodedData = decode(encodedPolyline);
+
+          // Corrigindo o erro de tipagem
+          const decodedCoordinates = decodedData.polyline
+            .map(([lat, lon]) => [lon, lat] as [number, number]) // Garantindo que lat e lon sejam números
+            .filter(([lat, lon]) => lat !== undefined && lon !== undefined); // Removendo valores undefined
+
+          // Convertendo as coordenadas para o formato GeoJSON LineString
+          const geoJSONLineString: GeoJSONLineString = {
+            type: "LineString",
+            coordinates: decodedCoordinates,
+          };
+
+          const outputSection: Section = {
+            type: section.type || "vehicle",
+            language: section.language || "en-us",
+            polyline: geoJSONLineString, // Usando o LineString diretamente
+            transport: {
+              mode: section.transport?.mode || "car",
+              current_weight: section.transport?.current_weight || 3000,
+            },
+            places: [],
+            spans: [],
+          };
+
+          if (section.departure) {
+            outputSection.places!.push({
+              name: "departure",
+              location: {
+                type: "Point",
+                coordinates: [
+                  section.departure.place.location.lng, // Longitude
+                  section.departure.place.location.lat, // Latitude
+                ],
+              },
+              originalLocation: {
+                type: "Point",
+                coordinates: [
+                  section.departure.place.originalLocation.lng, // Longitude
+                  section.departure.place.originalLocation.lat, // Latitude
+                ],
+              },
+              type: "place",
+              time: section.departure.time ?? "",
+              place: section.departure.place ?? "",
+            });
+          }
+
+          if (section.arrival) {
+            outputSection.places!.push({
+              name: "arrival",
+              location: {
+                type: "Point",
+                coordinates: [
+                  section.arrival.place?.location?.lng, // Longitude
+                  section.arrival.place?.location?.lat, // Latitude
+                ],
+              },
+              originalLocation: {
+                type: "Point",
+                coordinates: [
+                  section.arrival.place?.originalLocation?.lng, // Longitude
+                  section.arrival.place?.originalLocation?.lat, // Latitude
+                ],
+              },
+              type: "place",
+              time: section.arrival.time ?? "",
+              place: section.arrival.place ?? "",
+            });
+          }
+
+          if (section.spans) {
+            section.spans.forEach((span) => {
+              outputSection.spans = outputSection.spans || [];
+              outputSection.spans.push({
+                max_speed: span.max_speed ?? 0,
+                offset: span.offset ?? null,
+              });
+            });
+          }
+
+          outputRoute.sections!.push(outputSection);
+        });
+      }
+
+      if (output.data[0]) {
+        output.data[0].routes.push(outputRoute);
+      }
+    });
+
+    return output;
+  }
+
+  async gravarResposta(id: string, resposta: string): Promise<void> {
+    try {
+      console.log("Gravando resposta");
+      const jsonResposta: ApiResponse = JSON.parse(resposta);
+      const respostaFormatada = this.convertResponse2Routes(jsonResposta);
+
+      await this.service.updateOne(id, {
+        status: StatusRota.Publicado.nome,
+        response: JSON.stringify(jsonResposta),
+        routes: respostaFormatada.data[0]?.routes,
+        log: respostaFormatada.data[0]?.routes,
+        error: null,
+      });
+    } catch (error) {
+      this.handleResponseError(id, error);
+    }
+  }
+
   async obterRotasPorStatus(status: string): Promise<Rotas[]> {
     if (this._rotas.length === 0) {
       try {
@@ -228,134 +312,102 @@ export class RoutingService {
           limit: -1,
           filter: { status: { _eq: status } },
         };
-
         this._rotas = await this.service.readByQuery(query);
       } catch (error) {
-        if (error instanceof Error) {
-          this.ctx.logger.error(
-            "Erro ao buscar rotas para sincronização:",
-            error.message
-          );
-        } else {
-          this.ctx.logger.error(
-            "Erro desconhecido ao buscar rotas para sincronização"
-          );
-        }
-        throw error;
+        this.handleQueryError(error);
       }
     }
-
     return this._rotas;
   }
 
-  /**
-   * Define o status da rota
-   */
   async definirStatus(id: string, status: string): Promise<void> {
     try {
       await this.service.updateOne(id, { status: status });
       this.ctx.logger.info(`Status da rota ${id} atualizado para ${status}`);
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          `Erro ao atualizar status da rota ${id}: ${error.message}`
-        );
-      } else {
-        this.ctx.logger.error(
-          `Erro desconhecido ao atualizar status da rota ${id}`
-        );
-      }
-      throw error;
+      this.handleStatusUpdateError(id, error);
     }
   }
 
-  /**
-   * Envia rotas para HERE usando a nova classe ApiClient
-   */
   async send2Here(metodo: string, payload: any): Promise<any> {
-    // Validação do método HTTP
     if (!["GET", "POST"].includes(metodo)) {
       throw new Error(`Método HTTP não suportado: ${metodo}`);
     }
 
-    // Adiciona o token ao payload
-    const params = {
-      ...payload,
-      apikey: this.apiToken,
-    };
+    const params = { ...payload, apikey: this.apiToken };
 
     try {
-      let response: any;
-
       if (metodo === "POST") {
-        // Para POST, envia o payload no corpo da requisição
-        response = await this.apiClient.post(params);
-      } else if (metodo === "GET") {
-        // Para GET, passa os parâmetros diretamente para o método get
-        response = await this.apiClient.get(params);
+        return await this.apiClient.post(params);
       } else {
-        throw new Error(`Método HTTP não suportado: ${metodo}`);
+        return await this.apiClient.get(params);
       }
-
-      return response;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Erro na requisição: ${error.message}`);
-      } else {
-        throw new Error("Erro desconhecido na requisição");
-      }
-    }
-  }
-
-  /**
-   * Gravar resposta
-   */
-  async gravarResposta(id: string, resposta: string): Promise<void> {
-    try {
-      await this.service.updateOne(id, {
-        status: StatusRota.Publicado.nome,
-        response: resposta,
-        error: null,
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          `Erro ao gravar resposta ${id}: ${error.message}`
-        );
-      } else {
-        this.ctx.logger.error(`Erro desconhecido ao gravar resposta ${id}`);
-      }
-      throw error;
+      throw this.handleApiError(error);
     }
   }
 
   async gravarRequisicao(id: string, request: string): Promise<void> {
     try {
-      await this.service.updateOne(id, {
-        request: request,
-      });
+      await this.service.updateOne(id, { request: request });
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          `Erro ao gravar resposta ${id}: ${error.message}`
-        );
-      } else {
-        this.ctx.logger.error(`Erro desconhecido ao gravar resposta ${id}`);
-      }
+      this.handleRequestError(id, error);
+    }
+  }
+
+  async gravarErro(id: string, erro: string): Promise<void> {
+    try {
+      await this.service.updateOne(id, { error: erro });
+    } catch (error) {
       throw error;
     }
   }
 
-  /**
-   * Gravar erro
-   */
-  async gravarErro(id: string, erro: string): Promise<void> {
-    try {
-      await this.service.updateOne(id, {
-        error: erro,
-      });
-    } catch (error) {
-      throw error;
-    }
+  private handleRouteError(id: string, error: unknown): void {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na rota ${id}: ${message}`);
+    this.gravarErro(id, message);
+  }
+
+  private handleSyncError(error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error("Erro geral na sincronização: ", message);
+    throw new Error(message);
+  }
+
+  private handleQueryError(error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error("Erro na consulta de rotas: ", message);
+    throw new Error(message);
+  }
+
+  private handleStatusUpdateError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro ao atualizar status ${id}: ${message}`);
+    throw new Error(message);
+  }
+
+  private handleApiError(error: unknown): Error {
+    return error instanceof Error
+      ? new Error(`Erro na API: ${error.message}`)
+      : new Error("Erro desconhecido na API");
+  }
+
+  private handleResponseError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na resposta ${id}: ${message}`);
+    throw new Error(message);
+  }
+
+  private handleRequestError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na requisição ${id}: ${message}`);
+    throw new Error(message);
   }
 }
