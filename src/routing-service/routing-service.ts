@@ -268,8 +268,9 @@ export class RoutingService {
             section.spans.forEach((span) => {
               outputSection.spans = outputSection.spans || [];
               outputSection.spans.push({
-                max_speed: span.max_speed ?? 0,
-                offset: span.offset ?? null,
+                offset: span.offset,
+                duration: span.duration,
+                max_speed: this.formatNumber(span.maxSpeed, 7),
               });
             });
           }
@@ -283,6 +284,7 @@ export class RoutingService {
       }
     });
 
+    console.log("Output final:", JSON.stringify(output, null, 2));
     return output;
   }
 
@@ -409,5 +411,19 @@ export class RoutingService {
       error instanceof Error ? error.message : "Erro desconhecido";
     this.ctx.logger.error(`Erro na requisição ${id}: ${message}`);
     throw new Error(message);
+  }
+
+  private formatNumber(
+    speed?: number | null,
+    decimals: number = 2
+  ): number | null {
+    if (speed === undefined || speed === null) return null;
+
+    try {
+      return Number(speed.toFixed(decimals));
+    } catch (error) {
+      console.error("Erro ao formatar número:", error);
+      return null;
+    }
   }
 }

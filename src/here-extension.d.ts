@@ -3,12 +3,12 @@
  */
 export type HereExtension = {
   here_routing: components["schemas"]["ItemsHereRouting"];
-  here_span: components["schemas"]["ItemsHereSpan"];
   here_place: components["schemas"]["ItemsHerePlace"];
   here_route: components["schemas"]["ItemsHereRoute"];
   here_action: components["schemas"]["ItemsHereAction"];
   here_transport: components["schemas"]["ItemsHereTransport"];
   here_section: components["schemas"]["ItemsHereSection"];
+  here_span: components["schemas"]["ItemsHereSpan"];
 };
 export type paths = Record<string, never>;
 
@@ -447,22 +447,6 @@ export interface components {
        */
       delta?: Record<string, never>;
     };
-    ItemsHereSpan: {
-      /** Format: uuid */
-      id: string;
-      status?: string;
-      sort?: number | null;
-      user_created?: string | components["schemas"]["Users"] | null;
-      /** Format: timestamp */
-      date_created?: string | null;
-      user_updated?: string | components["schemas"]["Users"] | null;
-      /** Format: timestamp */
-      date_updated?: string | null;
-      /** Format: float */
-      max_speed?: number | null;
-      span?: string | components["schemas"]["ItemsHereSection"] | null;
-      offset?: number | null;
-    };
     ItemsHerePlace: {
       /** Format: uuid */
       id: string;
@@ -547,6 +531,23 @@ export interface components {
       polyline?: Record<string, unknown> | null;
       places?: ((string | components["schemas"]["ItemsHerePlace"])[]) | null;
       spans?: ((string | components["schemas"]["ItemsHereSpan"])[]) | null;
+    };
+    ItemsHereSpan: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      span?: string | components["schemas"]["ItemsHereSection"] | null;
+      offset?: number | null;
+      duration?: number | null;
+      /** Format: float */
+      max_speed?: number | null;
     };
   };
   responses: never;
