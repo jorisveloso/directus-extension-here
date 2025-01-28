@@ -271,6 +271,7 @@ export class RoutingService {
                 offset: span.offset,
                 duration: span.duration,
                 max_speed: this.formatNumber(span.maxSpeed, 7),
+                topology_segment_id: span.topologySegmentId,
               });
             });
           }
@@ -283,8 +284,6 @@ export class RoutingService {
         output.data[0].routes.push(outputRoute);
       }
     });
-
-    console.log("Output final:", JSON.stringify(output, null, 2));
     return output;
   }
 

@@ -548,6 +548,7 @@ export interface components {
       duration?: number | null;
       /** Format: float */
       max_speed?: number | null;
+      topology_segment_id?: string | null;
     };
   };
   responses: never;
