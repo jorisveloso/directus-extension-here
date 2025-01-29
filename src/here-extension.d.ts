@@ -344,6 +344,7 @@ export interface components {
       vehicle_height_above_first_axle?: number | null;
       vehicle_commercial?: string | null;
       log?: unknown;
+      via?: Record<string, unknown> | null;
       routes?: ((string | components["schemas"]["ItemsHereRoute"])[]) | null;
     };
     Comments: {

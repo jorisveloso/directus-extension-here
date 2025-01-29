@@ -112,11 +112,25 @@ export class RoutingService {
 
           const originString = this.formatCoordinates(rota.origin);
           const destinationString = this.formatCoordinates(rota.destination);
+          // Format waypoints from via if it exists
+          const viaPoints: string[] = [];
+          if (
+            rota.via?.type === "MultiPoint" &&
+            Array.isArray(rota.via.coordinates)
+          ) {
+            rota.via.coordinates.forEach((coordinate) => {
+              if (Array.isArray(coordinate) && coordinate.length === 2) {
+                const [longitude, latitude] = coordinate;
+                viaPoints.push(`${latitude},${longitude}`);
+              }
+            });
+          }
 
           const payload = {
             transportMode: rota.transport_mode,
             origin: originString,
             destination: destinationString,
+            ...(viaPoints.length > 0 ? { via: viaPoints } : {}),
             return: rota.return ? rota.return.join(",") : "",
             currency: rota.currency,
             spans: rota.spans ? rota.spans.join(",") : "",
@@ -330,18 +344,31 @@ export class RoutingService {
     }
   }
 
-  async send2Here(metodo: string, payload: any): Promise<any> {
+  async send2Here(
+    metodo: string,
+    payload: { [key: string]: any } // Alterado para aceitar arrays
+  ): Promise<any> {
     if (!["GET", "POST"].includes(metodo)) {
       throw new Error(`Método HTTP não suportado: ${metodo}`);
     }
 
-    const params = { ...payload, apikey: this.apiToken };
+    const params = new URLSearchParams();
+
+    Object.entries(payload).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        // Se for um array, adiciona cada item separadamente
+        value.forEach((item) => params.append(key, item));
+      } else {
+        params.append(key, String(value));
+      }
+    });
 
     try {
+      const requestParams = params.toString(); // Transformar em query string
       if (metodo === "POST") {
-        return await this.apiClient.post(params);
+        return await this.apiClient.post(`?${requestParams}`);
       } else {
-        return await this.apiClient.get(params);
+        return await this.apiClient.get(`?${requestParams}`);
       }
     } catch (error) {
       throw this.handleApiError(error);
