@@ -565,6 +565,13 @@ export interface components {
       base_speed?: number | null;
       turn_time?: number | null;
       segment_ref?: string | null;
+      street_attributes?: string[] | null;
+      truck_attributes?: string[] | null;
+      names?: unknown;
+      route_numbers?: unknown;
+      typical_duration?: number | null;
+      consumption?: number | null;
+      state_code?: string | null;
     };
   };
   responses: never;
