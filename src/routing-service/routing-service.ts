@@ -286,9 +286,10 @@ export class RoutingService {
                 duration: span.duration,
                 max_speed: this.formatNumber(span.maxSpeed, 7),
                 topology_segment_id: span.topologySegmentId,
-                walk_attributes: span.walkattributes,
+                walk_attributes: span.walkAttributes,
                 car_attributes: span.carAttributes,
                 scooter_attributes: span.scooterAttributes,
+                truck_attributes: span.truckAttributes,
                 length: span.length,
                 base_duration: span.baseDuration,
                 country_code: span.countryCode,
@@ -298,6 +299,12 @@ export class RoutingService {
                 base_speed: this.formatNumber(span.baseSpeed),
                 turn_time: span.turnTime,
                 segment_ref: span.segmetnRef,
+                street_attributes: span.streetAttributes,
+                names: span.names,
+                route_numbers: span.routeNumbers,
+                typical_duration: span.typicalDuration,
+                state_code: span.stateCode,
+                consumption: span.consumption,
               });
             });
           }

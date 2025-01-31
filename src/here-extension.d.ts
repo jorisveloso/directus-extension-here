@@ -550,9 +550,6 @@ export interface components {
       /** Format: float */
       max_speed?: number | null;
       topology_segment_id?: string | null;
-      walk_attributes?: string[] | null;
-      car_attributes?: string[] | null;
-      scooter_attributes?: string[] | null;
       length?: number | null;
       base_duration?: number | null;
       country_code?: string | null;
@@ -572,6 +569,9 @@ export interface components {
       typical_duration?: number | null;
       consumption?: number | null;
       state_code?: string | null;
+      walk_attributes?: string[] | null;
+      car_attributes?: string[] | null;
+      scooter_attributes?: string[] | null;
     };
   };
   responses: never;
