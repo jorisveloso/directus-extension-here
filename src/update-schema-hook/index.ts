@@ -77,42 +77,46 @@ export default defineHook(({ action }, { env }) => {
   action("server.start", async () => {
     console.log("Iniciando verificação do schema...");
 
-    // Caminho do schema usando o caminho correto do Docker
-    const schemaPath = path.join(
-      process.cwd(),
-      "extensions",
-      "directus-extension-here",
-      "src",
-      "utils",
-      "files",
-      "schema.json"
-    );
-    console.log(`Caminho do arquivo com o schema: ${schemaPath}`);
-
-    // Carrega e valida o schema
-    let schema: Schema;
     try {
-      schema = JSON.parse(fs.readFileSync(schemaPath, "utf-8")) as Schema;
-    } catch (error) {
-      console.error(`Erro ao ler o arquivo schema: ${schemaPath}`, error);
-      return;
-    }
+      // Caminho do schema usando o caminho correto do Docker
+      const schemaPath = path.join(
+        process.cwd(),
+        "extensions",
+        "directus-extension-here",
+        "src",
+        "utils",
+        "files",
+        "schema.json"
+      );
+      console.log(`Caminho do arquivo com o schema: ${schemaPath}`);
 
-    try {
-      // Autentica no Directus
-      await client.setToken(env.KEY);
+      // Carrega e valida o schema
+      const schemaContent = fs.readFileSync(schemaPath, "utf-8");
+      const parsedSchema = JSON.parse(schemaContent) as Schema;
+
+      if (
+        !parsedSchema ||
+        !parsedSchema.collections ||
+        !Array.isArray(parsedSchema.collections)
+      ) {
+        throw new Error("Schema inválido: formato incorreto");
+      }
 
       // Agrupa campos por coleção para processamento mais eficiente
-      const fieldsByCollection = schema.collections.reduce(
-        (acc, field) => {
-          if (!acc[field.collection]) {
-            acc[field.collection] = [];
+      const fieldsByCollection = parsedSchema.collections.reduce(
+        (acc: Record<string, SchemaField[]>, field) => {
+          const collection = field.collection;
+          if (!(collection in acc)) {
+            acc[collection] = [];
           }
-          acc[field.collection].push(field);
+          acc[collection]!.push(field);
           return acc;
         },
-        {} as Record<string, SchemaField[]>
+        {}
       );
+
+      // Autentica no Directus
+      await client.setToken(env.KEY);
 
       // Processa cada coleção
       for (const [collectionName, fields] of Object.entries(
@@ -213,7 +217,7 @@ export default defineHook(({ action }, { env }) => {
 
       console.log("Verificação e atualização do schema concluída com sucesso!");
     } catch (error) {
-      console.error("Erro durante a verificação do schema:", error);
+      console.error("Erro ao carregar ou processar o schema:", error);
     }
   });
 });
