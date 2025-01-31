@@ -7,7 +7,7 @@ type Routing = components["schemas"]["ItemsHereRouting"];
 
 export default defineHook(async (tiposEvento, apiExtensionContext) => {
   tiposEvento.filter<Routing>(
-    "here-routing.items.update",
+    "here_routing.items.update",
     async (input: Routing) => {
       if (input.status !== StatusRota.Rascunho.nome) {
         return input;
