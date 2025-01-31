@@ -1990,12 +1990,17 @@
                     "template": "{{type}}",
                     "layout": "table",
                     "fields": [
+                        "status",
                         "type",
-                        "polyline"
+                        "places",
+                        "spans",
+                        "transport"
                     ]
                 },
-                "display": null,
-                "display_options": null,
+                "display": "related-values",
+                "display_options": {
+                    "template": "{{type}}"
+                },
                 "readonly": false,
                 "hidden": false,
                 "sort": 8,
@@ -2058,6 +2063,26 @@
             "collection": "here_routing",
             "field": "id",
             "type": "uuid",
+            "schema": {
+                "name": "id",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": false,
+                "is_unique": true,
+                "is_indexed": false,
+                "is_primary_key": true,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "id",
@@ -2079,26 +2104,6 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "id",
-                "table": "here_routing",
-                "data_type": "uuid",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": false,
-                "is_unique": true,
-                "is_indexed": false,
-                "is_primary_key": true,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -2300,8 +2305,75 @@
         },
         {
             "collection": "here_routing",
+            "field": "request",
+            "type": "json",
+            "schema": {
+                "name": "request",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "request",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 1,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "debug",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
             "field": "status",
             "type": "string",
+            "schema": {
+                "name": "status",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": "draft",
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": false,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "status",
@@ -2358,26 +2430,6 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "status",
-                "table": "here_routing",
-                "data_type": "character varying",
-                "default_value": "draft",
-                "generation_expression": null,
-                "max_length": 255,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": false,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -2497,6 +2549,57 @@
         },
         {
             "collection": "here_routing",
+            "field": "response",
+            "type": "json",
+            "schema": {
+                "name": "response",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": [
+                    "polyline",
+                    "instructions",
+                    "actions"
+                ],
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "response",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 2,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "debug",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
             "field": "vehicle_speed_cap",
             "type": "integer",
             "schema": {
@@ -2548,26 +2651,6 @@
             "collection": "here_routing",
             "field": "sort",
             "type": "integer",
-            "meta": {
-                "collection": "here_routing",
-                "field": "sort",
-                "special": null,
-                "interface": "input",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": true,
-                "sort": 3,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
             "schema": {
                 "name": "sort",
                 "table": "here_routing",
@@ -2587,6 +2670,71 @@
                 "foreign_key_table": null,
                 "foreign_key_column": null,
                 "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "sort",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": true,
+                "sort": 3,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "error",
+            "type": "text",
+            "schema": {
+                "name": "error",
+                "table": "here_routing",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "error",
+                "special": null,
+                "interface": "input-multiline",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 3,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "debug",
+                "validation": null,
+                "validation_message": null
             }
         },
         {
@@ -2697,6 +2845,26 @@
             "collection": "here_routing",
             "field": "user_created",
             "type": "uuid",
+            "schema": {
+                "name": "user_created",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "user_created",
@@ -2720,26 +2888,6 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "user_created",
-                "table": "here_routing",
-                "data_type": "uuid",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": "public",
-                "foreign_key_table": "directus_users",
-                "foreign_key_column": "id",
-                "comment": null
             }
         },
         {
@@ -2847,8 +2995,75 @@
         },
         {
             "collection": "here_routing",
+            "field": "log",
+            "type": "json",
+            "schema": {
+                "name": "log",
+                "table": "here_routing",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "log",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "input-code",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 4,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "debug",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
             "field": "date_created",
             "type": "timestamp",
+            "schema": {
+                "name": "date_created",
+                "table": "here_routing",
+                "data_type": "timestamp with time zone",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "date_created",
@@ -2872,26 +3087,6 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "date_created",
-                "table": "here_routing",
-                "data_type": "timestamp with time zone",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -2945,20 +3140,44 @@
         },
         {
             "collection": "here_routing",
-            "field": "vehicle",
-            "type": "alias",
-            "schema": null,
+            "field": "via",
+            "type": "geometry.MultiPoint",
+            "schema": {
+                "name": "via",
+                "table": "here_routing",
+                "data_type": "MULTIPOINT",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
-                "field": "vehicle",
-                "special": [
-                    "alias",
-                    "no-data",
-                    "group"
-                ],
-                "interface": "group-detail",
+                "field": "via",
+                "special": null,
+                "interface": "map",
                 "options": {
-                    "start": "closed"
+                    "defaultView": {
+                        "center": {
+                            "lng": 0,
+                            "lat": 0
+                        },
+                        "zoom": 0,
+                        "bearing": 0,
+                        "pitch": 0
+                    },
+                    "geometryType": "MultiPoint"
                 },
                 "display": null,
                 "display_options": null,
@@ -2979,6 +3198,26 @@
             "collection": "here_routing",
             "field": "user_updated",
             "type": "uuid",
+            "schema": {
+                "name": "user_updated",
+                "table": "here_routing",
+                "data_type": "uuid",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "user_updated",
@@ -3000,223 +3239,6 @@
                 "conditions": null,
                 "required": false,
                 "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": {
-                "name": "user_updated",
-                "table": "here_routing",
-                "data_type": "uuid",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": "public",
-                "foreign_key_table": "directus_users",
-                "foreign_key_column": "id",
-                "comment": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "return",
-            "type": "csv",
-            "schema": {
-                "name": "return",
-                "table": "here_routing",
-                "data_type": "text",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_routing",
-                "field": "return",
-                "special": [
-                    "cast-csv"
-                ],
-                "interface": "select-multiple-checkbox",
-                "options": {
-                    "choices": [
-                        {
-                            "text": "polyline",
-                            "value": "polyline"
-                        },
-                        {
-                            "text": "instructions",
-                            "value": "instructions"
-                        },
-                        {
-                            "text": "travelSummary",
-                            "value": "travelSummary"
-                        },
-                        {
-                            "text": "typicalDuration",
-                            "value": "typicalDuration"
-                        },
-                        {
-                            "text": "elevation",
-                            "value": "elevation"
-                        },
-                        {
-                            "text": "passthrough",
-                            "value": "passthrough"
-                        },
-                        {
-                            "text": "routingZones",
-                            "value": "routingZones"
-                        },
-                        {
-                            "text": "tolls",
-                            "value": "tolls"
-                        },
-                        {
-                            "text": "potentialTimeDependentViolations",
-                            "value": "potentialTimeDependentViolations"
-                        },
-                        {
-                            "text": "noThroughRestrictions",
-                            "value": "noThroughRestrictions"
-                        },
-                        {
-                            "text": "routeLabels",
-                            "value": "routeLabels"
-                        },
-                        {
-                            "text": "truckRoadTypes",
-                            "value": "truckRoadTypes"
-                        },
-                        {
-                            "text": "incidents",
-                            "value": "incidents"
-                        },
-                        {
-                            "text": "routeHandle",
-                            "value": "routeHandle"
-                        },
-                        {
-                            "text": "turnByTurnActions",
-                            "value": "turnByTurnActions"
-                        },
-                        {
-                            "text": "mlDuration",
-                            "value": "mlDuration"
-                        },
-                        {
-                            "text": "summary",
-                            "value": "summary"
-                        },
-                        {
-                            "text": "actions",
-                            "value": "actions"
-                        }
-                    ]
-                },
-                "display": "labels",
-                "display_options": {
-                    "choices": [
-                        {
-                            "text": "polyline",
-                            "value": "polyline"
-                        },
-                        {
-                            "text": "instructions",
-                            "value": "instructions"
-                        },
-                        {
-                            "text": "travelSummary",
-                            "value": "travelSummary"
-                        },
-                        {
-                            "text": "typicalDuration",
-                            "value": "typicalDuration"
-                        },
-                        {
-                            "text": "elevation",
-                            "value": "elevation"
-                        },
-                        {
-                            "text": "passthrough",
-                            "value": "passthrough"
-                        },
-                        {
-                            "text": "routingZones",
-                            "value": "routingZones"
-                        },
-                        {
-                            "text": "tolls",
-                            "value": "tolls"
-                        },
-                        {
-                            "text": "potentialTimeDependentViolations",
-                            "value": "potentialTimeDependentViolations"
-                        },
-                        {
-                            "text": "noThroughRestrictions",
-                            "value": "noThroughRestrictions"
-                        },
-                        {
-                            "text": "routeLabels",
-                            "value": "routeLabels"
-                        },
-                        {
-                            "text": "truckRoadTypes",
-                            "value": "truckRoadTypes"
-                        },
-                        {
-                            "text": "incidents",
-                            "value": "incidents"
-                        },
-                        {
-                            "text": "routeHandle",
-                            "value": "routeHandle"
-                        },
-                        {
-                            "text": "turnByTurnActions",
-                            "value": "turnByTurnActions"
-                        },
-                        {
-                            "text": "mlDuration",
-                            "value": "mlDuration"
-                        },
-                        {
-                            "text": "summary",
-                            "value": "summary"
-                        },
-                        {
-                            "text": "actions",
-                            "value": "actions"
-                        }
-                    ]
-                },
-                "readonly": false,
-                "hidden": false,
-                "sort": 6,
-                "width": "half",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": "Input",
                 "validation": null,
                 "validation_message": null
             }
@@ -3271,8 +3293,60 @@
         },
         {
             "collection": "here_routing",
+            "field": "vehicle",
+            "type": "alias",
+            "schema": null,
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-detail",
+                "options": {
+                    "start": "closed"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 6,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
             "field": "date_updated",
             "type": "timestamp",
+            "schema": {
+                "name": "date_updated",
+                "table": "here_routing",
+                "data_type": "timestamp with time zone",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "date_updated",
@@ -3296,545 +3370,6 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "date_updated",
-                "table": "here_routing",
-                "data_type": "timestamp with time zone",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "spans",
-            "type": "csv",
-            "schema": {
-                "name": "spans",
-                "table": "here_routing",
-                "data_type": "text",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_routing",
-                "field": "spans",
-                "special": [
-                    "cast-csv"
-                ],
-                "interface": "select-multiple-checkbox",
-                "options": {
-                    "choices": [
-                        {
-                            "text": "walkAttributes",
-                            "value": "walkAttributes"
-                        },
-                        {
-                            "text": "carAttributes",
-                            "value": "carAttributes"
-                        },
-                        {
-                            "text": "scooterAttributes",
-                            "value": "scooterAttributes"
-                        },
-                        {
-                            "text": "length",
-                            "value": "length"
-                        },
-                        {
-                            "text": "baseDuration",
-                            "value": "baseDuration"
-                        },
-                        {
-                            "text": "countryCode",
-                            "value": "countryCode"
-                        },
-                        {
-                            "text": "functionalClass",
-                            "value": "functionalClass"
-                        },
-                        {
-                            "text": "speedLimit",
-                            "value": "speedLimit"
-                        },
-                        {
-                            "text": "dynamicSpeedInfo",
-                            "value": "dynamicSpeedInfo"
-                        },
-                        {
-                            "text": "segmentRef",
-                            "value": "segmentRef"
-                        },
-                        {
-                            "text": "routingZones",
-                            "value": "routingZones"
-                        },
-                        {
-                            "text": "notices",
-                            "value": "notices"
-                        },
-                        {
-                            "text": "tollSystems",
-                            "value": "tollSystems"
-                        },
-                        {
-                            "text": "railwayCrossings",
-                            "value": "railwayCrossings"
-                        },
-                        {
-                            "text": "streetAttributes",
-                            "value": "streetAttributes"
-                        },
-                        {
-                            "text": "truckAttributes",
-                            "value": "truckAttributes"
-                        },
-                        {
-                            "text": "names",
-                            "value": "names"
-                        },
-                        {
-                            "text": "duration",
-                            "value": "duration"
-                        },
-                        {
-                            "text": "typicalDuration",
-                            "value": "typicalDuration"
-                        },
-                        {
-                            "text": "stateCode",
-                            "value": "stateCode"
-                        },
-                        {
-                            "text": "routeNumbers",
-                            "value": "routeNumbers"
-                        },
-                        {
-                            "text": "maxSpeed",
-                            "value": "maxSpeed"
-                        },
-                        {
-                            "text": "segmentId",
-                            "value": "segmentId"
-                        },
-                        {
-                            "text": "consumption",
-                            "value": "consumption"
-                        },
-                        {
-                            "text": "truckRoadTypes",
-                            "value": "truckRoadTypes"
-                        },
-                        {
-                            "text": "incidents",
-                            "value": "incidents"
-                        },
-                        {
-                            "text": "gates",
-                            "value": "gates"
-                        },
-                        {
-                            "text": "noThroughRestrictions",
-                            "value": "noThroughRestrictions"
-                        }
-                    ]
-                },
-                "display": "labels",
-                "display_options": {
-                    "choices": [
-                        {
-                            "text": "walkAttributes",
-                            "value": "walkAttributes"
-                        },
-                        {
-                            "text": "carAttributes",
-                            "value": "carAttributes"
-                        },
-                        {
-                            "text": "scooterAttributes",
-                            "value": "scooterAttributes"
-                        },
-                        {
-                            "text": "length",
-                            "value": "length"
-                        },
-                        {
-                            "text": "baseDuration",
-                            "value": "baseDuration"
-                        },
-                        {
-                            "text": "countryCode",
-                            "value": "countryCode"
-                        },
-                        {
-                            "text": "functionalClass",
-                            "value": "functionalClass"
-                        },
-                        {
-                            "text": "speedLimit",
-                            "value": "speedLimit"
-                        },
-                        {
-                            "text": "dynamicSpeedInfo",
-                            "value": "dynamicSpeedInfo"
-                        },
-                        {
-                            "text": "segmentRef",
-                            "value": "segmentRef"
-                        },
-                        {
-                            "text": "routingZones",
-                            "value": "routingZones"
-                        },
-                        {
-                            "text": "notices",
-                            "value": "notices"
-                        },
-                        {
-                            "text": "tollSystems",
-                            "value": "tollSystems"
-                        },
-                        {
-                            "text": "railwayCrossings",
-                            "value": "railwayCrossings"
-                        },
-                        {
-                            "text": "streetAttributes",
-                            "value": "streetAttributes"
-                        },
-                        {
-                            "text": "truckAttributes",
-                            "value": "truckAttributes"
-                        },
-                        {
-                            "text": "names",
-                            "value": "names"
-                        },
-                        {
-                            "text": "duration",
-                            "value": "duration"
-                        },
-                        {
-                            "text": "typicalDuration",
-                            "value": "typicalDuration"
-                        },
-                        {
-                            "text": "stateCode",
-                            "value": "stateCode"
-                        },
-                        {
-                            "text": "routeNumbers",
-                            "value": "routeNumbers"
-                        },
-                        {
-                            "text": "maxSpeed",
-                            "value": "maxSpeed"
-                        },
-                        {
-                            "text": "segmentId",
-                            "value": "segmentId"
-                        },
-                        {
-                            "text": "consumption",
-                            "value": "consumption"
-                        },
-                        {
-                            "text": "truckRoadTypes",
-                            "value": "truckRoadTypes"
-                        },
-                        {
-                            "text": "incidents",
-                            "value": "incidents"
-                        },
-                        {
-                            "text": "gates",
-                            "value": "gates"
-                        },
-                        {
-                            "text": "noThroughRestrictions",
-                            "value": "noThroughRestrictions"
-                        }
-                    ]
-                },
-                "readonly": false,
-                "hidden": false,
-                "sort": 7,
-                "width": "half",
-                "translations": null,
-                "note": "description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead.",
-                "conditions": null,
-                "required": false,
-                "group": "Input",
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "vehicle_width",
-            "type": "integer",
-            "schema": {
-                "name": "vehicle_width",
-                "table": "here_routing",
-                "data_type": "integer",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": 32,
-                "numeric_scale": 0,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_routing",
-                "field": "vehicle_width",
-                "special": null,
-                "interface": "input",
-                "options": {
-                    "min": 0,
-                    "max": 5000,
-                    "placeholder": "Width in CM. (min 0, max 5000)"
-                },
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 7,
-                "width": "half",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": "vehicle",
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "routingMode",
-            "type": "string",
-            "schema": {
-                "name": "routingMode",
-                "table": "here_routing",
-                "data_type": "character varying",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": 255,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_routing",
-                "field": "routingMode",
-                "special": null,
-                "interface": "select-dropdown",
-                "options": {
-                    "choices": [
-                        {
-                            "text": "Fast",
-                            "value": "fast"
-                        },
-                        {
-                            "text": "Short",
-                            "value": "short"
-                        }
-                    ]
-                },
-                "display": "labels",
-                "display_options": {
-                    "choices": [
-                        {
-                            "text": "Fast",
-                            "value": "fast"
-                        },
-                        {
-                            "text": "Short",
-                            "value": "short"
-                        }
-                    ]
-                },
-                "readonly": false,
-                "hidden": false,
-                "sort": 8,
-                "width": "half",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": "Input",
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "vehicle_length",
-            "type": "integer",
-            "schema": {
-                "name": "vehicle_length",
-                "table": "here_routing",
-                "data_type": "integer",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": 32,
-                "numeric_scale": 0,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_routing",
-                "field": "vehicle_length",
-                "special": null,
-                "interface": "input",
-                "options": {
-                    "min": 0,
-                    "max": 30000,
-                    "placeholder": "Length in CM. (min 0, max 30000)"
-                },
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 8,
-                "width": "half",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": "vehicle",
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "Input",
-            "type": "alias",
-            "meta": {
-                "collection": "here_routing",
-                "field": "Input",
-                "special": [
-                    "alias",
-                    "no-data",
-                    "group"
-                ],
-                "interface": "group-detail",
-                "options": {
-                    "start": "closed"
-                },
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 8,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": null
-        },
-        {
-            "collection": "here_routing",
-            "field": "error",
-            "type": "text",
-            "meta": {
-                "collection": "here_routing",
-                "field": "error",
-                "special": null,
-                "interface": "input-multiline",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 9,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": {
-                "name": "error",
-                "table": "here_routing",
-                "data_type": "text",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -5173,8 +4708,402 @@
                 },
                 "readonly": false,
                 "hidden": false,
-                "sort": 9,
+                "sort": 7,
                 "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_width",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_width",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_width",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 5000,
+                    "placeholder": "Width in CM. (min 0, max 5000)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 7,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "routingMode",
+            "type": "string",
+            "schema": {
+                "name": "routingMode",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "routingMode",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "Fast",
+                            "value": "fast"
+                        },
+                        {
+                            "text": "Short",
+                            "value": "short"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "Fast",
+                            "value": "fast"
+                        },
+                        {
+                            "text": "Short",
+                            "value": "short"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "vehicle_length",
+            "type": "integer",
+            "schema": {
+                "name": "vehicle_length",
+                "table": "here_routing",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "vehicle_length",
+                "special": null,
+                "interface": "input",
+                "options": {
+                    "min": 0,
+                    "max": 30000,
+                    "placeholder": "Length in CM. (min 0, max 30000)"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "Input",
+            "type": "alias",
+            "schema": null,
+            "meta": {
+                "collection": "here_routing",
+                "field": "Input",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-detail",
+                "options": {
+                    "start": "closed"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "return",
+            "type": "csv",
+            "schema": {
+                "name": "return",
+                "table": "here_routing",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "return",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "polyline",
+                            "value": "polyline"
+                        },
+                        {
+                            "text": "instructions",
+                            "value": "instructions"
+                        },
+                        {
+                            "text": "travelSummary",
+                            "value": "travelSummary"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "elevation",
+                            "value": "elevation"
+                        },
+                        {
+                            "text": "passthrough",
+                            "value": "passthrough"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "tolls",
+                            "value": "tolls"
+                        },
+                        {
+                            "text": "potentialTimeDependentViolations",
+                            "value": "potentialTimeDependentViolations"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        },
+                        {
+                            "text": "routeLabels",
+                            "value": "routeLabels"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "routeHandle",
+                            "value": "routeHandle"
+                        },
+                        {
+                            "text": "turnByTurnActions",
+                            "value": "turnByTurnActions"
+                        },
+                        {
+                            "text": "mlDuration",
+                            "value": "mlDuration"
+                        },
+                        {
+                            "text": "summary",
+                            "value": "summary"
+                        },
+                        {
+                            "text": "actions",
+                            "value": "actions"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "polyline",
+                            "value": "polyline"
+                        },
+                        {
+                            "text": "instructions",
+                            "value": "instructions"
+                        },
+                        {
+                            "text": "travelSummary",
+                            "value": "travelSummary"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "elevation",
+                            "value": "elevation"
+                        },
+                        {
+                            "text": "passthrough",
+                            "value": "passthrough"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "tolls",
+                            "value": "tolls"
+                        },
+                        {
+                            "text": "potentialTimeDependentViolations",
+                            "value": "potentialTimeDependentViolations"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        },
+                        {
+                            "text": "routeLabels",
+                            "value": "routeLabels"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "routeHandle",
+                            "value": "routeHandle"
+                        },
+                        {
+                            "text": "turnByTurnActions",
+                            "value": "turnByTurnActions"
+                        },
+                        {
+                            "text": "mlDuration",
+                            "value": "mlDuration"
+                        },
+                        {
+                            "text": "summary",
+                            "value": "summary"
+                        },
+                        {
+                            "text": "actions",
+                            "value": "actions"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 9,
+                "width": "full",
                 "translations": null,
                 "note": null,
                 "conditions": null,
@@ -5234,21 +5163,31 @@
         },
         {
             "collection": "here_routing",
-            "field": "response",
-            "type": "json",
+            "field": "routes",
+            "type": "alias",
+            "schema": null,
             "meta": {
                 "collection": "here_routing",
-                "field": "response",
+                "field": "routes",
                 "special": [
-                    "cast-json"
+                    "o2m"
                 ],
-                "interface": "input-code",
-                "options": null,
-                "display": null,
-                "display_options": null,
+                "interface": "list-o2m",
+                "options": {
+                    "fields": [
+                        "sections"
+                    ],
+                    "template": "{{id}}",
+                    "enableLink": true,
+                    "enableSelect": false
+                },
+                "display": "related-values",
+                "display_options": {
+                    "template": "{{sections.type}}{{sections}}"
+                },
                 "readonly": false,
                 "hidden": false,
-                "sort": 10,
+                "sort": 9,
                 "width": "full",
                 "translations": null,
                 "note": null,
@@ -5257,16 +5196,17 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            },
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "spans",
+            "type": "csv",
             "schema": {
-                "name": "response",
+                "name": "spans",
                 "table": "here_routing",
-                "data_type": "json",
-                "default_value": [
-                    "polyline",
-                    "instructions",
-                    "actions"
-                ],
+                "data_type": "text",
+                "default_value": null,
                 "generation_expression": null,
                 "max_length": null,
                 "numeric_precision": null,
@@ -5281,6 +5221,258 @@
                 "foreign_key_table": null,
                 "foreign_key_column": null,
                 "comment": null
+            },
+            "meta": {
+                "collection": "here_routing",
+                "field": "spans",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "walkAttributes",
+                            "value": "walkAttributes"
+                        },
+                        {
+                            "text": "carAttributes",
+                            "value": "carAttributes"
+                        },
+                        {
+                            "text": "scooterAttributes",
+                            "value": "scooterAttributes"
+                        },
+                        {
+                            "text": "length",
+                            "value": "length"
+                        },
+                        {
+                            "text": "baseDuration",
+                            "value": "baseDuration"
+                        },
+                        {
+                            "text": "countryCode",
+                            "value": "countryCode"
+                        },
+                        {
+                            "text": "functionalClass",
+                            "value": "functionalClass"
+                        },
+                        {
+                            "text": "speedLimit",
+                            "value": "speedLimit"
+                        },
+                        {
+                            "text": "dynamicSpeedInfo",
+                            "value": "dynamicSpeedInfo"
+                        },
+                        {
+                            "text": "segmentRef",
+                            "value": "segmentRef"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "notices",
+                            "value": "notices"
+                        },
+                        {
+                            "text": "tollSystems",
+                            "value": "tollSystems"
+                        },
+                        {
+                            "text": "railwayCrossings",
+                            "value": "railwayCrossings"
+                        },
+                        {
+                            "text": "streetAttributes",
+                            "value": "streetAttributes"
+                        },
+                        {
+                            "text": "truckAttributes",
+                            "value": "truckAttributes"
+                        },
+                        {
+                            "text": "names",
+                            "value": "names"
+                        },
+                        {
+                            "text": "duration",
+                            "value": "duration"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "stateCode",
+                            "value": "stateCode"
+                        },
+                        {
+                            "text": "routeNumbers",
+                            "value": "routeNumbers"
+                        },
+                        {
+                            "text": "maxSpeed",
+                            "value": "maxSpeed"
+                        },
+                        {
+                            "text": "segmentId",
+                            "value": "segmentId"
+                        },
+                        {
+                            "text": "consumption",
+                            "value": "consumption"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "gates",
+                            "value": "gates"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "walkAttributes",
+                            "value": "walkAttributes"
+                        },
+                        {
+                            "text": "carAttributes",
+                            "value": "carAttributes"
+                        },
+                        {
+                            "text": "scooterAttributes",
+                            "value": "scooterAttributes"
+                        },
+                        {
+                            "text": "length",
+                            "value": "length"
+                        },
+                        {
+                            "text": "baseDuration",
+                            "value": "baseDuration"
+                        },
+                        {
+                            "text": "countryCode",
+                            "value": "countryCode"
+                        },
+                        {
+                            "text": "functionalClass",
+                            "value": "functionalClass"
+                        },
+                        {
+                            "text": "speedLimit",
+                            "value": "speedLimit"
+                        },
+                        {
+                            "text": "dynamicSpeedInfo",
+                            "value": "dynamicSpeedInfo"
+                        },
+                        {
+                            "text": "segmentRef",
+                            "value": "segmentRef"
+                        },
+                        {
+                            "text": "routingZones",
+                            "value": "routingZones"
+                        },
+                        {
+                            "text": "notices",
+                            "value": "notices"
+                        },
+                        {
+                            "text": "tollSystems",
+                            "value": "tollSystems"
+                        },
+                        {
+                            "text": "railwayCrossings",
+                            "value": "railwayCrossings"
+                        },
+                        {
+                            "text": "streetAttributes",
+                            "value": "streetAttributes"
+                        },
+                        {
+                            "text": "truckAttributes",
+                            "value": "truckAttributes"
+                        },
+                        {
+                            "text": "names",
+                            "value": "names"
+                        },
+                        {
+                            "text": "duration",
+                            "value": "duration"
+                        },
+                        {
+                            "text": "typicalDuration",
+                            "value": "typicalDuration"
+                        },
+                        {
+                            "text": "stateCode",
+                            "value": "stateCode"
+                        },
+                        {
+                            "text": "routeNumbers",
+                            "value": "routeNumbers"
+                        },
+                        {
+                            "text": "maxSpeed",
+                            "value": "maxSpeed"
+                        },
+                        {
+                            "text": "segmentId",
+                            "value": "segmentId"
+                        },
+                        {
+                            "text": "consumption",
+                            "value": "consumption"
+                        },
+                        {
+                            "text": "truckRoadTypes",
+                            "value": "truckRoadTypes"
+                        },
+                        {
+                            "text": "incidents",
+                            "value": "incidents"
+                        },
+                        {
+                            "text": "gates",
+                            "value": "gates"
+                        },
+                        {
+                            "text": "noThroughRestrictions",
+                            "value": "noThroughRestrictions"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 10,
+                "width": "full",
+                "translations": null,
+                "note": "description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead.",
+                "conditions": null,
+                "required": false,
+                "group": "Input",
+                "validation": null,
+                "validation_message": null
             }
         },
         {
@@ -5327,6 +5519,38 @@
                 "conditions": null,
                 "required": false,
                 "group": "vehicle",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_routing",
+            "field": "debug",
+            "type": "alias",
+            "schema": null,
+            "meta": {
+                "collection": "here_routing",
+                "field": "debug",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-detail",
+                "options": {
+                    "start": "closed"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 10,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
                 "validation": null,
                 "validation_message": null
             }
@@ -5416,53 +5640,6 @@
         },
         {
             "collection": "here_routing",
-            "field": "request",
-            "type": "json",
-            "meta": {
-                "collection": "here_routing",
-                "field": "request",
-                "special": [
-                    "cast-json"
-                ],
-                "interface": "input-code",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 11,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": {
-                "name": "request",
-                "table": "here_routing",
-                "data_type": "json",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            }
-        },
-        {
-            "collection": "here_routing",
             "field": "vehicle_axle_count",
             "type": "integer",
             "schema": {
@@ -5507,51 +5684,6 @@
                 "group": "vehicle",
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_routing",
-            "field": "debug",
-            "type": "string",
-            "meta": {
-                "collection": "here_routing",
-                "field": "debug",
-                "special": null,
-                "interface": "input-code",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 12,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": {
-                "name": "debug",
-                "table": "here_routing",
-                "data_type": "character varying",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": 255,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -5601,39 +5733,6 @@
                 "validation": null,
                 "validation_message": null
             }
-        },
-        {
-            "collection": "here_routing",
-            "field": "routes",
-            "type": "alias",
-            "meta": {
-                "collection": "here_routing",
-                "field": "routes",
-                "special": [
-                    "o2m"
-                ],
-                "interface": "list-o2m",
-                "options": {
-                    "layout": "table",
-                    "fields": [
-                        "sections"
-                    ]
-                },
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 13,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            },
-            "schema": null
         },
         {
             "collection": "here_routing",
@@ -6098,6 +6197,26 @@
             "collection": "here_routing",
             "field": "vehicle_commercial",
             "type": "string",
+            "schema": {
+                "name": "vehicle_commercial",
+                "table": "here_routing",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
             "meta": {
                 "collection": "here_routing",
                 "field": "vehicle_commercial",
@@ -6139,26 +6258,6 @@
                 "group": "vehicle",
                 "validation": null,
                 "validation_message": null
-            },
-            "schema": {
-                "name": "vehicle_commercial",
-                "table": "here_routing",
-                "data_type": "character varying",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": 255,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             }
         },
         {
@@ -6539,6 +6638,62 @@
         },
         {
             "collection": "here_section",
+            "field": "polyline",
+            "type": "geometry.LineString",
+            "schema": {
+                "name": "polyline",
+                "table": "here_section",
+                "data_type": "LINESTRING",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_section",
+                "field": "polyline",
+                "special": null,
+                "interface": "map",
+                "options": {
+                    "defaultView": {
+                        "center": {
+                            "lng": 0,
+                            "lat": 0
+                        },
+                        "zoom": 0,
+                        "bearing": 0,
+                        "pitch": 0
+                    },
+                    "geometryType": "LineString"
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 8,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_section",
             "field": "type",
             "type": "string",
             "schema": {
@@ -6573,7 +6728,7 @@
                 "display_options": null,
                 "readonly": false,
                 "hidden": false,
-                "sort": 8,
+                "sort": 9,
                 "width": "half",
                 "translations": null,
                 "note": null,
@@ -6620,7 +6775,7 @@
                 "display_options": null,
                 "readonly": false,
                 "hidden": false,
-                "sort": 9,
+                "sort": 10,
                 "width": "half",
                 "translations": null,
                 "note": null,
@@ -6658,64 +6813,6 @@
                 },
                 "readonly": false,
                 "hidden": false,
-                "sort": 10,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_section",
-            "field": "polyline",
-            "type": "json",
-            "schema": {
-                "name": "polyline",
-                "table": "here_section",
-                "data_type": "json",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_section",
-                "field": "polyline",
-                "special": [
-                    "cast-json"
-                ],
-                "interface": "map",
-                "options": {
-                    "defaultView": {
-                        "center": {
-                            "lng": -70.26796800530951,
-                            "lat": 2.842170943040401e-14
-                        },
-                        "zoom": -0.3706434003783814,
-                        "bearing": 0,
-                        "pitch": 0
-                    },
-                    "geometryType": "Point"
-                },
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
                 "sort": 11,
                 "width": "full",
                 "translations": null,
@@ -6742,61 +6839,37 @@
                 "options": {
                     "fields": [
                         "offset",
-                        "max_speed"
+                        "max_speed",
+                        "duration",
+                        "topology_segment_id",
+                        "walk_attributes",
+                        "car_attributes",
+                        "scooter_attributes",
+                        "length",
+                        "base_duration",
+                        "country_code",
+                        "functional_class",
+                        "speed_limit",
+                        "segment_ref",
+                        "traffic_speed",
+                        "base_speed",
+                        "turn_time",
+                        "street_attributes",
+                        "truck_attributes",
+                        "names",
+                        "route_numbers",
+                        "typical_duration",
+                        "state_code",
+                        "consumption"
                     ],
-                    "template": "{{offse}}{{max_speed}}",
+                    "template": null,
                     "layout": "table"
                 },
                 "display": "raw",
                 "display_options": null,
                 "readonly": false,
                 "hidden": false,
-                "sort": 13,
-                "width": "full",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_section",
-            "field": "polyline_encoded",
-            "type": "text",
-            "schema": {
-                "name": "polyline_encoded",
-                "table": "here_section",
-                "data_type": "text",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
-            "meta": {
-                "collection": "here_section",
-                "field": "polyline_encoded",
-                "special": null,
-                "interface": "input-multiline",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 14,
+                "sort": 12,
                 "width": "full",
                 "translations": null,
                 "note": null,
@@ -6845,7 +6918,7 @@
                 "display_options": null,
                 "readonly": false,
                 "hidden": false,
-                "sort": 15,
+                "sort": 13,
                 "width": "full",
                 "translations": null,
                 "note": null,
@@ -6890,7 +6963,7 @@
                 "display_options": null,
                 "readonly": false,
                 "hidden": true,
-                "sort": 16,
+                "sort": 14,
                 "width": "full",
                 "translations": null,
                 "note": null,
@@ -6905,26 +6978,6 @@
             "collection": "here_span",
             "field": "id",
             "type": "uuid",
-            "schema": {
-                "name": "id",
-                "table": "here_span",
-                "data_type": "uuid",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": false,
-                "is_unique": true,
-                "is_indexed": false,
-                "is_primary_key": true,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
-            },
             "meta": {
                 "collection": "here_span",
                 "field": "id",
@@ -6946,23 +6999,43 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "status",
-            "type": "string",
+            },
             "schema": {
-                "name": "status",
+                "name": "id",
                 "table": "here_span",
-                "data_type": "character varying",
-                "default_value": "draft",
+                "data_type": "uuid",
+                "default_value": null,
                 "generation_expression": null,
-                "max_length": 255,
+                "max_length": null,
                 "numeric_precision": null,
                 "numeric_scale": null,
                 "is_generated": false,
                 "is_nullable": false,
+                "is_unique": true,
+                "is_indexed": false,
+                "is_primary_key": true,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "traffic_speed",
+            "type": "float",
+            "schema": {
+                "name": "traffic_speed",
+                "table": "here_span",
+                "data_type": "real",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 24,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
                 "is_unique": false,
                 "is_indexed": false,
                 "is_primary_key": false,
@@ -6972,6 +7045,31 @@
                 "foreign_key_column": null,
                 "comment": null
             },
+            "meta": {
+                "collection": "here_span",
+                "field": "traffic_speed",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 1,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "dynamic_speed_info",
+                "validation": null,
+                "validation_message": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "status",
+            "type": "string",
             "meta": {
                 "collection": "here_span",
                 "field": "status",
@@ -7034,14 +7132,124 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
+            },
+            "schema": {
+                "name": "status",
+                "table": "here_span",
+                "data_type": "character varying",
+                "default_value": "draft",
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": false,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "base_speed",
+            "type": "float",
+            "schema": {
+                "name": "base_speed",
+                "table": "here_span",
+                "data_type": "real",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 24,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            },
+            "meta": {
+                "collection": "here_span",
+                "field": "base_speed",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 2,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": "dynamic_speed_info",
+                "validation": null,
+                "validation_message": null
             }
         },
         {
             "collection": "here_span",
             "field": "sort",
             "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "sort",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": true,
+                "sort": 3,
+                "width": "full",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
             "schema": {
                 "name": "sort",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "turn_time",
+            "type": "integer",
+            "schema": {
+                "name": "turn_time",
                 "table": "here_span",
                 "data_type": "integer",
                 "default_value": null,
@@ -7062,21 +7270,21 @@
             },
             "meta": {
                 "collection": "here_span",
-                "field": "sort",
+                "field": "turn_time",
                 "special": null,
                 "interface": "input",
                 "options": null,
                 "display": null,
                 "display_options": null,
                 "readonly": false,
-                "hidden": true,
+                "hidden": false,
                 "sort": 3,
-                "width": "full",
+                "width": "half",
                 "translations": null,
                 "note": null,
                 "conditions": null,
                 "required": false,
-                "group": null,
+                "group": "dynamic_speed_info",
                 "validation": null,
                 "validation_message": null
             }
@@ -7085,26 +7293,6 @@
             "collection": "here_span",
             "field": "user_created",
             "type": "uuid",
-            "schema": {
-                "name": "user_created",
-                "table": "here_span",
-                "data_type": "uuid",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": null,
-                "numeric_scale": null,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": "public",
-                "foreign_key_table": "directus_users",
-                "foreign_key_column": "id",
-                "comment": null
-            },
             "meta": {
                 "collection": "here_span",
                 "field": "user_created",
@@ -7128,16 +7316,11 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "date_created",
-            "type": "timestamp",
+            },
             "schema": {
-                "name": "date_created",
+                "name": "user_created",
                 "table": "here_span",
-                "data_type": "timestamp with time zone",
+                "data_type": "uuid",
                 "default_value": null,
                 "generation_expression": null,
                 "max_length": null,
@@ -7149,11 +7332,16 @@
                 "is_indexed": false,
                 "is_primary_key": false,
                 "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
                 "comment": null
-            },
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "date_created",
+            "type": "timestamp",
             "meta": {
                 "collection": "here_span",
                 "field": "date_created",
@@ -7177,16 +7365,11 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "user_updated",
-            "type": "uuid",
+            },
             "schema": {
-                "name": "user_updated",
+                "name": "date_created",
                 "table": "here_span",
-                "data_type": "uuid",
+                "data_type": "timestamp with time zone",
                 "default_value": null,
                 "generation_expression": null,
                 "max_length": null,
@@ -7198,11 +7381,16 @@
                 "is_indexed": false,
                 "is_primary_key": false,
                 "has_auto_increment": false,
-                "foreign_key_schema": "public",
-                "foreign_key_table": "directus_users",
-                "foreign_key_column": "id",
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
                 "comment": null
-            },
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "user_updated",
+            "type": "uuid",
             "meta": {
                 "collection": "here_span",
                 "field": "user_updated",
@@ -7226,16 +7414,11 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "date_updated",
-            "type": "timestamp",
+            },
             "schema": {
-                "name": "date_updated",
+                "name": "user_updated",
                 "table": "here_span",
-                "data_type": "timestamp with time zone",
+                "data_type": "uuid",
                 "default_value": null,
                 "generation_expression": null,
                 "max_length": null,
@@ -7247,11 +7430,16 @@
                 "is_indexed": false,
                 "is_primary_key": false,
                 "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
+                "foreign_key_schema": "public",
+                "foreign_key_table": "directus_users",
+                "foreign_key_column": "id",
                 "comment": null
-            },
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "date_updated",
+            "type": "timestamp",
             "meta": {
                 "collection": "here_span",
                 "field": "date_updated",
@@ -7275,65 +7463,15 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "offset",
-            "type": "integer",
-            "schema": {
-                "name": "offset",
-                "table": "here_span",
-                "data_type": "integer",
-                "default_value": null,
-                "generation_expression": null,
-                "max_length": null,
-                "numeric_precision": 32,
-                "numeric_scale": 0,
-                "is_generated": false,
-                "is_nullable": true,
-                "is_unique": false,
-                "is_indexed": false,
-                "is_primary_key": false,
-                "has_auto_increment": false,
-                "foreign_key_schema": null,
-                "foreign_key_table": null,
-                "foreign_key_column": null,
-                "comment": null
             },
-            "meta": {
-                "collection": "here_span",
-                "field": "offset",
-                "special": null,
-                "interface": "input",
-                "options": null,
-                "display": null,
-                "display_options": null,
-                "readonly": false,
-                "hidden": false,
-                "sort": 9,
-                "width": "half",
-                "translations": null,
-                "note": null,
-                "conditions": null,
-                "required": false,
-                "group": null,
-                "validation": null,
-                "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "max_speed",
-            "type": "float",
             "schema": {
-                "name": "max_speed",
+                "name": "date_updated",
                 "table": "here_span",
-                "data_type": "real",
+                "data_type": "timestamp with time zone",
                 "default_value": null,
                 "generation_expression": null,
                 "max_length": null,
-                "numeric_precision": 24,
+                "numeric_precision": null,
                 "numeric_scale": null,
                 "is_generated": false,
                 "is_nullable": true,
@@ -7345,19 +7483,24 @@
                 "foreign_key_table": null,
                 "foreign_key_column": null,
                 "comment": null
-            },
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "span",
+            "type": "uuid",
             "meta": {
                 "collection": "here_span",
-                "field": "max_speed",
+                "field": "span",
                 "special": null,
-                "interface": "input",
+                "interface": "select-dropdown-m2o",
                 "options": null,
                 "display": null,
                 "display_options": null,
                 "readonly": false,
-                "hidden": false,
-                "sort": 10,
-                "width": "half",
+                "hidden": true,
+                "sort": 8,
+                "width": "full",
                 "translations": null,
                 "note": null,
                 "conditions": null,
@@ -7365,12 +7508,7 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
-            }
-        },
-        {
-            "collection": "here_span",
-            "field": "span",
-            "type": "uuid",
+            },
             "schema": {
                 "name": "span",
                 "table": "here_span",
@@ -7390,18 +7528,721 @@
                 "foreign_key_table": "here_section",
                 "foreign_key_column": "id",
                 "comment": null
-            },
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "offset",
+            "type": "integer",
             "meta": {
                 "collection": "here_span",
-                "field": "span",
+                "field": "offset",
                 "special": null,
-                "interface": "select-dropdown-m2o",
+                "interface": "input",
                 "options": null,
                 "display": null,
                 "display_options": null,
                 "readonly": false,
-                "hidden": true,
+                "hidden": false,
+                "sort": 9,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "offset",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "duration",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "duration",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 10,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "duration",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "max_speed",
+            "type": "float",
+            "meta": {
+                "collection": "here_span",
+                "field": "max_speed",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
                 "sort": 11,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "max_speed",
+                "table": "here_span",
+                "data_type": "real",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 24,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "topology_segment_id",
+            "type": "string",
+            "meta": {
+                "collection": "here_span",
+                "field": "topology_segment_id",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 12,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "topology_segment_id",
+                "table": "here_span",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "walk_attributes",
+            "type": "csv",
+            "meta": {
+                "collection": "here_span",
+                "field": "walk_attributes",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 13,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "walk_attributes",
+                "table": "here_span",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "scooter_attributes",
+            "type": "csv",
+            "meta": {
+                "collection": "here_span",
+                "field": "scooter_attributes",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 14,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "scooter_attributes",
+                "table": "here_span",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "car_attributes",
+            "type": "csv",
+            "meta": {
+                "collection": "here_span",
+                "field": "car_attributes",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 15,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "car_attributes",
+                "table": "here_span",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "truck_attributes",
+            "type": "csv",
+            "meta": {
+                "collection": "here_span",
+                "field": "truck_attributes",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "display": "labels",
+                "display_options": {
+                    "choices": [
+                        {
+                            "text": "open",
+                            "value": "open"
+                        }
+                    ]
+                },
+                "readonly": false,
+                "hidden": false,
+                "sort": 16,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "truck_attributes",
+                "table": "here_span",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "length",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "length",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 17,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "length",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "base_duration",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "base_duration",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 18,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "base_duration",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "country_code",
+            "type": "string",
+            "meta": {
+                "collection": "here_span",
+                "field": "country_code",
+                "special": null,
+                "interface": "select-dropdown",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 19,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "country_code",
+                "table": "here_span",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "functional_class",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "functional_class",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 20,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "functional_class",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "speed_limit",
+            "type": "float",
+            "meta": {
+                "collection": "here_span",
+                "field": "speed_limit",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 21,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "speed_limit",
+                "table": "here_span",
+                "data_type": "real",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 24,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "segment_ref",
+            "type": "string",
+            "meta": {
+                "collection": "here_span",
+                "field": "segment_ref",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 22,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "segment_ref",
+                "table": "here_span",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "dynamic_speed_info",
+            "type": "alias",
+            "meta": {
+                "collection": "here_span",
+                "field": "dynamic_speed_info",
+                "special": [
+                    "alias",
+                    "no-data",
+                    "group"
+                ],
+                "interface": "group-raw",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 23,
                 "width": "full",
                 "translations": null,
                 "note": null,
@@ -7410,6 +8251,393 @@
                 "group": null,
                 "validation": null,
                 "validation_message": null
+            },
+            "schema": null
+        },
+        {
+            "collection": "here_span",
+            "field": "street_attributes",
+            "type": "csv",
+            "meta": {
+                "collection": "here_span",
+                "field": "street_attributes",
+                "special": [
+                    "cast-csv"
+                ],
+                "interface": "select-multiple-checkbox",
+                "options": {
+                    "choices": [
+                        {
+                            "text": "rightDrivingSide",
+                            "value": "rightDrivingSide"
+                        },
+                        {
+                            "text": "builtUpArea",
+                            "value": "builtUpArea"
+                        }
+                    ]
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 24,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "street_attributes",
+                "table": "here_span",
+                "data_type": "text",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "names",
+            "type": "json",
+            "meta": {
+                "collection": "here_span",
+                "field": "names",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "list",
+                "options": {
+                    "template": "{{ value }} ({{ language }})",
+                    "fields": [
+                        {
+                            "field": "value",
+                            "name": "value",
+                            "type": "text",
+                            "meta": {
+                                "field": "value",
+                                "width": "half",
+                                "type": "text",
+                                "interface": "input",
+                                "display": "formatted-value",
+                                "display_options": {
+                                    "conditionalFormatting": null
+                                }
+                            }
+                        },
+                        {
+                            "field": "language",
+                            "name": "language",
+                            "type": "string",
+                            "meta": {
+                                "field": "language",
+                                "width": "half",
+                                "type": "string",
+                                "interface": "select-dropdown",
+                                "options": {
+                                    "choices": [
+                                        {
+                                            "text": "pt",
+                                            "value": "pt"
+                                        },
+                                        {
+                                            "text": "en",
+                                            "value": "en"
+                                        }
+                                    ],
+                                    "allowOther": true,
+                                    "allowNone": true
+                                }
+                            }
+                        }
+                    ]
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 25,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "names",
+                "table": "here_span",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "route_numbers",
+            "type": "json",
+            "meta": {
+                "collection": "here_span",
+                "field": "route_numbers",
+                "special": [
+                    "cast-json"
+                ],
+                "interface": "list",
+                "options": {
+                    "template": "{{ value }} ({{ language }})",
+                    "fields": [
+                        {
+                            "field": "value",
+                            "name": "value",
+                            "type": "text",
+                            "meta": {
+                                "field": "value",
+                                "width": "half",
+                                "type": "text",
+                                "interface": "input",
+                                "display": "formatted-value",
+                                "display_options": {
+                                    "conditionalFormatting": null
+                                }
+                            }
+                        },
+                        {
+                            "field": "language",
+                            "name": "language",
+                            "type": "string",
+                            "meta": {
+                                "field": "language",
+                                "width": "half",
+                                "type": "string",
+                                "interface": "select-dropdown",
+                                "options": {
+                                    "choices": [
+                                        {
+                                            "text": "pt",
+                                            "value": "pt"
+                                        },
+                                        {
+                                            "text": "en",
+                                            "value": "en"
+                                        }
+                                    ],
+                                    "allowOther": true,
+                                    "allowNone": true
+                                }
+                            }
+                        },
+                        {
+                            "field": "route_type",
+                            "name": "route_type",
+                            "type": "integer",
+                            "meta": {
+                                "field": "route_type",
+                                "width": "half",
+                                "type": "integer",
+                                "interface": "input"
+                            }
+                        }
+                    ]
+                },
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 26,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "route_numbers",
+                "table": "here_span",
+                "data_type": "json",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "typical_duration",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "typical_duration",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 27,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "typical_duration",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "state_code",
+            "type": "string",
+            "meta": {
+                "collection": "here_span",
+                "field": "state_code",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 28,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "state_code",
+                "table": "here_span",
+                "data_type": "character varying",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": 255,
+                "numeric_precision": null,
+                "numeric_scale": null,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
+            }
+        },
+        {
+            "collection": "here_span",
+            "field": "consumption",
+            "type": "integer",
+            "meta": {
+                "collection": "here_span",
+                "field": "consumption",
+                "special": null,
+                "interface": "input",
+                "options": null,
+                "display": null,
+                "display_options": null,
+                "readonly": false,
+                "hidden": false,
+                "sort": 29,
+                "width": "half",
+                "translations": null,
+                "note": null,
+                "conditions": null,
+                "required": false,
+                "group": null,
+                "validation": null,
+                "validation_message": null
+            },
+            "schema": {
+                "name": "consumption",
+                "table": "here_span",
+                "data_type": "integer",
+                "default_value": null,
+                "generation_expression": null,
+                "max_length": null,
+                "numeric_precision": 32,
+                "numeric_scale": 0,
+                "is_generated": false,
+                "is_nullable": true,
+                "is_unique": false,
+                "is_indexed": false,
+                "is_primary_key": false,
+                "has_auto_increment": false,
+                "foreign_key_schema": null,
+                "foreign_key_table": null,
+                "foreign_key_column": null,
+                "comment": null
             }
         },
         {
@@ -8066,7 +9294,7 @@
                 "foreign_key_table": "here_section",
                 "foreign_key_column": "id",
                 "on_update": "NO ACTION",
-                "on_delete": "SET NULL"
+                "on_delete": "CASCADE"
             },
             "meta": {
                 "many_collection": "here_place",
@@ -8144,7 +9372,7 @@
                 "foreign_key_table": "here_routing",
                 "foreign_key_column": "id",
                 "on_update": "NO ACTION",
-                "on_delete": "SET NULL"
+                "on_delete": "CASCADE"
             },
             "meta": {
                 "many_collection": "here_route",
@@ -8264,32 +9492,6 @@
         },
         {
             "collection": "here_section",
-            "field": "transport",
-            "related_collection": "here_transport",
-            "schema": {
-                "constraint_name": "here_section_transport_foreign",
-                "table": "here_section",
-                "column": "transport",
-                "foreign_key_schema": "public",
-                "foreign_key_table": "here_transport",
-                "foreign_key_column": "id",
-                "on_update": "NO ACTION",
-                "on_delete": "SET NULL"
-            },
-            "meta": {
-                "many_collection": "here_section",
-                "many_field": "transport",
-                "one_collection": "here_transport",
-                "one_field": null,
-                "one_collection_field": null,
-                "one_allowed_collections": null,
-                "junction_field": null,
-                "sort_field": null,
-                "one_deselect_action": "nullify"
-            }
-        },
-        {
-            "collection": "here_section",
             "field": "section",
             "related_collection": "here_route",
             "schema": {
@@ -8300,13 +9502,39 @@
                 "foreign_key_table": "here_route",
                 "foreign_key_column": "id",
                 "on_update": "NO ACTION",
-                "on_delete": "SET NULL"
+                "on_delete": "CASCADE"
             },
             "meta": {
                 "many_collection": "here_section",
                 "many_field": "section",
                 "one_collection": "here_route",
                 "one_field": "sections",
+                "one_collection_field": null,
+                "one_allowed_collections": null,
+                "junction_field": null,
+                "sort_field": null,
+                "one_deselect_action": "nullify"
+            }
+        },
+        {
+            "collection": "here_section",
+            "field": "transport",
+            "related_collection": "here_transport",
+            "schema": {
+                "constraint_name": "here_section_transport_foreign",
+                "table": "here_section",
+                "column": "transport",
+                "foreign_key_schema": "public",
+                "foreign_key_table": "here_transport",
+                "foreign_key_column": "id",
+                "on_update": "NO ACTION",
+                "on_delete": "CASCADE"
+            },
+            "meta": {
+                "many_collection": "here_section",
+                "many_field": "transport",
+                "one_collection": "here_transport",
+                "one_field": null,
                 "one_collection_field": null,
                 "one_allowed_collections": null,
                 "junction_field": null,
@@ -8378,7 +9606,7 @@
                 "foreign_key_table": "here_section",
                 "foreign_key_column": "id",
                 "on_update": "NO ACTION",
-                "on_delete": "SET NULL"
+                "on_delete": "CASCADE"
             },
             "meta": {
                 "many_collection": "here_span",
