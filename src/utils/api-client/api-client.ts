@@ -11,12 +11,12 @@ export class ApiClient {
     baseUrl: string,
     apiKey: string, // Alterado de 'token' para 'apiKey'
     path: string,
-    requestTimeout: number = 10000
+    requestTimeout: number = 10000,
   ) {
     // Validação dos parâmetros obrigatórios
     if (!baseUrl || !apiKey || !path) {
       throw new Error(
-        "Parâmetros obrigatórios (baseUrl, apiKey, path) não foram fornecidos."
+        "Parâmetros obrigatórios (baseUrl, apiKey, path) não foram fornecidos.",
       );
     }
 
@@ -38,12 +38,6 @@ export class ApiClient {
     if (method === "GET" && data) {
       const queryParams = new URLSearchParams(data).toString();
       url += `&${queryParams}`;
-    }
-
-    // Log da URL e dos dados (se houver)
-    console.log(`Chamando API: ${method} ${url}`);
-    if (data) {
-      console.log("Dados enviados:", JSON.stringify(data, null, 2));
     }
 
     const headers: HeadersInit = {
@@ -72,9 +66,6 @@ export class ApiClient {
       }
 
       const responseData = await response.json();
-
-      // Log do resultado da requisição
-      console.log("Resposta da API:", JSON.stringify(responseData, null, 2));
 
       return responseData;
     } catch (error) {

@@ -23,6 +23,11 @@
         "type": "hook",
         "name": "routing-hook",
         "source": "src/routing-hook/index.ts"
+      },
+      {
+        "type": "hook",
+        "name": "update-schema-hook",
+        "source": "src/update-schema-hook/index.ts"
       }
     ],
     "host": "^10.10.0"
@@ -40,8 +45,8 @@
     "lint:fix": "eslint --fix .",
     "compose:up": "docker-compose up --build",
     "compose:down": "docker-compose down",
-    "compose:psql": "docker-compose exec --user postgres agiliza-ai-directus_postgres psql",
-    "compose:bash": "docker-compose exec --user postgres agiliza-ai-directus_postgres bash",
+    "compose:psql": "docker-compose exec --user postgres directus-extension-here_postgres psql",
+    "compose:bash": "docker-compose exec --user postgres adirectus-extension-here_postgres bash",
     "semantic-release": "semantic-release",
     "bootstrap": "directus bootstrap",
     "migration:create": "yarn knex migrate:make",
@@ -53,21 +58,41 @@
     "docker:push": "docker push $npm_package_dockername:$npm_package_version",
     "docker:release": "yarn docker:build && yarn docker:push",
     "docker:build:dev": "docker build --rm -f docker/dev/Dockerfile -t docker-registry.de.vix.br/directus/nodemon:1.0 . && echo Done: docker-registry.de.vix.br/directus/nodemon:1.0",
-    "limpar:branches": "node utils/limpar-branches.js"
+    "limpar:branches": "node utils/limpar-branches.js",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@directus/extensions-sdk": "12.1.4",
-    "@types/node": "^22.10.7",
+    "@directus/extensions-sdk": "13.0.0",
+    "@types/node": "^22.12.0",
+    "@types/proj4": "^2.5.6",
     "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "vitest": "^3.0.2"
   },
   "dependencies": {
     "@directus/cli": "^9.14.3",
+    "@directus/sdk": "^19.0.0",
+    "@googlemaps/polyline-codec": "^1.0.28",
+    "@here/flexpolyline": "^0.1.0",
+    "@types/express": "^5.0.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/pino": "^7.0.5",
     "@unhead/vue": "^1.11.18",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "fs": "^0.0.1-security",
+    "geojson": "^0.5.0",
+    "knex": "^3.1.0",
+    "knex-schema-inspector": "^3.1.0",
+    "path": "^0.12.7",
     "pinia": "^2.3.0",
+    "pino": "^9.6.0",
+    "prettier": "^3.4.2",
+    "proj4": "^2.15.0",
+    "vue": "^3.5.13",
+    "vue-i18n": "9",
+    "vue-router": "4",
     "wkx": "^0.5.0"
   }
 }

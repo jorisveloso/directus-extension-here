@@ -3,6 +3,12 @@
  */
 export type HereExtension = {
   here_routing: components["schemas"]["ItemsHereRouting"];
+  here_place: components["schemas"]["ItemsHerePlace"];
+  here_route: components["schemas"]["ItemsHereRoute"];
+  here_action: components["schemas"]["ItemsHereAction"];
+  here_transport: components["schemas"]["ItemsHereTransport"];
+  here_section: components["schemas"]["ItemsHereSection"];
+  here_span: components["schemas"]["ItemsHereSpan"];
 };
 export type paths = Record<string, never>;
 
@@ -289,6 +295,58 @@ export interface components {
        */
       bundle?: string | null;
     };
+    ItemsHereRouting: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      method?: string | null;
+      transport_mode?: string | null;
+      response?: unknown;
+      error?: string | null;
+      return?: string[] | null;
+      currency?: string | null;
+      /** @description description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead. */
+      spans?: string[] | null;
+      routingMode?: string | null;
+      /** @description Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . */
+      vehicle_speed_cap?: number | null;
+      vehicles_hipped_hazardous_goods?: unknown;
+      /** @description Supported in `truck`, `bus`, `privateBus`, `car` (Beta), `taxi` (Beta) transport modes.  minimum - 0 maximum - 5000 */
+      vehicle_gross_weight?: number | null;
+      vehicle_current_weight?: number | null;
+      vehicle_weight_per_axle?: number | null;
+      vehicle_height?: number | null;
+      vehicle_width?: number | null;
+      vehicle_length?: number | null;
+      /** @description description - Kingpin to rear axle length, in centimeters.  **NOTE:** Currently, the KPRA restrictions are only present in California and Idaho.  **Note:** Supported in `truck`, `car` (Beta), `taxi` (Beta) transport modes. */
+      vehicle_kpra_length?: number | null;
+      vehicle_payload_capacity?: number | null;
+      vehicle_tunnel_category?: string | null;
+      vehicle_axle_count?: number | null;
+      vehicle_trailer_axle_count?: number | null;
+      origin?: Record<string, unknown> | null;
+      request?: unknown;
+      destination?: Record<string, unknown> | null;
+      vehicle_tires_count?: number | null;
+      vehicle_type?: string | null;
+      vehicle_category?: string | null;
+      vehicle_trailer_count?: number | null;
+      vehicle_license_plate?: string | null;
+      vehicle_occupancy?: number | null;
+      vehicle_engine_type?: string | null;
+      vehicle_height_above_first_axle?: number | null;
+      vehicle_commercial?: string | null;
+      log?: unknown;
+      via?: Record<string, unknown> | null;
+      routes?: ((string | components["schemas"]["ItemsHereRoute"])[]) | null;
+    };
     Comments: {
       /**
        * @description Unique identifier for this single collection preset.
@@ -390,7 +448,7 @@ export interface components {
        */
       delta?: Record<string, never>;
     };
-    ItemsHereRouting: {
+    ItemsHerePlace: {
       /** Format: uuid */
       id: string;
       status?: string;
@@ -401,20 +459,119 @@ export interface components {
       user_updated?: string | components["schemas"]["Users"] | null;
       /** Format: timestamp */
       date_updated?: string | null;
-      method?: string | null;
-      transport_mode?: string | null;
-      response?: unknown;
-      error?: string | null;
-      return?: string[] | null;
-      currency?: string | null;
-      origin?: string | null;
-      destination?: string | null;
-      map?: Record<string, unknown> | null;
-      /** @description description - Defines which map content attributes are included in the response spans. For example, `attributes,length` will enable the fields `attributes` and `length` in the route response. For more information about the `countryCode` field, see the [ISO standard](https://www.iso.org/obp/ui/#search).  This parameter also requires that the `polyline` option is set within the `return` parameter.  **NOTE:** Attribute speedLimit is deprecated, use maxSpeed instead. Attribute segmentId is deprecated, use segmentRef instead. */
-      spans?: string[] | null;
-      routingMode?: string | null;
-      /** @description Range [1..70]. Valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus` . */
-      vehicle_speed_cap?: number | null;
+      name?: string | null;
+      location?: Record<string, unknown> | null;
+      originalLocation?: Record<string, unknown> | null;
+      type?: string | null;
+      time?: string | null;
+      place?: string | components["schemas"]["ItemsHereSection"] | null;
+    };
+    ItemsHereRoute: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      route?: string | components["schemas"]["ItemsHereRouting"] | null;
+      sections?: ((string | components["schemas"]["ItemsHereSection"])[]) | null;
+    };
+    ItemsHereAction: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      name?: string | null;
+      duration?: number | null;
+      length?: number | null;
+      instruction?: string | null;
+      offset?: number | null;
+      direction?: string | null;
+      exit?: number | null;
+      severity?: string | null;
+    };
+    ItemsHereTransport: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      mode?: string | null;
+      current_weight?: number | null;
+    };
+    ItemsHereSection: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      type?: string | null;
+      language?: string | null;
+      transport?: string | components["schemas"]["ItemsHereTransport"] | null;
+      section?: string | components["schemas"]["ItemsHereRoute"] | null;
+      polyline?: Record<string, unknown> | null;
+      places?: ((string | components["schemas"]["ItemsHerePlace"])[]) | null;
+      spans?: ((string | components["schemas"]["ItemsHereSpan"])[]) | null;
+    };
+    ItemsHereSpan: {
+      /** Format: uuid */
+      id: string;
+      status?: string;
+      sort?: number | null;
+      user_created?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_created?: string | null;
+      user_updated?: string | components["schemas"]["Users"] | null;
+      /** Format: timestamp */
+      date_updated?: string | null;
+      span?: string | components["schemas"]["ItemsHereSection"] | null;
+      offset?: number | null;
+      duration?: number | null;
+      /** Format: float */
+      max_speed?: number | null;
+      topology_segment_id?: string | null;
+      length?: number | null;
+      base_duration?: number | null;
+      country_code?: string | null;
+      functional_class?: number | null;
+      /** Format: float */
+      speed_limit?: number | null;
+      /** Format: float */
+      traffic_speed?: number | null;
+      /** Format: float */
+      base_speed?: number | null;
+      turn_time?: number | null;
+      segment_ref?: string | null;
+      street_attributes?: string[] | null;
+      truck_attributes?: string[] | null;
+      names?: unknown;
+      route_numbers?: unknown;
+      typical_duration?: number | null;
+      consumption?: number | null;
+      state_code?: string | null;
+      walk_attributes?: string[] | null;
+      car_attributes?: string[] | null;
+      scooter_attributes?: string[] | null;
     };
   };
   responses: never;

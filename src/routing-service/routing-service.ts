@@ -1,19 +1,47 @@
 import { HookExtensionContext } from "@directus/extensions";
+import { decode } from "@here/flexpolyline";
+import dotenv from "dotenv";
 import { components } from "../here-extension";
 import { ApiClient } from "../utils/api-client/api-client";
 import { AbstractServiceOptions, ItemsService } from "../utils/DirectusImports";
 import { StatusRota } from "./StatusRota";
-
-import dotenv from "dotenv";
 dotenv.config();
-
-// interface Point {
-//   type: string;
-//   coordinates: [number, number];
-// }
 
 type Schemas = components["schemas"];
 type Rotas = Schemas["ItemsHereRouting"];
+
+type GeoJSONLineString = {
+  type: "LineString";
+  coordinates: number[][];
+};
+
+interface Section {
+  type?: string;
+  language?: string;
+  departure?: any;
+  arrival?: any;
+  spans?: Array<any>;
+  transport?: any;
+  polyline?: any;
+  places?: Array<any>;
+}
+
+interface Route {
+  id?: string;
+  sections?: Section[];
+}
+
+interface RouteData {
+  routes: Route[];
+}
+
+interface OutputResponse {
+  data: RouteData[];
+}
+
+interface ApiResponse {
+  routes?: Route[];
+}
 
 export class RoutingService {
   ctx: HookExtensionContext;
@@ -29,7 +57,6 @@ export class RoutingService {
     this.service = new this.ctx.services.ItemsService("here_routing", opts);
     this._rotas = [];
 
-    // Validação das variáveis de ambiente obrigatórias
     if (
       !process.env.HERE_API_BASE_URL ||
       !process.env.HERE_API_ROUTES_PATH ||
@@ -40,115 +67,277 @@ export class RoutingService {
       );
     }
 
-    // Atribui as variáveis de ambiente
     this.baseUrl = process.env.HERE_API_BASE_URL;
     this.routePath = process.env.HERE_API_ROUTES_PATH;
     this.apiToken = process.env.HERE_API_TOKEN;
-
-    // Inicializa a instância do ApiClient com baseUrl, token e path
     this.apiClient = new ApiClient(this.baseUrl, this.apiToken, this.routePath);
 
-    // Verifica se a integração está ativada
-    const integracaoAtivada =
-      process.env.HERE_API_INTEGRACAO_ATIVADA === "true";
-    if (!integracaoAtivada) {
-      console.log("Integração com a API da HERE está desativada.");
+    if (process.env.HERE_API_INTEGRACAO_ATIVADA !== "true") {
+      throw new Error("Integração com a API da HERE está desativada.");
     }
+  }
+
+  private getCoordinates(point: any): [number, number] {
+    if (
+      typeof point !== "object" ||
+      point === null ||
+      point.type !== "Point" ||
+      !Array.isArray(point.coordinates) ||
+      point.coordinates.length !== 2
+    ) {
+      throw new Error("O ponto não é um GeoJSON Point válido.");
+    }
+
+    const [longitude, latitude] = point.coordinates;
+    return [latitude, longitude];
+  }
+
+  private formatCoordinates(point: any): string {
+    const [latitude, longitude] = this.getCoordinates(point);
+    return `${latitude},${longitude}`;
   }
 
   async sincronizar(): Promise<void> {
     this._rotas = [];
+
     try {
       await this.obterRotasPorStatus(StatusRota.Rascunho.nome);
       for (const rota of this._rotas) {
         try {
-          // Validação dos campos origin e destination
-          console.log(JSON.stringify(rota));
           if (!rota.origin || !rota.destination) {
             throw new Error(
               `Os campos 'origin' e 'destination' são obrigatórios para a rota ${rota.id}.`
             );
           }
 
-          // Verifica se origin e destination têm a estrutura correta
-          const originPoint = rota.origin; //this.parsePoint(rota.origin);
-          const destinationPoint = rota.destination; //this.parsePoint(rota.destination);
-
-          if (!originPoint || !destinationPoint) {
-            throw new Error(
-              `Os campos 'origin' e 'destination' devem ser do tipo 'Point' com coordenadas válidas para a rota ${rota.id}.`
-            );
+          const originString = this.formatCoordinates(rota.origin);
+          const destinationString = this.formatCoordinates(rota.destination);
+          // Format waypoints from via if it exists
+          const viaPoints: string[] = [];
+          if (
+            rota.via?.type === "MultiPoint" &&
+            Array.isArray(rota.via.coordinates)
+          ) {
+            rota.via.coordinates.forEach((coordinate) => {
+              if (Array.isArray(coordinate) && coordinate.length === 2) {
+                const [longitude, latitude] = coordinate;
+                viaPoints.push(`${latitude},${longitude}`);
+              }
+            });
           }
 
-          // Extrai as coordenadas de origin e destination
-          const originString = rota.origin; //extractLatLongAsString(originPoint);
-          const destinationString = rota.destination; //extractLatLongAsString(destinationPoint);
-
-          // Monta o payload corretamente
           const payload = {
             transportMode: rota.transport_mode,
             origin: originString,
             destination: destinationString,
+            ...(viaPoints.length > 0 ? { via: viaPoints } : {}),
             return: rota.return ? rota.return.join(",") : "",
             currency: rota.currency,
             spans: rota.spans ? rota.spans.join(",") : "",
-            routingMode: rota.routingMode,
             "vehicle[speedCap]": rota.vehicle_speed_cap,
-          };
+            "vehicle[grossWeight]": rota.vehicle_gross_weight,
+            "vehicle[weightPerAxle]": rota.vehicle_weight_per_axle ?? 0,
+            "vehicle[width]": rota.vehicle_width ?? 0,
+            "vehicle[length]": rota.vehicle_length ?? 0,
+            "vehicle[kpraLength]": rota.vehicle_kpra_length ?? 0,
+            "vehicle[payloadCapacity]": rota.vehicle_payload_capacity ?? 0,
+          } as { [key: string]: any };
+
+          if (rota.routingMode !== null) payload.routingMode = rota.routingMode;
+          if (rota.vehicles_hipped_hazardous_goods !== null)
+            payload["vehicle[shippedHazardousGoods]"] =
+              rota.vehicles_hipped_hazardous_goods;
+          if (rota.vehicle_current_weight !== null)
+            payload["vehicle[currentWeight]"] = rota.vehicle_current_weight;
+          if (rota.vehicle_tunnel_category !== null)
+            payload["vehicle[tunnelCategory]"] = rota.vehicle_tunnel_category;
+          if (rota.vehicle_axle_count !== null)
+            payload["vehicle[axleCount]"] = rota.vehicle_axle_count;
+          if (rota.vehicle_type !== null)
+            payload["vehicle[type]"] = rota.vehicle_type;
+          if (rota.vehicle_category !== null)
+            payload["vehicle[category]"] = rota.vehicle_category;
+          if (rota.vehicle_trailer_count !== null)
+            payload["vehicle[trailerCount]"] = rota.vehicle_trailer_count;
+          if (rota.vehicle_license_plate !== null)
+            payload["vehicle[licensePlate]"] = rota.vehicle_license_plate;
+          if (rota.vehicle_occupancy !== null)
+            payload["vehicle[occupancy]"] = rota.vehicle_occupancy;
+          if (rota.vehicle_engine_type !== null)
+            payload["vehicle[engineType]"] = rota.vehicle_engine_type;
+          if (rota.vehicle_height_above_first_axle !== null)
+            payload["vehicle[heightAboveFirstAxle]"] =
+              rota.vehicle_height_above_first_axle;
+          if (rota.vehicle_commercial !== null)
+            payload["vehicle[commercial]"] = rota.vehicle_commercial;
 
           const metodo = rota.method?.toUpperCase() || "GET";
+          await this.gravarRequisicao(rota.id, JSON.stringify(payload));
           const resposta = await this.send2Here(metodo, payload);
           await this.gravarResposta(rota.id, JSON.stringify(resposta));
           await this.definirStatus(rota.id, StatusRota.Publicado.nome);
         } catch (error) {
-          if (error instanceof Error) {
-            this.ctx.logger.error(
-              `Erro ao consultar rotas ${rota.id}: ${error.message}`
-            );
-            await this.gravarErro(rota.id, error.message);
-          } else {
-            this.ctx.logger.error(
-              `Erro desconhecido ao consultar rotas ${rota.id}`
-            );
-            await this.gravarErro(rota.id, "Erro desconhecido");
-          }
+          this.handleRouteError(rota.id, error);
         }
       }
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          "Erro geral ao sincronizar com here: ",
-          error.message
-        );
-      } else {
-        this.ctx.logger.error("Erro desconhecido ao sincronizar com here");
-      }
-      throw error;
+      this.handleSyncError(error);
     }
   }
 
-  // /**
-  //  * Converte um objeto Record<string, unknown> para Point, se válido.
-  //  */
-  // private parsePoint(point: Record<string, unknown> | null): Point | null {
-  //   if (
-  //     point &&
-  //     typeof point === "object" &&
-  //     point.type === "Point" &&
-  //     Array.isArray(point.coordinates) &&
-  //     point.coordinates.length === 2
-  //   ) {
-  //     return {
-  //       type: point.type as string,
-  //       coordinates: point.coordinates as [number, number],
-  //     };
-  //   }
-  //   return null;
-  // }
+  private convertResponse2Routes(responseData: ApiResponse): OutputResponse {
+    const output: OutputResponse = {
+      data: [
+        {
+          routes: [],
+        },
+      ],
+    };
 
-  /**
-   * Obtém rotas por status
-   */
+    if (!responseData.routes || !Array.isArray(responseData.routes)) {
+      return output;
+    }
+
+    responseData.routes.forEach((route) => {
+      const outputRoute: Route = {
+        id: route.id || "",
+        sections: [],
+      };
+
+      if (route.sections) {
+        route.sections.forEach((section) => {
+          const encodedPolyline = section.polyline;
+          const decodedData = decode(encodedPolyline);
+
+          // Corrigindo o erro de tipagem
+          const decodedCoordinates = decodedData.polyline
+            .map(([lat, lon]) => [lon, lat] as [number, number]) // Garantindo que lat e lon sejam números
+            .filter(([lat, lon]) => lat !== undefined && lon !== undefined); // Removendo valores undefined
+
+          // Convertendo as coordenadas para o formato GeoJSON LineString
+          const geoJSONLineString: GeoJSONLineString = {
+            type: "LineString",
+            coordinates: decodedCoordinates,
+          };
+
+          const outputSection: Section = {
+            type: section.type || "vehicle",
+            language: section.language || "en-us",
+            polyline: geoJSONLineString, // Usando o LineString diretamente
+            transport: {
+              mode: section.transport?.mode || "car",
+              current_weight: section.transport?.current_weight || 3000,
+            },
+            places: [],
+            spans: [],
+          };
+
+          if (section.departure) {
+            outputSection.places!.push({
+              name: "departure",
+              location: {
+                type: "Point",
+                coordinates: [
+                  section.departure.place.location.lng, // Longitude
+                  section.departure.place.location.lat, // Latitude
+                ],
+              },
+              originalLocation: {
+                type: "Point",
+                coordinates: [
+                  section.departure.place.originalLocation.lng, // Longitude
+                  section.departure.place.originalLocation.lat, // Latitude
+                ],
+              },
+              type: "place",
+              time: section.departure.time ?? "",
+              place: section.departure.place ?? "",
+            });
+          }
+
+          if (section.arrival) {
+            outputSection.places!.push({
+              name: "arrival",
+              location: {
+                type: "Point",
+                coordinates: [
+                  section.arrival.place?.location?.lng, // Longitude
+                  section.arrival.place?.location?.lat, // Latitude
+                ],
+              },
+              originalLocation: {
+                type: "Point",
+                coordinates: [
+                  section.arrival.place?.originalLocation?.lng, // Longitude
+                  section.arrival.place?.originalLocation?.lat, // Latitude
+                ],
+              },
+              type: "place",
+              time: section.arrival.time ?? "",
+              place: section.arrival.place ?? "",
+            });
+          }
+
+          if (section.spans) {
+            section.spans.forEach((span) => {
+              outputSection.spans = outputSection.spans || [];
+              outputSection.spans.push({
+                offset: span.offset,
+                duration: span.duration,
+                max_speed: this.formatNumber(span.maxSpeed, 7),
+                topology_segment_id: span.topologySegmentId,
+                walk_attributes: span.walkAttributes,
+                car_attributes: span.carAttributes,
+                scooter_attributes: span.scooterAttributes,
+                truck_attributes: span.truckAttributes,
+                length: span.length,
+                base_duration: span.baseDuration,
+                country_code: span.countryCode,
+                functional_class: span.functionalClass,
+                speed_limit: span.speedLimit,
+                traffic_speed: this.formatNumber(span.trafficSpeed, 7),
+                base_speed: this.formatNumber(span.baseSpeed),
+                turn_time: span.turnTime,
+                segment_ref: span.segmetnRef,
+                street_attributes: span.streetAttributes,
+                names: span.names,
+                route_numbers: span.routeNumbers,
+                typical_duration: span.typicalDuration,
+                state_code: span.stateCode,
+                consumption: span.consumption,
+              });
+            });
+          }
+
+          outputRoute.sections!.push(outputSection);
+        });
+      }
+
+      if (output.data[0]) {
+        output.data[0].routes.push(outputRoute);
+      }
+    });
+    return output;
+  }
+
+  async gravarResposta(id: string, resposta: string): Promise<void> {
+    try {
+      console.log("Gravando resposta");
+      const jsonResposta: ApiResponse = JSON.parse(resposta);
+      const respostaFormatada = this.convertResponse2Routes(jsonResposta);
+
+      await this.service.updateOne(id, {
+        status: StatusRota.Publicado.nome,
+        response: JSON.stringify(jsonResposta),
+        routes: respostaFormatada.data[0]?.routes,
+        log: respostaFormatada.data[0]?.routes,
+        error: null,
+      });
+    } catch (error) {
+      this.handleResponseError(id, error);
+    }
+  }
+
   async obterRotasPorStatus(status: string): Promise<Rotas[]> {
     if (this._rotas.length === 0) {
       try {
@@ -157,130 +346,129 @@ export class RoutingService {
           limit: -1,
           filter: { status: { _eq: status } },
         };
-
         this._rotas = await this.service.readByQuery(query);
       } catch (error) {
-        if (error instanceof Error) {
-          this.ctx.logger.error(
-            "Erro ao buscar rotas para sincronização:",
-            error.message
-          );
-        } else {
-          this.ctx.logger.error(
-            "Erro desconhecido ao buscar rotas para sincronização"
-          );
-        }
-        throw error;
+        this.handleQueryError(error);
       }
     }
-
     return this._rotas;
   }
 
-  /**
-   * Define o status da rota
-   */
   async definirStatus(id: string, status: string): Promise<void> {
     try {
       await this.service.updateOne(id, { status: status });
       this.ctx.logger.info(`Status da rota ${id} atualizado para ${status}`);
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          `Erro ao atualizar status da rota ${id}: ${error.message}`
-        );
-      } else {
-        this.ctx.logger.error(
-          `Erro desconhecido ao atualizar status da rota ${id}`
-        );
-      }
-      throw error;
+      this.handleStatusUpdateError(id, error);
     }
   }
 
-  /**
-   * Envia rotas para HERE usando a nova classe ApiClient
-   */
-  async send2Here(metodo: string, payload: any): Promise<any> {
-    // Validação do método HTTP
+  async send2Here(
+    metodo: string,
+    payload: { [key: string]: any } // Alterado para aceitar arrays
+  ): Promise<any> {
     if (!["GET", "POST"].includes(metodo)) {
       throw new Error(`Método HTTP não suportado: ${metodo}`);
     }
 
-    // Adiciona o token ao payload
-    const params = {
-      ...payload,
-      apikey: this.apiToken,
-    };
+    const params = new URLSearchParams();
+
+    Object.entries(payload).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        // Se for um array, adiciona cada item separadamente
+        value.forEach((item) => params.append(key, item));
+      } else {
+        params.append(key, String(value));
+      }
+    });
 
     try {
-      let response: any;
-
+      const requestParams = params.toString(); // Transformar em query string
       if (metodo === "POST") {
-        // Para POST, envia o payload no corpo da requisição
-        response = await this.apiClient.post(params);
-      } else if (metodo === "GET") {
-        // Para GET, passa os parâmetros diretamente para o método get
-        response = await this.apiClient.get(params);
+        return await this.apiClient.post(`?${requestParams}`);
       } else {
-        throw new Error(`Método HTTP não suportado: ${metodo}`);
+        return await this.apiClient.get(`?${requestParams}`);
       }
-
-      return response;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Erro na requisição: ${error.message}`);
-      } else {
-        throw new Error("Erro desconhecido na requisição");
-      }
+      throw this.handleApiError(error);
     }
   }
 
-  /**
-   * Gravar resposta
-   */
-  async gravarResposta(id: string, resposta: string): Promise<void> {
+  async gravarRequisicao(id: string, request: string): Promise<void> {
     try {
-      await this.service.updateOne(id, {
-        status: StatusRota.Publicado.nome,
-        response: resposta,
-      });
+      await this.service.updateOne(id, { request: request });
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(
-          `Erro ao gravar resposta ${id}: ${error.message}`
-        );
-      } else {
-        this.ctx.logger.error(`Erro desconhecido ao gravar resposta ${id}`);
-      }
-      throw error;
+      this.handleRequestError(id, error);
     }
   }
 
-  /**
-   * Gravar erro
-   */
   async gravarErro(id: string, erro: string): Promise<void> {
     try {
-      await this.service.updateOne(id, {
-        error: erro,
-      });
+      await this.service.updateOne(id, { error: erro });
     } catch (error) {
-      if (error instanceof Error) {
-        this.ctx.logger.error(`Erro ao gravar erro ${id}: ${error.message}`);
-      } else {
-        this.ctx.logger.error(`Erro desconhecido ao gravar erro ${id}`);
-      }
       throw error;
+    }
+  }
+
+  private handleRouteError(id: string, error: unknown): void {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na rota ${id}: ${message}`);
+    this.gravarErro(id, message);
+  }
+
+  private handleSyncError(error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error("Erro geral na sincronização: ", message);
+    throw new Error(message);
+  }
+
+  private handleQueryError(error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error("Erro na consulta de rotas: ", message);
+    throw new Error(message);
+  }
+
+  private handleStatusUpdateError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro ao atualizar status ${id}: ${message}`);
+    throw new Error(message);
+  }
+
+  private handleApiError(error: unknown): Error {
+    return error instanceof Error
+      ? new Error(`Erro na API: ${error.message}`)
+      : new Error("Erro desconhecido na API");
+  }
+
+  private handleResponseError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na resposta ${id}: ${message}`);
+    throw new Error(message);
+  }
+
+  private handleRequestError(id: string, error: unknown): never {
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido";
+    this.ctx.logger.error(`Erro na requisição ${id}: ${message}`);
+    throw new Error(message);
+  }
+
+  private formatNumber(
+    speed?: number | null,
+    decimals: number = 2
+  ): number | null {
+    if (speed === undefined || speed === null) return null;
+
+    try {
+      return Number(speed.toFixed(decimals));
+    } catch (error) {
+      console.error("Erro ao formatar número:", error);
+      return null;
     }
   }
 }
-
-// // Função para extrair latitude e longitude como string
-// function extractLatLongAsString(point: Point): string {
-//   if (point.type === "Point" && point.coordinates.length === 2) {
-//     const [latitude, longitude] = point.coordinates;
-//     return `${latitude}, ${longitude}`;
-//   }
-//   return ""; // Retorna uma string vazia se o tipo não for "Point" ou as coordenadas forem inválidas
-// }
