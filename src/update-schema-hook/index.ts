@@ -4,81 +4,162 @@ import {
   createCollection,
   createDirectus,
   createField,
+  login,
+  readCollections,
   readFields,
   rest,
   updateField,
 } from "@directus/sdk";
 import fs from "fs";
+import { Agent } from "http";
+import fetch from "node-fetch";
 import path from "path";
 
-// Interface para a estrutura do schema
-interface SchemaField {
+interface Field {
   collection: string;
   field: string;
   type: string;
+  schema?: Record<string, any>;
   meta?: Record<string, any>;
 }
 
-interface Schema {
-  collections: SchemaField[];
+interface Collection {
+  collection: string;
+  meta?: Record<string, any>;
+  schema?: Record<string, any>;
 }
 
-// Tipo personalizado para campos existentes
-type ExistingField = {
-  collection: string;
-  field: string;
-  type: string;
-  meta?: Record<string, any> | null;
-};
+interface Schema {
+  collections: Collection[];
+  fields: Field[];
+}
 
-// Função para comparar objetos com segurança
-function deepEqual(
-  obj1: Record<string, any> | undefined | null,
-  obj2: Record<string, any> | undefined | null
-): boolean {
-  // Casos de igualdade direta
+async function checkServiceReady(baseUrl: string): Promise<boolean> {
+  try {
+    const response = await fetch(`${baseUrl}/server/health`, {
+      agent: new Agent({ family: 4 }),
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  retries = 5,
+  delayMs = 2000
+): Promise<T> {
+  let lastError;
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (error: any) {
+      lastError = error;
+      if (i < retries - 1) await delay(delayMs * (i + 1));
+    }
+  }
+  throw lastError;
+}
+
+async function processFields(
+  client: any,
+  collectionName: string,
+  fields: Field[]
+): Promise<void> {
+  for (const field of fields) {
+    try {
+      const { field: fieldName, type, schema = {}, meta = {} } = field;
+
+      if (fieldName === "id") continue;
+
+      const existingFields = await withRetry(async () => {
+        const fields = await client.request(readFields());
+        return fields.filter((f: any) => f.collection === collectionName);
+      });
+
+      const existingField = existingFields.find(
+        (f: any) => f.field === fieldName
+      );
+
+      if (existingField) {
+        const needsUpdate = !deepEqual(existingField, field);
+        if (needsUpdate) {
+          await withRetry(async () => {
+            await client.request(
+              updateField(collectionName, fieldName, {
+                type,
+                schema,
+                meta,
+              })
+            );
+          });
+        }
+      } else {
+        await withRetry(async () => {
+          await client.request(
+            createField(collectionName, {
+              field: fieldName,
+              type,
+              schema,
+              meta,
+            })
+          );
+        });
+      }
+    } catch (error: any) {
+      console.error(`Erro ao processar campo ${field.field}:`, error.message);
+    }
+  }
+}
+
+function deepEqual(obj1: any, obj2: any): boolean {
   if (obj1 === obj2) return true;
-
-  // Tratamento de undefined ou null
-  if (obj1 == null || obj2 == null) return false;
+  if (!obj1 || !obj2) return false;
+  if (typeof obj1 !== typeof obj2) return false;
+  if (typeof obj1 !== "object") return obj1 === obj2;
 
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
 
   if (keys1.length !== keys2.length) return false;
 
-  for (const key of keys1) {
-    const val1 = obj1[key];
-    const val2 = obj2[key];
-
-    // Comparação profunda para objetos aninhados
-    if (val1 !== val2) {
-      if (typeof val1 === "object" && typeof val2 === "object") {
-        if (!deepEqual(val1, val2)) return false;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  return true;
+  return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
 }
 
-// Hook para atualizar o schema
 export default defineHook(({ action }, { env }) => {
-  console.log("********* Verificando se o schema está atualizado ************");
+  if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD) {
+    console.error("Credenciais de admin não encontradas");
+    return;
+  }
 
-  // Configura o Directus
-  const client = createDirectus(env.PUBLIC_URL || "http://localhost:8055")
-    .with(rest())
-    .with(authentication("session"));
-
-  // Executa quando o servidor Directus inicializa
   action("server.start", async () => {
-    console.log("Iniciando verificação do schema...");
-
     try {
-      // Caminho do schema usando o caminho correto do Docker
+      const directusUrl = "http://directus:8055";
+      let isReady = false;
+      const maxAttempts = 15;
+
+      for (let i = 0; i < maxAttempts && !isReady; i++) {
+        isReady = await checkServiceReady(directusUrl);
+        if (!isReady) await delay(2000);
+      }
+
+      if (!isReady)
+        throw new Error("Servidor não disponível após tempo máximo de espera");
+
+      const client = createDirectus(directusUrl)
+        .with(rest())
+        .with(authentication());
+
+      await withRetry(async () => {
+        const loginResponse = await client.request(
+          login(env.ADMIN_EMAIL, env.ADMIN_PASSWORD)
+        );
+        client.setToken(loginResponse.access_token);
+      });
+
       const schemaPath = path.join(
         process.cwd(),
         "extensions",
@@ -88,136 +169,58 @@ export default defineHook(({ action }, { env }) => {
         "files",
         "schema.json"
       );
-      console.log(`Caminho do arquivo com o schema: ${schemaPath}`);
 
-      // Carrega e valida o schema
+      if (!fs.existsSync(schemaPath))
+        throw new Error(`Schema não encontrado: ${schemaPath}`);
+
       const schemaContent = fs.readFileSync(schemaPath, "utf-8");
       const parsedSchema = JSON.parse(schemaContent) as Schema;
 
-      if (
-        !parsedSchema ||
-        !parsedSchema.collections ||
-        !Array.isArray(parsedSchema.collections)
-      ) {
-        throw new Error("Schema inválido: formato incorreto");
-      }
+      if (!parsedSchema?.collections?.length)
+        throw new Error("Schema inválido");
 
-      // Agrupa campos por coleção para processamento mais eficiente
-      const fieldsByCollection = parsedSchema.collections.reduce(
-        (acc: Record<string, SchemaField[]>, field) => {
-          const collection = field.collection;
-          if (!(collection in acc)) {
-            acc[collection] = [];
-          }
-          acc[collection]!.push(field);
-          return acc;
-        },
-        {}
+      const collections = await withRetry(async () =>
+        client.request(readCollections())
       );
+      const existingCollections = collections.map((c: any) => c.collection);
 
-      // Autentica no Directus
-      await client.setToken(env.KEY);
-
-      // Processa cada coleção
-      for (const [collectionName, fields] of Object.entries(
-        fieldsByCollection
-      )) {
-        try {
-          // Tenta ler os campos existentes da coleção
-          const existingFields: ExistingField[] = await client
-            .request(readFields())
-            .then((allFields) =>
-              (allFields as ExistingField[]).filter(
-                (f) => f.collection === collectionName
-              )
-            )
-            .catch(() => []);
-
-          // Se a coleção não existe, tenta criar
-          if (existingFields.length === 0) {
-            console.log(`Coleção ${collectionName} não encontrada. Criando...`);
+      for (const collection of parsedSchema.collections) {
+        if (!existingCollections.includes(collection.collection)) {
+          await withRetry(async () => {
             await client.request(
               createCollection({
-                collection: collectionName,
-                fields: [
-                  {
-                    field: "id",
-                    type: "integer",
-                    meta: {
-                      hidden: true,
-                      interface: "input",
-                      readonly: true,
-                    },
-                    schema: {
-                      is_primary_key: true,
-                      has_auto_increment: true,
-                    },
-                  },
-                ],
+                collection: collection.collection,
+                meta: collection.meta || {
+                  icon: "box",
+                  note: null,
+                  display_template: null,
+                  hidden: false,
+                  singleton: false,
+                  translations: null,
+                  archive_field: null,
+                  archive_app_filter: true,
+                  archive_value: null,
+                  unarchive_value: null,
+                  sort_field: null,
+                },
+                schema: collection.schema || {
+                  name: collection.collection,
+                },
               })
             );
-            console.log(`Coleção ${collectionName} criada com sucesso.`);
-          }
-
-          // Processa cada campo da coleção
-          for (const field of fields) {
-            const { field: fieldName, type, meta = {} } = field;
-
-            // Tratamento seguro para encontrar o campo existente
-            const existingField = existingFields.find(
-              (f) => f.field === fieldName
-            );
-
-            // Prepara dados do campo
-            const fieldData = {
-              field: fieldName,
-              type,
-              meta: Object.keys(meta).length > 0 ? meta : undefined,
-            };
-
-            // Verifica se o campo existe antes de processar
-            if (existingField) {
-              // Compara meta e tipo com verificação segura
-              const isMetaEqual = deepEqual(
-                existingField.meta || {},
-                fieldData.meta || {}
-              );
-              const isTypeEqual = existingField.type === type;
-
-              if (!isMetaEqual || !isTypeEqual) {
-                await client.request(
-                  updateField(collectionName, fieldName, {
-                    type: fieldData.type,
-                    meta: fieldData.meta,
-                  })
-                );
-                console.log(
-                  `Campo ${fieldName} na coleção ${collectionName} atualizado com sucesso.`
-                );
-              } else {
-                console.log(
-                  `Campo ${fieldName} na coleção ${collectionName} já está atualizado.`
-                );
-              }
-            } else {
-              // Cria novo campo
-              await client.request(createField(collectionName, fieldData));
-              console.log(
-                `Campo ${fieldName} na coleção ${collectionName} criado com sucesso.`
-              );
-            }
-          }
-        } catch (error) {
-          console.error(
-            `Erro ao processar a coleção ${collectionName}:`,
-            error
-          );
+          });
         }
+
+        const collectionFields = parsedSchema.fields.filter(
+          (field) => field.collection === collection.collection
+        );
+
+        await processFields(client, collection.collection, collectionFields);
       }
 
-      console.log("Verificação e atualização do schema concluída com sucesso!");
-    } catch (error) {
-      console.error("Erro ao carregar ou processar o schema:", error);
+      console.log("Schema atualizado com sucesso");
+    } catch (error: any) {
+      console.error("Erro:", error.message);
     }
   });
 });

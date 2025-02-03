@@ -58,7 +58,8 @@
     "docker:push": "docker push $npm_package_dockername:$npm_package_version",
     "docker:release": "yarn docker:build && yarn docker:push",
     "docker:build:dev": "docker build --rm -f docker/dev/Dockerfile -t docker-registry.de.vix.br/directus/nodemon:1.0 . && echo Done: docker-registry.de.vix.br/directus/nodemon:1.0",
-    "limpar:branches": "node utils/limpar-branches.js"
+    "limpar:branches": "node utils/limpar-branches.js",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@directus/extensions-sdk": "13.0.0",
